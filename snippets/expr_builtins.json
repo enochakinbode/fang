@@ -1,104 +1,259 @@
 {
     ".source.vyper": {
-        "ecadd": {
-            "prefix": "ecadd",
-            "body": "ecadd(${1:a}, ${2:b})"
+        "abi_encode": {
+            "prefix": [
+                "abi_encode",
+                "abi.encode"
+            ],
+            "body": "abi_encode(${1:values}, output_type=${2:Bytes[M]})",
+            "description": "Encode values into ABI-encoded bytes"
         },
-        "ecmul": {
-            "prefix": "ecmul",
-            "body": "ecmul(${1:a}, ${2:b})"
+        "abi_decode": {
+            "prefix": [
+                "abi_decode",
+                "abi.decode"
+            ],
+            "body": "abi_decode(${1:data}, ${2:output_type})",
+            "description": "Decode ABI-encoded bytes into given type"
         },
-        "ecrecover": {
-            "prefix": "ecrecover",
-            "body": "ecrecover(${1:hash}, ${2:v}, ${3:r}, ${4:s})"
+        "_abi_encode (deprecated)": {
+            "prefix": [
+                "_abi_encode",
+                "abi.encode.old"
+            ],
+            "body": "_abi_encode(${1:values}, output_type=${2:Bytes[M]})",
+            "description": "Deprecated old ABI encoder (_abi_encode)"
         },
-        "keccak256": {
-            "prefix": "keccak256",
-            "body": "keccak256(${1:value})"
+        "_abi_decode (deprecated)": {
+            "prefix": [
+                "_abi_decode",
+                "abi.decode.old"
+            ],
+            "body": "_abi_decode(${1:data}, ${2:output_type})",
+            "description": "Deprecated old ABI decoder (_abi_decode)"
         },
-        "sha256": {
-            "prefix": "sha256",
-            "body": "sha256(${1:value})"
+        "floor": {
+            "prefix": [
+                "floor",
+                "mathfloor"
+            ],
+            "body": "floor(${1:x})",
+            "description": "Largest integer <= x"
         },
-        "concat": {
-            "prefix": "concat",
-            "body": "concat(${1:value}, ${2:value}, ${3:value})"
+        "ceil": {
+            "prefix": [
+                "ceil",
+                "mathceil"
+            ],
+            "body": "ceil(${1:x})",
+            "description": "Smallest integer >= x"
         },
         "convert": {
             "prefix": "convert",
-            "body": "convert(${1:name}: ${2:type}, ${3:type})"
+            "body": "convert(${1:value}, ${2:new_type})",
+            "description": "Convert value to a different type"
         },
         "slice": {
             "prefix": "slice",
-            "body": "slice(${1:value}: ${2:start}, ${3:length})"
-        },
-        "extract32": {
-            "prefix": "extract32",
-            "body": "extract32(${1:value}, ${2:start})"
-        },
-        "math abs": {
-            "prefix": ["abs", "mathabs"],
-            "body": "abs(${1:value})"
-        },
-        "math ceil": {
-            "prefix": ["ceil", "mathceil"],
-            "body": "ceil(${1:value})"
-        },
-        "math floor": {
-            "prefix": ["floor", "mathfloor"],
-            "body": "floor(${1:value})"
-        },
-        "math max": {
-            "prefix": ["max", "mathmax"],
-            "body": "max(${1:value}, ${2:value})"
-        },
-        "math min": {
-            "prefix": ["min", "mathmin"],
-            "body": "min(${1:value}, ${2:value})"
-        },
-        "math pow_mod256": {
-            "prefix": ["pow_mod256", "mathpow"],
-            "body": "pow_mod256(${1:value}, ${2:value})"
-        },
-        "math sqrt": {
-            "prefix": ["sqrt", "mathsqrt"],
-            "body": "sqrt(${1:value})"
-        },
-        "math uint256_addmod": {
-            "prefix": ["uint256_addmod", "addmod"],
-            "body": "uint256_addmod(${1:value}, ${2:value}, ${3:value})"
-        },
-        "math uint256_mulmod": {
-            "prefix": ["uint256_mulmod", "mulmod"],
-            "body": "uint256_mulmod(${1:value}, ${2:value}, ${3:value})"
-        },
-        "as_wei_value": {
-            "prefix": "as_wei_value",
-            "body": "as_wei_value(${1:value}, ${2:unit})"
-        },
-        "blockhash": {
-            "prefix": "blockhash",
-            "body": "blockhash(${1:value})"
-        },
-        "empty": {
-            "prefix": "empty",
-            "body": "empty(${1:value})"
+            "body": "slice(${1:bytes_value}, start=${2:start}, length=${3:length})",
+            "description": "Slice bytes from start with length"
         },
         "len": {
             "prefix": "len",
-            "body": "len(${1:value}})"
+            "body": "len(${1:value})",
+            "description": "Length of array/bytes/string"
+        },
+        "concat": {
+            "prefix": "concat",
+            "body": "concat(${1:value1}, ${2:value2})",
+            "description": "Concatenate bytes/string values"
+        },
+        "sha256": {
+            "prefix": "sha256",
+            "body": "sha256(${1:data})",
+            "description": "Compute SHA-256 hash"
         },
         "method_id": {
             "prefix": "method_id",
-            "body": "method_id(${1:value}, output_type=${2:type})"
+            "body": "method_id(${1:signature}, output_type=${2:bytes4})",
+            "description": "Compute function selector from signature"
         },
-        "abi_encode": {
-            "prefix": ["abi_encode", "abi.encode"],
-            "body": "abi_encode(${1:args}, ${2:value}, ${3:value}, ${4:value})"
+        "keccak256": {
+            "prefix": "keccak256",
+            "body": "keccak256(${1:data})",
+            "description": "Compute Keccak-256 hash"
         },
-        "abi_decode": {
-            "prefix": ["abi_decode", "abi.decode"],
-            "body": "abi_decode(${1:data}, ${2:output_type})"
+        "ecrecover": {
+            "prefix": "ecrecover",
+            "body": "ecrecover(${1:hash}, ${2:v}, ${3:r}, ${4:s})",
+            "description": "Recover address from ECDSA signature"
+        },
+        "ecadd": {
+            "prefix": "ecadd",
+            "body": "ecadd(${1:point1}, ${2:point2})",
+            "description": "Elliptic curve point addition"
+        },
+        "ecmul": {
+            "prefix": "ecmul",
+            "body": "ecmul(${1:point}, ${2:scalar})",
+            "description": "Elliptic curve scalar multiplication"
+        },
+        "extract32": {
+            "prefix": "extract32",
+            "body": "extract32(${1:bytes_data}, ${2:start})",
+            "description": "Extract 32 bytes from bytes at offset"
+        },
+        "as_wei_value": {
+            "prefix": "as_wei_value",
+            "body": "as_wei_value(${1:amount}, ${2:unit})",
+            "description": "Convert units (e.g. ether) to wei"
+        },
+        "blockhash": {
+            "prefix": "blockhash",
+            "body": "blockhash(${1:block_number})",
+            "description": "Return block hash for recent block"
+        },
+        "blobhash": {
+            "prefix": "blobhash",
+            "body": "blobhash(${1:block_number}, ${2:index})",
+            "description": "Return blob hash (EIP-4844)"
+        },
+        "uint256_addmod": {
+            "prefix": [
+                "uint256_addmod",
+                "addmod"
+            ],
+            "body": "uint256_addmod(${1:a}, ${2:b}, ${3:modulus})",
+            "description": "Compute (a + b) % modulus"
+        },
+        "uint256_mulmod": {
+            "prefix": [
+                "uint256_mulmod",
+                "mulmod"
+            ],
+            "body": "uint256_mulmod(${1:a}, ${2:b}, ${3:modulus})",
+            "description": "Compute (a * b) % modulus"
+        },
+        "unsafe_add": {
+            "prefix": "unsafe_add",
+            "body": "unsafe_add(${1:a}, ${2:b})",
+            "description": "Unchecked addition (no overflow checks)"
+        },
+        "unsafe_sub": {
+            "prefix": "unsafe_sub",
+            "body": "unsafe_sub(${1:a}, ${2:b})",
+            "description": "Unchecked subtraction"
+        },
+        "unsafe_mul": {
+            "prefix": "unsafe_mul",
+            "body": "unsafe_mul(${1:a}, ${2:b})",
+            "description": "Unchecked multiplication"
+        },
+        "unsafe_div": {
+            "prefix": "unsafe_div",
+            "body": "unsafe_div(${1:a}, ${2:b})",
+            "description": "Unchecked division"
+        },
+        "pow_mod256": {
+            "prefix": [
+                "pow_mod256",
+                "mathpow"
+            ],
+            "body": "pow_mod256(${1:base}, ${2:exponent})",
+            "description": "Exponentiation modulo 2**256"
+        },
+        "uint2str": {
+            "prefix": [
+                "uint2str",
+                "to_string"
+            ],
+            "body": "uint2str(${1:value})",
+            "description": "Convert uint256 to string"
+        },
+        "sqrt": {
+            "prefix": [
+                "sqrt",
+                "mathsqrt"
+            ],
+            "body": "sqrt(${1:value})",
+            "description": "Square root (decimal)"
+        },
+        "isqrt": {
+            "prefix": "isqrt",
+            "body": "isqrt(${1:value})",
+            "description": "Integer square root"
+        },
+        "shift": {
+            "prefix": [
+                "shift",
+                "bitshift"
+            ],
+            "body": "shift(${1:value}, ${2:shift_by})",
+            "description": "Bit shift (deprecated in favor of << and >> in newer Vyper)"
+        },
+        "create_minimal_proxy_to (expr)": {
+            "prefix": "create_minimal_proxy_to_expr",
+            "body": "create_minimal_proxy_to(${1:target})",
+            "description": "Create minimal proxy and return address (expression form)"
+        },
+        "create_forwarder_to (expr)": {
+            "prefix": "create_forwarder_to_expr",
+            "body": "create_forwarder_to(${1:target})",
+            "description": "Create forwarder and return address (expression form)"
+        },
+        "create_copy_of (expr)": {
+            "prefix": "create_copy_of_expr",
+            "body": "create_copy_of(${1:target})",
+            "description": "Create copy of target and return address (expression form)"
+        },
+        "create_from_blueprint (expr)": {
+            "prefix": "create_from_blueprint_expr",
+            "body": "create_from_blueprint(${1:blueprint}, ${2:salt})",
+            "description": "Create from blueprint and return address (expression form)"
+        },
+        "min": {
+            "prefix": [
+                "min",
+                "mathmin"
+            ],
+            "body": "min(${1:a}, ${2:b})",
+            "description": "Minimum of two values"
+        },
+        "max": {
+            "prefix": [
+                "max",
+                "mathmax"
+            ],
+            "body": "max(${1:a}, ${2:b})",
+            "description": "Maximum of two values"
+        },
+        "empty": {
+            "prefix": "empty",
+            "body": "empty(${1:value})",
+            "description": "Zero/empty value for given type"
+        },
+        "abs": {
+            "prefix": [
+                "abs",
+                "mathabs"
+            ],
+            "body": "abs(${1:value})",
+            "description": "Absolute value"
+        },
+        "min_value": {
+            "prefix": "min_value",
+            "body": "min_value(${1:Type})",
+            "description": "Minimum representable value for given type"
+        },
+        "max_value": {
+            "prefix": "max_value",
+            "body": "max_value(${1:Type})",
+            "description": "Maximum representable value for given type"
+        },
+        "epsilon": {
+            "prefix": "epsilon",
+            "body": "epsilon(${1:Type})",
+            "description": "Smallest non-zero value for decimal-like types"
         }
     }
 }
