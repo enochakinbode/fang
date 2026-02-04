@@ -13,33 +13,13 @@ import json
 
 
 class VyperLang:
-    builtin_functions = DISPATCH_TABLE.keys()
-    builtin_raw_functions = STMT_DISPATCH_TABLE.keys()
+    builtin_functions = list(DISPATCH_TABLE.keys())
+    builtin_raw_functions = list(STMT_DISPATCH_TABLE.keys())
     base_types = set([x for x in PRIMITIVE_TYPES.keys() if not x.startswith("$")])
     reserved_words = vyper.ast.identifiers.RESERVED_KEYWORDS
     special_attributes = {"__interface__"}
     fallback_name = "__default__"
     constructor_name = "__init__"
-
-    # Categorize builtins for better syntax highlighting
-    builtin_crypto = ["keccak256", "sha256", "ecrecover", "ecadd", "ecmul"]
-    builtin_math = [
-        "floor",
-        "ceil",
-        "sqrt",
-        "isqrt",
-        "abs",
-        "min",
-        "max",
-        "uint256_addmod",
-        "uint256_mulmod",
-        "pow_mod256",
-        "min_value",
-        "max_value",
-        "epsilon",
-    ]
-    builtin_unsafe_math = ["unsafe_add", "unsafe_sub", "unsafe_mul", "unsafe_div"]
-    builtin_abi = ["abi_encode", "abi_decode", "method_id"]
 
     # Modifiers: categorized for better syntax highlighting
     modifiers_visibility = ["external", "internal"]
