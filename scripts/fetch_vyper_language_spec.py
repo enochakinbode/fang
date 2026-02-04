@@ -15,32 +15,40 @@ import json
 class VyperLang:
     builtin_functions = DISPATCH_TABLE.keys()
     builtin_raw_functions = STMT_DISPATCH_TABLE.keys()
-    base_types = set(
-        [x for x in PRIMITIVE_TYPES.keys() if not x.startswith("$")]
-    )
+    base_types = set([x for x in PRIMITIVE_TYPES.keys() if not x.startswith("$")])
     reserved_words = vyper.ast.identifiers.RESERVED_KEYWORDS
     special_attributes = {"__interface__"}
     fallback_name = "__default__"
     constructor_name = "__init__"
-    modifiers_safe = [
-        "nonreentrant",
-        "internal",
-        "view",
-        "pure",
-        "private",
-        "immutable",
-        "constant",
-    ]  # private,constant for backward compatibility
-    modifiers_unsafe = [
-        "deploy",
-        "nonpayable",
-        "payable",
-        "external",
-        "modifying",
-    ]  # modifying kept for backward compatibility
+
+    # Categorize builtins for better syntax highlighting
+    builtin_crypto = ["keccak256", "sha256", "ecrecover", "ecadd", "ecmul"]
+    builtin_math = [
+        "floor",
+        "ceil",
+        "sqrt",
+        "isqrt",
+        "abs",
+        "min",
+        "max",
+        "uint256_addmod",
+        "uint256_mulmod",
+        "pow_mod256",
+        "min_value",
+        "max_value",
+        "epsilon",
+    ]
+    builtin_unsafe_math = ["unsafe_add", "unsafe_sub", "unsafe_mul", "unsafe_div"]
+    builtin_abi = ["abi_encode", "abi_decode", "method_id"]
+
+    # Modifiers: categorized for better syntax highlighting
+    modifiers_visibility = ["external", "internal"]
+    modifiers_state_mutability = ["view", "pure", "nonpayable", "payable"]
+    modifiers_security = ["nonreentrant", "deploy"]
+    modifiers_storage = ["immutable"]
+
     var_types_ref = [
         "struct",
-        "enum",
         "flag",
         "event",
         "interface",
@@ -48,17 +56,7 @@ class VyperLang:
         "DynArray",
         "Bytes",
         "String",
-    ]  # enum kept for backward compatibility
-    constants = [
-        "ZERO_ADDRESS",
-        "EMPTY_BYTES32",
-        "MAX_INT128",
-        "MIN_INT128",
-        "MAX_DECIMAL",
-        "MIN_DECIMAL",
-        "MIN_UINT256",
-        "MAX_UINT256",
-    ]  # kept for backward compatibility
+    ]
     modules = ["implements", "uses", "initializes", "exports"]
     special_vars = [
         "log",
@@ -123,21 +121,46 @@ class VyperLang:
             }
         )
 
-        # modifiers
-        repo["builtin-functions"]["patterns"].append(
-            {
-                "name": "support.function.builtin.modifiers.safe.vyper",
-                "match": VyperLang.tmlanguage_match_functions
-                % {"match": " | ".join(VyperLang.modifiers_safe)},
-            }
-        )
-        repo["builtin-functions"]["patterns"].append(
-            {
-                "name": "support.function.builtin.modifiers.unsafe.vyper",
-                "match": VyperLang.tmlanguage_match_functions
-                % {"match": " | ".join(VyperLang.modifiers_unsafe)},
-            }
-        )
+        # Modifiers: use categorized lists for better syntax highlighting
+        # Visibility modifiers
+        if VyperLang.modifiers_visibility:
+            repo["builtin-functions"]["patterns"].append(
+                {
+                    "name": "storage.type.modifier.visibility.vyper",
+                    "match": VyperLang.tmlanguage_match_functions
+                    % {"match": " | ".join(VyperLang.modifiers_visibility)},
+                }
+            )
+
+        # State mutability modifiers
+        if VyperLang.modifiers_state_mutability:
+            repo["builtin-functions"]["patterns"].append(
+                {
+                    "name": "storage.type.modifier.mutability.vyper",
+                    "match": VyperLang.tmlanguage_match_functions
+                    % {"match": " | ".join(VyperLang.modifiers_state_mutability)},
+                }
+            )
+
+        # Security modifiers
+        if VyperLang.modifiers_security:
+            repo["builtin-functions"]["patterns"].append(
+                {
+                    "name": "storage.type.modifier.security.vyper",
+                    "match": VyperLang.tmlanguage_match_functions
+                    % {"match": " | ".join(VyperLang.modifiers_security)},
+                }
+            )
+
+        # Storage modifiers
+        if VyperLang.modifiers_storage:
+            repo["builtin-functions"]["patterns"].append(
+                {
+                    "name": "storage.type.modifier.storage.vyper",
+                    "match": VyperLang.tmlanguage_match_functions
+                    % {"match": " | ".join(VyperLang.modifiers_storage)},
+                }
+            )
 
         # builtin types
         # fix array
@@ -157,14 +180,6 @@ class VyperLang:
                 % {"match": " | ".join(VyperLang.reserved_words)},
             }
         )
-
-        repo["builtin-types"]["patterns"].append(
-            {
-                "name": "support.type.constant.vyper",
-                "match": VyperLang.tmlanguage_match_types
-                % {"match": " | ".join(VyperLang.constants)},
-            }
-        )
         repo["builtin-types"]["patterns"].append(
             {
                 "name": "entity.other.inherited-class.modules.vyper",
@@ -177,8 +192,7 @@ class VyperLang:
             repo["special-variables-types"]["patterns"].append(
                 {
                     "name": f"variable.language.special.{special}.vyper",
-                    "match": VyperLang.tmlanguage_match_functions
-                    % {"match": special},
+                    "match": VyperLang.tmlanguage_match_functions % {"match": special},
                 }
             )
         for special in VyperLang.special_attributes:
