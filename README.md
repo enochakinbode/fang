@@ -89,38 +89,6 @@ Visual indicators help identify:
 - ℹ️ **Block/transaction variables** - Underlined for visibility
 - 🔵 **Special functions** - Bold and underlined (constructors, fallbacks)
 
-## Troubleshooting
-
-### LSP Not Working
-
-If the Language Server isn't starting:
-
-1. Verify `vyper-lsp` is installed:
-   ```bash
-   pip list | grep vyper-lsp
-   ```
-
-2. Check the command is in your PATH:
-   ```bash
-   which vyper-lsp
-   ```
-
-3. Configure the server command in settings if needed:
-   ```json
-   {
-     "vyper.lsp.serverCommand": "/path/to/vyper-lsp"
-   }
-   ```
-
-4. Check the Output panel: `View → Output → Log (Extension Host)` for error messages
-
-5. Try restarting the LSP server: `Cmd+Shift+P` → "Vyper: Restart LSP Server"
-
-### Syntax Highlighting Not Working
-
-- Ensure the file has a `.vy` or `.vyi` extension
-- Reload the window: `Cmd+Shift+P` → "Developer: Reload Window"
-
 ## Development
 
 ### Building from Source
@@ -137,29 +105,12 @@ npm install
 vsce package
 ```
 
-### Project Structure
-
-```
-fang/
-├── src/
-│   ├── extension.js          # Main extension entry point
-│   ├── extension.web.js      # Web version entry point
-│   ├── features/
-│   │   ├── deco.js           # Code decorations
-│   │   ├── hover/            # Hover information
-│   │   └── lsp.js            # LSP client integration
-│   └── settings.js           # Configuration
-├── syntaxes/                 # TextMate grammar for syntax highlighting
-├── snippets/                 # Code snippets
-├── themes/                   # Color themes
-└── package.json              # Extension manifest
-```
 
 ## Credits
 
 Fang is built upon the excellent work of:
 
-- **[vscode-vyper](https://github.com/tintinweb/vscode-vyper)** by [tintinweb](https://github.com/tintinweb) @ [Consensys Diligence](https://consensys.io/diligence/) and [trocher](https://github.com/trocher) @ [ChainSecurity](https://www.chainsecurity.com/) - Original extension providing syntax highlighting, decorations, and hover features
+- **[vscode-vyper](https://github.com/tintinweb/vscode-vyper)** by [tintinweb](https://github.com/tintinweb) - Original extension providing syntax highlighting, decorations, and hover features
 - **[vyper-lsp](https://github.com/vyperlang/vyper-lsp)** by the Vyper team - Official Language Server Protocol implementation
 
 Special thanks to the original maintainers and contributors of both projects.
