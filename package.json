@@ -1,7 +1,7 @@
 {
-    "name": "vscode-vyper",
-    "displayName": "Vyper",
-    "description": "Ethereum Vyper language support for Visual Studio Code",
+    "name": "sentinel",
+    "displayName": "sentinel",
+    "description": "sentinel provides language support for the Ethereum Vyper smart contract language for Visual Studio Code",
     "license": "MIT",
     "version": "0.1.0",
     "keywords": [
@@ -11,7 +11,7 @@
         "Language Server",
         "security"
     ],
-    "publisher": "enochlee",
+    "publisher": "enochakinbode",
     "icon": "images/icon.png",
     "galleryBanner": {
         "color": "#EDE5D5",
@@ -283,8 +283,8 @@
         "combineSnippets": "cat snippets/expr_builtins.json snippets/stmt_builtins.json snippets/expressions.json snippets/statements.json snippets/module.json snippets/other.json snippets/types.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "fetchGrammar": "rm -f syntaxes/vyper.tmLanguage.json && python3 scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
         "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
-        "pretest": "npm run compile-web",
-        "vscode:prepublish": "npm run package-web",
+        "pretest": "bun run compile-web",
+        "vscode:prepublish": "bun install && bun run package-web",
         "compile-web": "webpack -c config/web.webpack.config.js",
         "watch-web": "webpack -c config/web.webpack.config.js --watch",
         "package-web": "webpack -c config/web.webpack.config.js --mode production --devtool hidden-source-map",
