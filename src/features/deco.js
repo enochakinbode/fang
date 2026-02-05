@@ -60,8 +60,8 @@ const styles = {
 
 async function decorateWords(editor, decorules, decoStyle) {
     return new Promise(resolve => {
-        if (!editor) {
-            return;
+        if (!editor || !editor.document) {
+            return resolve();
         }
         var decos = [];
         const text = editor.document.getText();
@@ -81,7 +81,14 @@ async function decorateWords(editor, decorules, decoStyle) {
                 decos.push(decoration);
             }
         });
-        editor.setDecorations(decoStyle, decos);
+        // Only set decorations if editor is still valid
+        if (editor && editor.setDecorations) {
+            try {
+                editor.setDecorations(decoStyle, decos);
+            } catch (error) {
+                console.error('Failed to set decorations:', error.message);
+            }
+        }
         resolve();
     });
 }

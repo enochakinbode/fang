@@ -49,7 +49,7 @@ async function onDidChange(event) {
     ], mod_deco.styles.foreGroundInfoUnderline);
     mod_deco.decorateWords(activeEditor, [
         {
-            regex: "^@\\b(immutable|nonreentrant|constant|internal|view|pure|event)\\b",
+            regex: "^@\\b(nonreentrant|internal|view|pure)\\b",
             captureGroup: 0,
         },
     ], mod_deco.styles.foreGroundOk);
