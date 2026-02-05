@@ -10,6 +10,8 @@ Fang is built by combining:
 
 This extension brings together the powerful LSP capabilities for code completion, diagnostics, and navigation with the proven syntax highlighting and security-focused code decorations from the original extension.
 
+**Vyper Version Support:** Fang supports Vyper 0.4.1 and later (as supported by vyper-lsp).
+
 ## Features
 
 ### Core Features
