@@ -8,8 +8,7 @@ __pycache__/
 *.pyd
 .Python
 
-# Node modules (already excluded by default, but explicit)
-node_modules/
+
 
 # Build outputs (but keep dist/web/extension.js which is needed)
 dist/**/*.map
