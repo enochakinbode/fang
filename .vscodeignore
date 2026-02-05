@@ -1,11 +1,56 @@
-**/*.ts
-**/tsconfig.json
-!file.ts
-**/*.zip
-*.gitignore
-*.py
+# Python virtual environment
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Node modules (already excluded by default, but explicit)
+node_modules/
+
+# Build outputs (but keep dist/web/extension.js which is needed)
+dist/**/*.map
+dist/**/*.LICENSE.txt
+out/
 *.vsix
-**/.vscode/**
-**/tmp/**
-**/test/**
-**/webpack/**
+
+# Development files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Test files
+test/
+tests/
+*.test.js
+*.spec.js
+
+# Lock files (not needed in package)
+bun.lock
+uv.lock
+
+# Development config
+webpack.config.js
+config/
+scripts/
+
+# Python project files
+pyproject.toml
+uv.lock
+
+# Documentation
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db

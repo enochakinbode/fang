@@ -30,7 +30,7 @@ async function onDidSave(document) {
     }
 
     const fileExtension = document.fileName.split('.').pop();
-        
+
     if (fileExtension != "vy") {
         console.log("Skipping compilation for interface file");
         return;
@@ -42,54 +42,60 @@ async function onDidChange(event) {
         return;
     }
 
-    if(settings.extensionConfig().decoration.enable){
+    if (settings.extensionConfig().decoration.enable) {
         mod_deco.decorateWords(activeEditor, [
             {
-                regex:"^@\\b(public|nonpayable|modifying|payable|external|deploy)\\b",
+                regex: "^@\\b(public|nonpayable|modifying|payable|external|deploy)\\b",
                 captureGroup: 0,
             },
             {
-                regex:"\\b(send|raw_call|selfdestruct|create_forwarder_to|create_minimal_proxy_to|create_copy_of|create_from_blueprint)\\b",
+                regex: "\\b(send|raw_call|selfdestruct|create_forwarder_to|create_minimal_proxy_to|create_copy_of|create_from_blueprint)\\b",
                 captureGroup: 0,
                 hoverMessage: "❗**potentially unsafe** lowlevel call"
             },
             {
-                regex:"\\b(extcall|staticcall)\\b",
+                regex: "\\b(extcall|staticcall)\\b",
                 captureGroup: 0,
             },
         ], mod_deco.styles.foreGroundWarning);
         mod_deco.decorateWords(activeEditor, [
             {
-                regex:"\\b(\\.balance|msg\\.[\\w]+|block\\.[\\w]+)\\b",
+                regex: "\\b(\\.balance|msg\\.[\\w]+|block\\.[\\w]+)\\b",
                 captureGroup: 0,
             }
         ], mod_deco.styles.foreGroundInfoUnderline);
         mod_deco.decorateWords(activeEditor, [
             {
-                regex:"^@\\b(private|nonreentrant|constant|internal|view|pure|event)\\b",
+                regex: "^@\\b(private|nonreentrant|constant|internal|view|pure|event)\\b",
                 captureGroup: 0,
             },
         ], mod_deco.styles.foreGroundOk);
         mod_deco.decorateWords(activeEditor, [
             {
-                regex:"\\b(log)\\.",
+                regex: "\\b(log)\\.",
                 captureGroup: 1,
             },
             {
-                regex:"\\b(clear)\\b\\(",
+                regex: "\\b(clear)\\b\\(",
                 captureGroup: 1,
             },
         ], mod_deco.styles.foreGroundNewEmit);
         mod_deco.decorateWords(activeEditor, [
             {
-                regex:"\\b(__init__|__default__)\\b",
+                regex: "\\b(__init__|__default__)\\b",
                 captureGroup: 0,
             },
         ], mod_deco.styles.boldUnderline);
     }
 }
 function onInitModules(context, type) {
-  mod_hover.init(context, type);
+    mod_hover.init(context, type);
+
+    // Register restart LSP server command (not available in web mode)
+    const restartCommand = vscode.commands.registerCommand('vyper.restartLspServer', async () => {
+        vscode.window.showWarningMessage('Vyper LSP Server restart is not available in web mode. Please use the desktop version of VS Code.');
+    });
+    context.subscriptions.push(restartCommand);
 }
 
 function onActivate(context) {
@@ -100,27 +106,18 @@ function onActivate(context) {
     registerDocType(settings.LANGUAGE_ID);
 
     function registerDocType(type) {
-        context.subscriptions.push(
-            vscode.languages.reg
-        );
-
         // taken from: https://github.com/Microsoft/vscode/blob/master/extensions/python/src/pythonMain.ts ; slightly modified
         // autoindent while typing
         vscode.languages.setLanguageConfiguration(type, {
             onEnterRules: [
                 {
-                    beforeText: /^\s*(?:struct|enum|flag|event|interface|def|class|for|if|elif|else).*?:\s*$/,
+                    beforeText: /^\s*(?:struct|flag|event|interface|def|class|for|if|elif|else).*?:\s*$/,
                     action: { indentAction: vscode.IndentAction.Indent }
                 }
             ]
         });
 
-
-        if (!settings.extensionConfig().mode.active) {
-            console.log("ⓘ activate extension: entering passive mode. not registering any active code augmentation support.");
-            return;
-        }
-        /** module init */
+        // Initialize modules including command registration
         onInitModules(context, type);
         onDidChange();
         onDidSave(active.document);
@@ -164,5 +161,11 @@ function onActivate(context) {
     }
 }
 
+// Add deactivate function for consistency
+function onDeactivate() {
+    // No cleanup needed for web mode
+}
+
 /* exports */
 exports.activate = onActivate;
+exports.deactivate = onDeactivate;

@@ -1,0 +1,651 @@
+{
+  ".source.vyper": {
+    "abi_encode": {
+      "prefix": [
+        "abi_encode",
+        "abi.encode"
+      ],
+      "body": "abi_encode(${1:values}, output_type=${2:Bytes[M]})",
+      "description": "Encode values into ABI-encoded bytes"
+    },
+    "abi_decode": {
+      "prefix": [
+        "abi_decode",
+        "abi.decode"
+      ],
+      "body": "abi_decode(${1:data}, ${2:output_type})",
+      "description": "Decode ABI-encoded bytes into given type"
+    },
+    "_abi_encode (deprecated)": {
+      "prefix": [
+        "_abi_encode",
+        "abi.encode.old"
+      ],
+      "body": "_abi_encode(${1:values}, output_type=${2:Bytes[M]})",
+      "description": "Deprecated old ABI encoder (_abi_encode)"
+    },
+    "_abi_decode (deprecated)": {
+      "prefix": [
+        "_abi_decode",
+        "abi.decode.old"
+      ],
+      "body": "_abi_decode(${1:data}, ${2:output_type})",
+      "description": "Deprecated old ABI decoder (_abi_decode)"
+    },
+    "floor": {
+      "prefix": [
+        "floor",
+        "mathfloor"
+      ],
+      "body": "floor(${1:x})",
+      "description": "Largest integer <= x"
+    },
+    "ceil": {
+      "prefix": [
+        "ceil",
+        "mathceil"
+      ],
+      "body": "ceil(${1:x})",
+      "description": "Smallest integer >= x"
+    },
+    "convert": {
+      "prefix": "convert",
+      "body": "convert(${1:value}, ${2:new_type})",
+      "description": "Convert value to a different type"
+    },
+    "slice": {
+      "prefix": "slice",
+      "body": "slice(${1:bytes_value}, start=${2:start}, length=${3:length})",
+      "description": "Slice bytes from start with length"
+    },
+    "len": {
+      "prefix": "len",
+      "body": "len(${1:value})",
+      "description": "Length of array/bytes/string"
+    },
+    "concat": {
+      "prefix": "concat",
+      "body": "concat(${1:value1}, ${2:value2})",
+      "description": "Concatenate bytes/string values"
+    },
+    "sha256": {
+      "prefix": "sha256",
+      "body": "sha256(${1:data})",
+      "description": "Compute SHA-256 hash"
+    },
+    "method_id": {
+      "prefix": "method_id",
+      "body": "method_id(${1:signature}, output_type=${2:bytes4})",
+      "description": "Compute function selector from signature"
+    },
+    "keccak256": {
+      "prefix": "keccak256",
+      "body": "keccak256(${1:data})",
+      "description": "Compute Keccak-256 hash"
+    },
+    "ecrecover": {
+      "prefix": "ecrecover",
+      "body": "ecrecover(${1:hash}, ${2:v}, ${3:r}, ${4:s})",
+      "description": "Recover address from ECDSA signature"
+    },
+    "ecadd": {
+      "prefix": "ecadd",
+      "body": "ecadd(${1:point1}, ${2:point2})",
+      "description": "Elliptic curve point addition"
+    },
+    "ecmul": {
+      "prefix": "ecmul",
+      "body": "ecmul(${1:point}, ${2:scalar})",
+      "description": "Elliptic curve scalar multiplication"
+    },
+    "extract32": {
+      "prefix": "extract32",
+      "body": "extract32(${1:bytes_data}, ${2:start})",
+      "description": "Extract 32 bytes from bytes at offset"
+    },
+    "as_wei_value": {
+      "prefix": "as_wei_value",
+      "body": "as_wei_value(${1:amount}, ${2:unit})",
+      "description": "Convert units (e.g. ether) to wei"
+    },
+    "blockhash": {
+      "prefix": "blockhash",
+      "body": "blockhash(${1:block_number})",
+      "description": "Return block hash for recent block"
+    },
+    "blobhash": {
+      "prefix": "blobhash",
+      "body": "blobhash(${1:block_number}, ${2:index})",
+      "description": "Return blob hash (EIP-4844)"
+    },
+    "uint256_addmod": {
+      "prefix": [
+        "uint256_addmod",
+        "addmod"
+      ],
+      "body": "uint256_addmod(${1:a}, ${2:b}, ${3:modulus})",
+      "description": "Compute (a + b) % modulus"
+    },
+    "uint256_mulmod": {
+      "prefix": [
+        "uint256_mulmod",
+        "mulmod"
+      ],
+      "body": "uint256_mulmod(${1:a}, ${2:b}, ${3:modulus})",
+      "description": "Compute (a * b) % modulus"
+    },
+    "unsafe_add": {
+      "prefix": "unsafe_add",
+      "body": "unsafe_add(${1:a}, ${2:b})",
+      "description": "Unchecked addition (no overflow checks)"
+    },
+    "unsafe_sub": {
+      "prefix": "unsafe_sub",
+      "body": "unsafe_sub(${1:a}, ${2:b})",
+      "description": "Unchecked subtraction"
+    },
+    "unsafe_mul": {
+      "prefix": "unsafe_mul",
+      "body": "unsafe_mul(${1:a}, ${2:b})",
+      "description": "Unchecked multiplication"
+    },
+    "unsafe_div": {
+      "prefix": "unsafe_div",
+      "body": "unsafe_div(${1:a}, ${2:b})",
+      "description": "Unchecked division"
+    },
+    "pow_mod256": {
+      "prefix": [
+        "pow_mod256",
+        "mathpow"
+      ],
+      "body": "pow_mod256(${1:base}, ${2:exponent})",
+      "description": "Exponentiation modulo 2**256"
+    },
+    "uint2str": {
+      "prefix": [
+        "uint2str",
+        "to_string"
+      ],
+      "body": "uint2str(${1:value})",
+      "description": "Convert uint256 to string"
+    },
+    "sqrt": {
+      "prefix": [
+        "sqrt",
+        "mathsqrt"
+      ],
+      "body": "sqrt(${1:value})",
+      "description": "Square root (decimal)"
+    },
+    "isqrt": {
+      "prefix": "isqrt",
+      "body": "isqrt(${1:value})",
+      "description": "Integer square root"
+    },
+    "shift": {
+      "prefix": [
+        "shift",
+        "bitshift"
+      ],
+      "body": "shift(${1:value}, ${2:shift_by})",
+      "description": "Bit shift (deprecated in favor of << and >> in newer Vyper)"
+    },
+    "create_minimal_proxy_to (expr)": {
+      "prefix": "create_minimal_proxy_to_expr",
+      "body": "create_minimal_proxy_to(${1:target})",
+      "description": "Create minimal proxy and return address (expression form)"
+    },
+    "create_forwarder_to (expr)": {
+      "prefix": "create_forwarder_to_expr",
+      "body": "create_forwarder_to(${1:target})",
+      "description": "Create forwarder and return address (expression form)"
+    },
+    "create_copy_of (expr)": {
+      "prefix": "create_copy_of_expr",
+      "body": "create_copy_of(${1:target})",
+      "description": "Create copy of target and return address (expression form)"
+    },
+    "create_from_blueprint (expr)": {
+      "prefix": "create_from_blueprint_expr",
+      "body": "create_from_blueprint(${1:blueprint}, ${2:salt})",
+      "description": "Create from blueprint and return address (expression form)"
+    },
+    "min": {
+      "prefix": [
+        "min",
+        "mathmin"
+      ],
+      "body": "min(${1:a}, ${2:b})",
+      "description": "Minimum of two values"
+    },
+    "max": {
+      "prefix": [
+        "max",
+        "mathmax"
+      ],
+      "body": "max(${1:a}, ${2:b})",
+      "description": "Maximum of two values"
+    },
+    "empty": {
+      "prefix": "empty",
+      "body": "empty(${1:value})",
+      "description": "Zero/empty value for given type"
+    },
+    "abs": {
+      "prefix": [
+        "abs",
+        "mathabs"
+      ],
+      "body": "abs(${1:value})",
+      "description": "Absolute value"
+    },
+    "min_value": {
+      "prefix": "min_value",
+      "body": "min_value(${1:Type})",
+      "description": "Minimum representable value for given type"
+    },
+    "max_value": {
+      "prefix": "max_value",
+      "body": "max_value(${1:Type})",
+      "description": "Maximum representable value for given type"
+    },
+    "epsilon": {
+      "prefix": "epsilon",
+      "body": "epsilon(${1:Type})",
+      "description": "Smallest non-zero value for decimal-like types"
+    },
+    "send": {
+      "prefix": "send",
+      "body": "send(${1:recipient}, ${2:amount})",
+      "description": "Send ether to recipient, reverts on failure"
+    },
+    "print": {
+      "prefix": "print",
+      "body": "print(${1:value})",
+      "description": "Debug print (testing / debugging only)"
+    },
+    "breakpoint": {
+      "prefix": "breakpoint",
+      "body": "breakpoint(${1:value})",
+      "description": "Trigger a breakpoint for debugging"
+    },
+    "selfdestruct": {
+      "prefix": "selfdestruct",
+      "body": "selfdestruct(${1:recipient})",
+      "description": "Destroy the contract and send remaining balance to recipient"
+    },
+    "raw_log": {
+      "prefix": "raw_log",
+      "body": "raw_log([${1:topic}], ${2:data})",
+      "description": "Low-level LOG with topics and data"
+    },
+    "raw_revert": {
+      "prefix": "raw_revert",
+      "body": "raw_revert(${1:data})",
+      "description": "Low-level REVERT with return data"
+    },
+    "raw_call": {
+      "prefix": "raw_call",
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize})",
+      "description": "Low-level CALL, capturing success flag and return data"
+    },
+    "raw_delegatecall": {
+      "prefix": [
+        "raw_delegatecall",
+        "delegatecall"
+      ],
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_delegate_call=True)",
+      "description": "Low-level DELEGATECALL, capturing success flag and return data"
+    },
+    "raw_staticcall": {
+      "prefix": [
+        "raw_staticcall",
+        "staticcall"
+      ],
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_static_call=True)",
+      "description": "Low-level STATICCALL, capturing success flag and return data"
+    },
+    "raw_create": {
+      "prefix": "raw_create",
+      "body": "new_contract: address = raw_create(${1:value}, ${2:code})",
+      "description": "Low-level CREATE, storing address of new contract"
+    },
+    "create minimal proxy to": {
+      "prefix": "create_minimal_proxy_to",
+      "body": "proxy: address = create_minimal_proxy_to(${1:target})",
+      "description": "Create minimal proxy (EIP-1167) and store its address"
+    },
+    "create_forwarder_to": {
+      "prefix": "create_forwarder_to",
+      "body": "forwarder: address = create_forwarder_to(${1:target})",
+      "description": "Create forwarder contract and store its address"
+    },
+    "create copy of": {
+      "prefix": "create_copy_of",
+      "body": "copy: address = create_copy_of(${1:target})",
+      "description": "Create copy of target contract and store its address"
+    },
+    "create from blueprint": {
+      "prefix": "create_from_blueprint",
+      "body": "instance: address = create_from_blueprint(${1:blueprint}, ${2:salt})",
+      "description": "Create contract from blueprint and store its address"
+    },
+    "assert not empty address": {
+      "prefix": [
+        "assert_not_empty",
+        "not_empty_addr",
+        "notnull"
+      ],
+      "body": "assert ${1:addr} != empty(address)",
+      "description": "Assert address is not zero address"
+    },
+    "assert address is empty": {
+      "prefix": [
+        "assert_empty",
+        "is_empty_addr",
+        "isnull"
+      ],
+      "body": "assert ${1:addr} == empty(address)",
+      "description": "Assert address is zero address"
+    },
+    "assert greater than zero": {
+      "prefix": [
+        "assert_gt_zero",
+        "gt_zero",
+        "positive"
+      ],
+      "body": "assert ${1:value} > 0",
+      "description": "Assert value is greater than zero"
+    },
+    "assert greater than or equal zero": {
+      "prefix": [
+        "assert_gte_zero",
+        "gte_zero",
+        "non_negative"
+      ],
+      "body": "assert ${1:value} >= 0",
+      "description": "Assert value is non-negative"
+    },
+    "assert not zero": {
+      "prefix": [
+        "assert_not_zero",
+        "not_zero",
+        "nonzero"
+      ],
+      "body": "assert ${1:value} != 0",
+      "description": "Assert value is not zero"
+    },
+    "assert equals zero": {
+      "prefix": [
+        "assert_zero",
+        "is_zero",
+        "zero"
+      ],
+      "body": "assert ${1:value} == 0",
+      "description": "Assert value equals zero"
+    },
+    "assert array bounds": {
+      "prefix": [
+        "assert_bounds",
+        "bounds_check",
+        "in_bounds"
+      ],
+      "body": "assert ${1:index} < len(${2:array})",
+      "description": "Assert index is within array bounds"
+    },
+    "assert sufficient balance": {
+      "prefix": [
+        "assert_balance",
+        "has_balance",
+        "sufficient_balance"
+      ],
+      "body": "assert ${1:account}.balance >= ${2:amount}",
+      "description": "Assert account has sufficient balance"
+    },
+    "assert sender balance": {
+      "prefix": [
+        "assert_sender_balance",
+        "sender_has_balance"
+      ],
+      "body": "assert msg.sender.balance >= ${1:amount}",
+      "description": "Assert msg.sender has sufficient balance"
+    },
+    "assert contract balance": {
+      "prefix": [
+        "assert_self_balance",
+        "contract_balance"
+      ],
+      "body": "assert self.balance >= ${1:amount}",
+      "description": "Assert contract has sufficient balance"
+    },
+    "assert not equal": {
+      "prefix": [
+        "assert_ne",
+        "not_equal"
+      ],
+      "body": "assert ${1:a} != ${2:b}",
+      "description": "Assert two values are not equal"
+    },
+    "assert equal": {
+      "prefix": [
+        "assert_eq",
+        "equal"
+      ],
+      "body": "assert ${1:a} == ${2:b}",
+      "description": "Assert two values are equal"
+    },
+    "assert less than": {
+      "prefix": [
+        "assert_lt",
+        "less_than"
+      ],
+      "body": "assert ${1:a} < ${2:b}",
+      "description": "Assert first value is less than second"
+    },
+    "assert less than or equal": {
+      "prefix": [
+        "assert_lte",
+        "less_equal"
+      ],
+      "body": "assert ${1:a} <= ${2:b}",
+      "description": "Assert first value is less than or equal to second"
+    },
+    "assert greater than": {
+      "prefix": [
+        "assert_gt",
+        "greater_than"
+      ],
+      "body": "assert ${1:a} > ${2:b}",
+      "description": "Assert first value is greater than second"
+    },
+    "assert greater than or equal": {
+      "prefix": [
+        "assert_gte",
+        "greater_equal"
+      ],
+      "body": "assert ${1:a} >= ${2:b}",
+      "description": "Assert first value is greater than or equal to second"
+    },
+    "check flag in flags": {
+      "prefix": [
+        "flag_in",
+        "has_flag",
+        "check_flag"
+      ],
+      "body": "${1:flag} in ${2:flags}",
+      "description": "Check if flag is set in flags (bitflag check)"
+    },
+    "check flag not in flags": {
+      "prefix": [
+        "flag_not_in",
+        "no_flag",
+        "missing_flag"
+      ],
+      "body": "${1:flag} not in ${2:flags}",
+      "description": "Check if flag is not set in flags"
+    },
+    "log event call": {
+      "prefix": "log",
+      "body": "log ${1:name}(${2:variable}, ${3:variable})"
+    },
+    "if statement": {
+      "prefix": "if",
+      "body": "if ${1:condition}: \n\t$2\n"
+    },
+    "if else statement": {
+      "prefix": "ifelse",
+      "body": "if ${1:condition}: \n\t$2\n else: \n\t$0\n"
+    },
+    "for array statement": {
+      "prefix": "forarray",
+      "body": "for ${1:name}: ${2:type} in ${3:array}:\n\t$0\n"
+    },
+    "range(end)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:times}):\n\t$0\n"
+    },
+    "range(start, end)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}):\n\t$0\n"
+    },
+    "range(start, end, bound=)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}, bound=${5:bound}):\n\t$0\n"
+    },
+    "struct declaration": {
+      "prefix": "struct",
+      "body": "struct ${1:name}:\n\t${2:name}: ${3:type}$0\n\t$0\n"
+    },
+    "flag declaration": {
+      "prefix": [
+        "flag",
+        "enum",
+        "enumflag"
+      ],
+      "body": "flag ${1:State}:\n\t${2:OPEN}\n\t${3:CLOSE}$0",
+      "description": "Define a Vyper flag (bitflag-style enum)"
+    },
+    "event declaration": {
+      "prefix": "event",
+      "body": "event ${1:name}:\n\t${2:name}: ${3:type}\n\t${4:name}: ${5:type}"
+    },
+    "interface declaration": {
+      "prefix": "interface",
+      "body": "interface ${1:name}:\n\tdef ${2:name}() -> ${3:type}: nonpayable"
+    },
+    "constructor declaration": {
+      "prefix": [
+        "@deploy",
+        "__init__",
+        "constructor",
+        "init"
+      ],
+      "body": "@deploy\ndef __init__(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "default function declaration": {
+      "prefix": [
+        "fallback",
+        "__default__",
+        "default"
+      ],
+      "body": "@external\ndef __default__(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "function declaration": {
+      "prefix": [
+        "@external",
+        "def",
+        "func"
+      ],
+      "body": "@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "payable function declaration": {
+      "prefix": [
+        "@payable",
+        "payable",
+        "funcpay"
+      ],
+      "body": "@payable\n@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "external nonreentrant function declaration": {
+      "prefix": [
+        "@nonreentrant",
+        "nonreentrant",
+        "funcnonreentrant"
+      ],
+      "body": "@nonreentrant\n@external\ndef ${2:name}(${3:_name}: ${4:type}):\n\t$0\n"
+    },
+    "external view function declaration": {
+      "prefix": [
+        "@view",
+        "view",
+        "funcview"
+      ],
+      "body": "@view\n@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "external pure function declaration": {
+      "prefix": [
+        "@pure",
+        "pure",
+        "funcpure"
+      ],
+      "body": "@pure\n@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "internal function declaration": {
+      "prefix": [
+        "@internal",
+        "internal",
+        "funcint"
+      ],
+      "body": "@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "internal view function declaration": {
+      "prefix": [
+        "@view",
+        "view",
+        "funcintview"
+      ],
+      "body": "@view\n@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "internal pure function declaration": {
+      "prefix": [
+        "@pure",
+        "pure",
+        "funcintpure"
+      ],
+      "body": "@pure\n@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "variable declaration": {
+      "prefix": "vardec",
+      "body": "${1:name}: ${2:type}"
+    },
+    "public variable declaration": {
+      "prefix": "pubvardec",
+      "body": "${1:name}: public(${2:type})"
+    },
+    "constant declaration": {
+      "prefix": "constdec",
+      "body": "${1:NAME}: constant(${2:type}) = ${3:defaultValue}"
+    },
+    "interface implementation impl": {
+      "prefix": "implements",
+      "body": "implements: ${1:interface}"
+    },
+    "natspec sample": {
+      "prefix": "natspec sample",
+      "body": "\"\"\"\n@author github.com/tintinweb\n@notice <Determine if Bugs will accept `food` to eat>\n@dev <Compares the entire string and does not rely on a hash>\n@param <food The name of a food to evaluate (in English)>\n@return <true if Bugs will eat it, false otherwise>\n\"\"\"\n"
+    },
+    "natspec": {
+      "prefix": "natspec",
+      "body": "\"\"\"\n@author ${1:author}\n@notice ${2:notice}\n@dev ${3:dev}\n@param ${4:param}\n@return ${5:return}\n\"\"\"\n\t"
+    },
+    "HashMap type": {
+      "prefix": "HashMap",
+      "body": "HashMap[${1:type}, ${2:type}]"
+    },
+    "DynArray type": {
+      "prefix": "DynArray",
+      "body": "DynArray[${1:type}, ${2:length}]"
+    }
+  }
+}

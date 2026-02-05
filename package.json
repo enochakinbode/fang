@@ -8,10 +8,10 @@
         "vyper",
         "ethereum",
         "blockchain",
-        "compiler",
+        "Language Server",
         "security"
     ],
-    "publisher": "tintinweb",
+    "publisher": "enochlee",
     "icon": "images/icon.png",
     "galleryBanner": {
         "color": "#EDE5D5",
@@ -25,11 +25,11 @@
         "Snippets"
     ],
     "bugs": {
-        "url": "https://github.com/tintinweb/vscode-vyper/issues"
+        "url": "https://github.com/enochakinbode/sentinel/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/tintinweb/vscode-vyper"
+        "url": "https://github.com/enochakinbode/sentinel"
     },
     "main": "./src/extension.js",
     "browser": "./dist/web/extension.js",
@@ -63,73 +63,213 @@
         "snippets": [
             {
                 "language": "vyper",
-                "path": "./snippets/expr_builtins.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/stmt_builtins.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/expressions.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/statements.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/module.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/other.json"
-            },
-            {
-                "language": "vyper",
-                "path": "./snippets/types.json"
+                "path": "./snippets/vyper.json"
             }
         ],
         "configuration": {
             "type": "object",
             "title": "Vyper (Ethereum)",
             "properties": {
-                "vyper.compile.onSave": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Automatically compile when saving and annotate code with compile results."
-                },
-                "vyper.compile.verbose": {
-                    "type": "boolean",
-                    "default": false,
-                    "markdownDescription": "Enable/Suppress Compiler Success/Error Information Popup Messages. Compiler errors will still be decorated in the editor."
-                },
-                "vyper.mode.active": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable/Disable all active components of this extension (emergency)."
-                },
-                "vyper.decoration.enable": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Whether to enable/disable vyper active syntax highlighting for security."
-                },
-                "vyper.hover.enable": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Whether to enable/disable vyper tooltips/hover information."
-                },
-                "vyper.command": {
+                "vyper.lsp.serverCommand": {
                     "type": "string",
-                    "default": "vyper",
-                    "description": "Defines how to invoke the vyper compiler command. This can by any shell command and the vyper arguments will be passed to this command as <vyper.command> <args>. Default is to assume vyper is installed in PATH and executable as `vyper`"
+                    "default": "vyper-lsp",
+                    "description": "Command to start the Vyper language server"
+                },
+                "vyper.lsp.serverArgs": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Arguments to pass to the language server"
+                },
+                "vyper.lsp.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable/disable the language server"
                 }
             }
         },
         "commands": [
             {
-                "command": "vyper.compileContract",
-                "title": "Vyper: Compile"
+                "command": "vyper.restartLspServer",
+                "title": "Restart Vyper LSP Server",
+                "category": "Vyper"
+            }
+        ],
+        "tokenColors": [
+            {
+                "scope": [
+                    "comment.line.number-sign.vyper"
+                ],
+                "settings": {
+                    "foreground": "#6A9955",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": [
+                    "string.quoted.double.vyper",
+                    "string.quoted.single.vyper"
+                ],
+                "settings": {
+                    "foreground": "#CE9178"
+                }
+            },
+            {
+                "scope": [
+                    "constant.character.escape.vyper"
+                ],
+                "settings": {
+                    "foreground": "#D7BA7D"
+                }
+            },
+            {
+                "scope": [
+                    "constant.numeric.decimal.vyper",
+                    "constant.numeric.hex.vyper"
+                ],
+                "settings": {
+                    "foreground": "#B5CEA8"
+                }
+            },
+            {
+                "scope": [
+                    "keyword.control.vyper"
+                ],
+                "settings": {
+                    "foreground": "#fb0b0b",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": [
+                    "keyword.other.vyper"
+                ],
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": [
+                    "support.type.reference.vyper"
+                ],
+                "settings": {
+                    "foreground": "#4EC9B0"
+                }
+            },
+            {
+                "scope": [
+                    "support.type.basetype.vyper"
+                ],
+                "settings": {
+                    "foreground": "#569CD6",
+                    "fontStyle": "italic"
+                }
+            },
+            {
+                "scope": [
+                    "storage.type.modifier.visibility.vyper",
+                    "storage.type.modifier.mutability.vyper",
+                    "storage.type.modifier.security.vyper",
+                    "storage.type.modifier.storage.vyper",
+                    "storage.type.modifier.other.vyper"
+                ],
+                "settings": {
+                    "foreground": "#569CD6"
+                }
+            },
+            {
+                "scope": [
+                    "storage.type.function.vyper"
+                ],
+                "settings": {
+                    "foreground": "#C586C0"
+                }
+            },
+            {
+                "scope": [
+                    "entity.name.function.vyper"
+                ],
+                "settings": {
+                    "foreground": "#DCDCAA"
+                }
+            },
+            {
+                "scope": [
+                    "entity.name.function.constructor.vyper",
+                    "entity.name.function.fallback.vyper"
+                ],
+                "settings": {
+                    "foreground": "#DCDCAA",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": [
+                    "support.function.builtin.vyper"
+                ],
+                "settings": {
+                    "foreground": "#4EC9B0"
+                }
+            },
+            {
+                "scope": [
+                    "support.function.builtin.lowlevel.vyper"
+                ],
+                "settings": {
+                    "foreground": "#CE9178"
+                }
+            },
+            {
+                "scope": [
+                    "variable.language.special.msg.vyper",
+                    "variable.language.special.block.vyper",
+                    "variable.language.special.tx.vyper",
+                    "variable.language.special.chain.vyper",
+                    "variable.language.special.log.vyper",
+                    "variable.language.special.extcall.vyper",
+                    "variable.language.special.staticcall.vyper",
+                    "variable.language.special.self.vyper"
+                ],
+                "settings": {
+                    "foreground": "#9CDCFE"
+                }
+            },
+            {
+                "scope": [
+                    "keyword.operator.arithmetic.vyper",
+                    "keyword.operator.comparison.vyper",
+                    "keyword.operator.logical.vyper",
+                    "keyword.operator.bitwise.vyper",
+                    "keyword.operator.assignment.vyper"
+                ],
+                "settings": {
+                    "foreground": "#D4D4D4"
+                }
+            },
+            {
+                "scope": [
+                    "punctuation.separator.colon.vyper",
+                    "punctuation.separator.comma.vyper",
+                    "punctuation.definition.brackets.begin.vyper",
+                    "punctuation.definition.brackets.end.vyper",
+                    "punctuation.definition.parentheses.begin.vyper",
+                    "punctuation.definition.parentheses.end.vyper",
+                    "punctuation.definition.braces.begin.vyper",
+                    "punctuation.definition.braces.end.vyper",
+                    "punctuation.definition.arguments.begin.vyper",
+                    "punctuation.definition.arguments.end.vyper"
+                ],
+                "settings": {
+                    "foreground": "#D4D4D4"
+                }
+            },
+            {
+                "scope": [
+                    "meta.function.vyper",
+                    "meta.function-call.vyper"
+                ],
+                "settings": {
+                    "foreground": "#D4D4D4"
+                }
             }
         ],
         "x-keybindings": [
@@ -140,7 +280,8 @@
         ]
     },
     "scripts": {
-        "fetchGrammar": "rm -f syntaxes/vyper.tmLanguage.json  && python3 ./scripts/fetch_vyper_language_spec.py > syntaxes/vyper.tmLanguage.json",
+        "combineSnippets": "cat snippets/expr_builtins.json snippets/stmt_builtins.json snippets/expressions.json snippets/statements.json snippets/module.json snippets/other.json snippets/types.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
+        "fetchGrammar": "rm -f syntaxes/vyper.tmLanguage.json && python3 scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
         "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
         "pretest": "npm run compile-web",
         "vscode:prepublish": "npm run package-web",
@@ -152,7 +293,8 @@
     "dependencies": {
         "async": "^3.2.4",
         "chai": "^4.2.0",
-        "shell-escape": "^0.2.0"
+        "shell-escape": "^0.2.0",
+        "vscode-languageclient": "^9.0.0"
     },
     "devDependencies": {
         "@vscode/test-web": "^0.0.52",

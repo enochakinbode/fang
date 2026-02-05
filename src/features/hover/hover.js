@@ -5,8 +5,7 @@
  * 
  * */
 const vscode = require('vscode');
-const settings = require("../../settings");
-const {BUILTINS} = require("./static.builtins");
+const { BUILTINS } = require("./static.builtins");
 
 
 function createHover(name, snippet, type) {
@@ -59,9 +58,6 @@ function createHover(name, snippet, type) {
 }
 
 function provideHoverHandler(document, position, token, type) {
-    if (!settings.extensionConfig().hover.enable) {
-        return;
-    }
     const range = document.getWordRangeAtPosition(position, /(tx\.gasprice|tx\.origin|msg\.data|msg\.sender|msg\.sig|msg\.value|block\.coinbase|block\.difficulty|block\.gaslimit|block\.number|block\.timestamp|abi\.encodePacked|abi\.encodeWithSelector|abi\.encodeWithSignature|abi\.decode|abi\.encode|\.?[0-9_\w>]+)/);
     if (!range || range.length <= 0)
         return;
