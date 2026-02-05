@@ -1,108 +1,189 @@
-[<img height="71" alt="get in touch with Consensys Diligence" src="https://user-images.githubusercontent.com/2865694/56826101-91dcf380-685b-11e9-937c-af49c2510aa0.png">](https://consensys.io/diligence/) &nbsp; and &nbsp; [<img height="48" alt="get in touch with Consensys Diligence" src="https://github.com/tintinweb/vscode-vyper/assets/2865694/e627c8ef-79f5-4efc-acbc-8a70e1105af3">](https://www.chainsecurity.com)<br/>
-<sup>
-[[  🌐  ](https://consensys.io/diligence/)  [  📩  ](mailto:diligence@consensys.net)  [  🔥  ](https://consensys.io/diligence/research)]
-</sup><br/><br/>
-[<img height="30" alt="vscode marketplace" src="https://github.com/user-attachments/assets/030dde14-1745-4f4e-852c-b415db9c2050">](https://marketplace.visualstudio.com/items?itemName=tintinweb.vscode-vyper) [<img height="30" alt="open-vsx" src="https://github.com/user-attachments/assets/975d31ca-5259-4bf0-8c40-b2e25cdd5ccb">](https://open-vsx.org/extension/tintinweb/vscode-vyper) 
+# Fang - Vyper Language Support
 
-# vscode-Vyper    
-   
-![img](./images/icon.png)
+<img src="./images/icon_small_with_border.png" alt="Fang" width="24" height="24" /> **Fang** is a comprehensive VS Code extension for [Vyper](https://www.vyperlang.org/) smart contract development. It combines the best of both worlds by integrating Language Server Protocol (LSP) support with the robust syntax highlighting and code analysis features from the original vscode-vyper extension.
 
-Ethereum [Vyper](https://www.vyperlang.org/) Language Support for [Visual Studio Code](https://code.visualstudio.com/) & [VSCodium](https://vscodium.com/)
+## About
 
+Fang is built by combining:
+- **[vyper-lsp](https://github.com/vyperlang/vyper-lsp)** - Official Vyper Language Server Protocol implementation for advanced IDE features
+- **[vscode-vyper](https://github.com/tintinweb/vscode-vyper)** - Original Vyper extension codebase (forked) providing syntax highlighting, decorations, and hover information
 
-`ext install tintinweb.vscode-vyper`
-
-
-<sup>Vyper syntax also available on [vscode.dev](https://vscode.dev)!</sup> 
+This extension brings together the powerful LSP capabilities for code completion, diagnostics, and navigation with the proven syntax highlighting and security-focused code decorations from the original extension.
 
 ## Features
 
-#### Passive Features
+### Core Features
 
-* Vyper syntax highlighting support
+- **Syntax Highlighting** - Full Vyper syntax support with color-coded keywords, types, and constructs
+- **Language Server Protocol (LSP)** - Advanced IDE features including:
+  - Code completion and IntelliSense
+  - Real-time diagnostics and error reporting
+  - Go to definition and references
+  - Symbol navigation
+  - Hover documentation
 
-#### Active Features
+### Enhanced Features
 
-Note: Active features can be disabled by setting `Settings` → `Vyper` → `Mode: Active` to `false`.
+- **Security-Focused Decorations** - Visual indicators for:
+  - Potentially unsafe operations (low-level calls, selfdestruct, etc.)
+  - Safe modifiers (nonreentrant, view, pure, etc.)
+  - Special functions (constructors, fallbacks)
+  - Block and transaction variables
 
-* Provides Security augmented decorations (`Settings` → `Vyper` → `Decoration: Enable`)
-* Provides Hover information (`Settings` → `Vyper` → `Hover: Enable`)
-* Provides Code snippets for common language constructs
-* Integrates with the vyper compiler
-  * automatically compile contracts on save (`Settings` → `Vyper` → `Compile: On Save`)
-  * compilation can be triggered by executing a vscode command (`cmd + shift + p` → `Vyper: Compile`)
-  * vyper location/command can be customized (default assumes `vyper` is in `PATH`) (`Settings` → `Vyper` → `Command`)
+- **Code Snippets** - Quick templates for:
+  - Constructors (`__init__`)
+  - Fallback functions (`__default__`)
+  - Common patterns and structures
+  - NatSpec documentation
 
-## Requirements
+- **Custom Color Theme** - Optimized color scheme for Vyper development
 
-* It is assumed that vyper is installed and generally available on the system (`pip3 install vyper`). In case vyper is not available in path or called in a virtualenv configure the vyper command in `Settings` → `Vyper` → `Command`
+## Installation
 
-## Tour
+TODO: 
 
-#### Syntax Highlighting
+## Installing vyper-lsp
 
-##### VSCode Light+ (default light)
+Required for LSP features. Install with pip:
 
-<img width="550" alt="theme-light" src="https://user-images.githubusercontent.com/2865694/64434714-76afa980-d0c1-11e9-8836-520a1920435b.png">
+```bash
+pip install vyper-lsp
+```
 
-##### Solidity Visual Auditor - Dark
+**Verify installation:**
+```bash
+vyper-lsp --version
+```
 
-<img width="550" alt="theme-light" src="https://user-images.githubusercontent.com/2865694/54860156-63c53a80-4d16-11e9-9c94-0bdead2346b6.png">
+## Configuration
 
-#### Compiler Errors and Details
+### LSP Settings
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/2865694/54860166-a1c25e80-4d16-11e9-9352-89e380b3b498.png">
+Configure the Language Server in VS Code settings:
 
+```json
+{
+  "vyper.lsp.enabled": true,
+  "vyper.lsp.serverCommand": "vyper-lsp",
+  "vyper.lsp.serverArgs": []
+}
+```
 
-#### Hover information
+## Usage
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/2865694/54860173-b6065b80-4d16-11e9-8dba-84107c6ac726.png">
+### Basic Usage
 
+1. Open a `.vy` or `.vyi` file
+2. Syntax highlighting will activate automatically
+3. LSP features (completion, diagnostics) will work if `vyper-lsp` is installed
 
-#### Security Augmented Decorations - Auditor Mode
+### Commands
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/2865694/54860188-ff56ab00-4d16-11e9-92a7-01e6c2ddcbf1.png">
+- **`vyper.restartLspServer`** - Restart the Vyper Language Server (useful if LSP becomes unresponsive)
 
-#### Snippets
+### Security Decorations
 
-* Quickly create `constructor`, `fallback` function, `methods`, `structs`, ... as you type. Select the snippet from the suggestion box. See [snippets/](./snippets/) for a list of available snippets.
-* start typing ...
+Visual indicators help identify:
+- ⚠️ **Unsafe operations** - Highlighted in red (send, raw_call, selfdestruct, etc.)
+- ✅ **Safe modifiers** - Highlighted in green (nonreentrant, view, pure, etc.)
+- ℹ️ **Block/transaction variables** - Underlined for visibility
+- 🔵 **Special functions** - Bold and underlined (constructors, fallbacks)
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/2865694/54860223-6e340400-4d17-11e9-8b21-49deed0db4db.png">
+## Troubleshooting
 
-* creates a template constructor after selecting it from the suggestion box.
+### LSP Not Working
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/2865694/54860229-75f3a880-4d17-11e9-93fc-e2a02ac60459.png">
+If the Language Server isn't starting:
 
-## Extension Settings
+1. Verify `vyper-lsp` is installed:
+   ```bash
+   pip list | grep vyper-lsp
+   ```
 
-<img width="600" alt="settings" src="https://user-images.githubusercontent.com/2865694/54860098-67a48d00-4d15-11e9-951e-e8422bc3fae5.png">
+2. Check the command is in your PATH:
+   ```bash
+   which vyper-lsp
+   ```
 
-## FAQ
+3. Configure the server command in settings if needed:
+   ```json
+   {
+     "vyper.lsp.serverCommand": "/path/to/vyper-lsp"
+   }
+   ```
 
-* **Q**: I get an error running vyper on my macbook with M1/M2 chipset.
-* **A**: The extension executes the vyper compiler in a `/bin/sh` shell that may not have all the customizations you are using in your day-to-day shell/terminal. As a workaround, I suggest to set the setting:`vyper.command` to `arch -x86_64 vyper`. see #18
+4. Check the Output panel: `View → Output → Log (Extension Host)` for error messages
 
-* **Q**: My project uses Vyper 0.3.x and import some interfaces from other contracts. but the extension does not recognize them and output `FileNotFoundError: Cannot locate interface 'interface/my_interface{.vy,.json}`.
-* **A** The extension compiles your file with the command `vyper`. You should set the setting: `vyper.command` to `vyper -p path/to/your/project/directory` to make the compiler aware of the interfaces in your project.
+5. Try restarting the LSP server: `Cmd+Shift+P` → "Vyper: Restart LSP Server"
 
-* **Q** My multi-module project uses Vyper 0.4.x and while the extension does not report compilation error for any files, when compiling the project with the Vyper cli or some framework such as `ape`, `foundry` or `titanoboa`, it fails with some issue about modules usage/initialization.
-* **A** In 0.4.x, A Vyper modules might be valid when being imported but not a valid standalone contracts to compile into bytecode. Hence the extension stops the compilation at the ``annotated_ast` phase, before the global constraint checker. For more info see https://github.com/vyperlang/vyper/pull/3810.
+### Syntax Highlighting Not Working
 
-## Developer Notes
+- Ensure the file has a `.vy` or `.vyi` extension
+- Reload the window: `Cmd+Shift+P` → "Developer: Reload Window"
 
-* install vyper `pip3 install vyper`
-* use the script in `./scripts/fetch_vyper_language_spec.py` or run `npm run fetchGrammar` to merge the python tmlanguage spec with vyper language specifics.
+## Development
 
-## Release Notes
+### Building from Source
 
-see [CHANGELOG](./CHANGELOG.md)
+```bash
+# Clone the repository
+git clone https://github.com/enochakinbode/fang.git
+cd fang
 
-## Contact / Maintainer
+# Install dependencies
+npm install
 
-- [tintinweb](https://github.com/tintinweb) @ [Consensys Diligence](https://consensys.io/diligence/)
-- [trocher](https://github.com/trocher) @ [ChainSecurity](https://www.chainsecurity.com/)
+# Package the extension
+vsce package
+```
 
+### Project Structure
 
------------------------------------------------------------------------------------------------------------
+```
+fang/
+├── src/
+│   ├── extension.js          # Main extension entry point
+│   ├── extension.web.js      # Web version entry point
+│   ├── features/
+│   │   ├── deco.js           # Code decorations
+│   │   ├── hover/            # Hover information
+│   │   └── lsp.js            # LSP client integration
+│   └── settings.js           # Configuration
+├── syntaxes/                 # TextMate grammar for syntax highlighting
+├── snippets/                 # Code snippets
+├── themes/                   # Color themes
+└── package.json              # Extension manifest
+```
+
+## Credits
+
+Fang is built upon the excellent work of:
+
+- **[vscode-vyper](https://github.com/tintinweb/vscode-vyper)** by [tintinweb](https://github.com/tintinweb) @ [Consensys Diligence](https://consensys.io/diligence/) and [trocher](https://github.com/trocher) @ [ChainSecurity](https://www.chainsecurity.com/) - Original extension providing syntax highlighting, decorations, and hover features
+- **[vyper-lsp](https://github.com/vyperlang/vyper-lsp)** by the Vyper team - Official Language Server Protocol implementation
+
+Special thanks to the original maintainers and contributors of both projects.
+
+## License
+
+MIT License - See [LICENSE](./LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Issues
+
+Found a bug or have a feature request? Please open an issue on [GitHub](https://github.com/enochakinbode/fang/issues).
+
+## Links
+
+- **GitHub Repository**: https://github.com/enochakinbode/fang
+- **Vyper Language**: https://www.vyperlang.org/
+- **Original vscode-vyper**: https://github.com/tintinweb/vscode-vyper
+- **vyper-lsp**: https://github.com/vyperlang/vyper-lsp
+
+---
+
+**Fang** - Sharp tools for Vyper development 🐍
+
