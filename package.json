@@ -1,15 +1,20 @@
 {
-    "name": "sentinel",
-    "displayName": "sentinel",
-    "description": "sentinel provides language support for the Ethereum Vyper smart contract language for Visual Studio Code",
+    "name": "fang",
+    "displayName": "Fang - Vyper Language Support",
+    "description": "Comprehensive language support for Vyper smart contracts. Features syntax highlighting, code decorations, hover documentation, Language Server Protocol (LSP) integration, and code snippets to enhance your Vyper development experience.",
     "license": "MIT",
     "version": "0.1.0",
     "keywords": [
         "vyper",
         "ethereum",
         "blockchain",
-        "Language Server",
-        "security"
+        "smart-contracts",
+        "solidity-alternative",
+        "language-server",
+        "lsp",
+        "syntax-highlighting",
+        "code-completion",
+        "vyperlang"
     ],
     "publisher": "enochakinbode",
     "icon": "images/icon.png",
@@ -24,12 +29,13 @@
         "Programming Languages",
         "Snippets"
     ],
+    "homepage": "https://github.com/enochakinbode/fang#readme",
     "bugs": {
-        "url": "https://github.com/enochakinbode/sentinel/issues"
+        "url": "https://github.com/enochakinbode/fang/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/enochakinbode/sentinel"
+        "url": "https://github.com/enochakinbode/fang.git"
     },
     "main": "./src/extension.js",
     "browser": "./dist/web/extension.js",
@@ -270,12 +276,6 @@
                 "settings": {
                     "foreground": "#D4D4D4"
                 }
-            }
-        ],
-        "x-keybindings": [
-            {
-                "key": "cmd+alt+shift+i",
-                "command": "editor.action.inspectTMScopes"
             }
         ]
     },
