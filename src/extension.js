@@ -11,7 +11,6 @@
 const vscode = require("vscode");
 
 const settings = require("./settings");
-const mod_deco = require("./features/deco.js");
 const mod_hover = require("./features/hover/hover.js");
 const mod_lsp = require("./features/lsp.js");
 /** global vars */
@@ -25,50 +24,6 @@ async function onDidChange(event) {
     if (vscode.window.activeTextEditor.document.languageId != settings.LANGUAGE_ID) {
         return;
     }
-
-    mod_deco.decorateWords(activeEditor, [
-        {
-            regex: "^@\\b(public|nonpayable|payable|external|deploy)\\b",
-            captureGroup: 0,
-        },
-        {
-            regex: "\\b(send|raw_call|selfdestruct|create_forwarder_to|create_minimal_proxy_to|create_copy_of|create_from_blueprint)\\b",
-            captureGroup: 0,
-            hoverMessage: "❗**potentially unsafe** lowlevel call"
-        },
-        {
-            regex: "\\b(extcall|staticcall)\\b",
-            captureGroup: 0,
-        },
-    ], mod_deco.styles.foreGroundWarning);
-    mod_deco.decorateWords(activeEditor, [
-        {
-            regex: "\\b(\\.balance|msg\\.[\\w]+|block\\.[\\w]+)\\b",
-            captureGroup: 0,
-        }
-    ], mod_deco.styles.foreGroundInfoUnderline);
-    mod_deco.decorateWords(activeEditor, [
-        {
-            regex: "^@\\b(nonreentrant|internal|view|pure)\\b",
-            captureGroup: 0,
-        },
-    ], mod_deco.styles.foreGroundOk);
-    mod_deco.decorateWords(activeEditor, [
-        {
-            regex: "\\b(log)\\.",
-            captureGroup: 1,
-        },
-        {
-            regex: "\\b(clear)\\b\\(",
-            captureGroup: 1,
-        },
-    ], mod_deco.styles.foreGroundNewEmit);
-    mod_deco.decorateWords(activeEditor, [
-        {
-            regex: "\\b(__init__|__default__)\\b",
-            captureGroup: 0,
-        },
-    ], mod_deco.styles.boldUnderline);
 }
 function onInitModules(context, type) {
     mod_hover.init(context, type);

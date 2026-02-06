@@ -10,7 +10,6 @@
 /** imports */
 const vscode = require("vscode");
 
-const mod_deco = require("./features/deco.js");
 const settings = require("./settings");
 const mod_hover = require("./features/hover/hover.js");
 /** global vars */
@@ -42,51 +41,6 @@ async function onDidChange(event) {
         return;
     }
 
-    if (settings.extensionConfig().decoration.enable) {
-        mod_deco.decorateWords(activeEditor, [
-            {
-                regex: "^@\\b(public|nonpayable|modifying|payable|external|deploy)\\b",
-                captureGroup: 0,
-            },
-            {
-                regex: "\\b(send|raw_call|selfdestruct|create_forwarder_to|create_minimal_proxy_to|create_copy_of|create_from_blueprint)\\b",
-                captureGroup: 0,
-                hoverMessage: "❗**potentially unsafe** lowlevel call"
-            },
-            {
-                regex: "\\b(extcall|staticcall)\\b",
-                captureGroup: 0,
-            },
-        ], mod_deco.styles.foreGroundWarning);
-        mod_deco.decorateWords(activeEditor, [
-            {
-                regex: "\\b(\\.balance|msg\\.[\\w]+|block\\.[\\w]+)\\b",
-                captureGroup: 0,
-            }
-        ], mod_deco.styles.foreGroundInfoUnderline);
-        mod_deco.decorateWords(activeEditor, [
-            {
-                regex: "^@\\b(private|nonreentrant|constant|internal|view|pure|event)\\b",
-                captureGroup: 0,
-            },
-        ], mod_deco.styles.foreGroundOk);
-        mod_deco.decorateWords(activeEditor, [
-            {
-                regex: "\\b(log)\\.",
-                captureGroup: 1,
-            },
-            {
-                regex: "\\b(clear)\\b\\(",
-                captureGroup: 1,
-            },
-        ], mod_deco.styles.foreGroundNewEmit);
-        mod_deco.decorateWords(activeEditor, [
-            {
-                regex: "\\b(__init__|__default__)\\b",
-                captureGroup: 0,
-            },
-        ], mod_deco.styles.boldUnderline);
-    }
 }
 function onInitModules(context, type) {
     mod_hover.init(context, type);
