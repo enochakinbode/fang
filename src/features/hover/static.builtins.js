@@ -19,16 +19,26 @@ const BUILTINS = {
     "difficulty": {
         "prefix": "block.difficulty",
         "description": "block.difficulty (uint256): current block difficulty",
-        "security": ""
+        "security": "Deprecated in favor of block.prevrandao after The Merge (EIP-4399); prefer using block.prevrandao."
     },
     "prevrandao": {
         "prefix": "block.prevrandao",
         "description": "block.prevrandao (bytes32): current randomness beacon provided by the beacon chain",
-        "security": ""
+        "security": "Alias for the block.difficulty opcode after The Merge; recommended instead of block.difficulty."
     },
     "gaslimit": {
         "prefix": "block.gaslimit",
-        "description": "block.gaslimit (uint256): current block gaslimit",
+        "description": "block.gaslimit (uint256): current block's gas limit",
+        "security": ""
+    },
+    "basefee": {
+        "prefix": "block.basefee",
+        "description": "block.basefee (uint256): current block's base fee",
+        "security": ""
+    },
+    "blobbasefee": {
+        "prefix": "block.blobbasefee",
+        "description": "block.blobbasefee (uint256): current block's blob gas base fee",
         "security": ""
     },
     "number": {
@@ -36,14 +46,24 @@ const BUILTINS = {
         "description": "block.number (uint256): current block number",
         "security": "Can be manipulated by miner"
     },
+    "prevhash": {
+        "prefix": "block.prevhash",
+        "description": "block.prevhash (bytes32): equivalent to blockhash(block.number - 1)",
+        "security": ""
+    },
     "timestamp": {
         "prefix": "block.timestamp",
-        "description": "block.timestamp (uint256): current block timestamp as seconds since unix epoch",
+        "description": "block.timestamp (uint256): current block epoch timestamp (seconds since Unix epoch)",
         "security": ["Do not rely on block.timestamp, now and blockhash as a source of randomness, unless you know what you are doing.", "Both the timestamp and the block hash can be influenced by miners to some degree. Bad actors in the mining community can for example run a casino payout function on a chosen hash and just retry a different hash if they did not receive any money.", "The current block timestamp must be strictly larger than the timestamp of the last block, but the only guarantee is that it will be somewhere between the timestamps of two consecutive blocks in the canonical chain."]
     },
     "gas": {
         "prefix": "msg.gas",
         "description": "msg.gas (uint256): remaining gas",
+    },
+    "mana": {
+        "prefix": "msg.mana",
+        "description": "msg.mana (uint256): remaining gas (alias for msg.gas)",
+        "security": ""
     },
     "msg": {
         "prefix": "msg",
@@ -52,7 +72,7 @@ const BUILTINS = {
     },
     "data": {
         "prefix": "msg.data",
-        "description": "msg.data -> Bytes[]: complete calldata, must be used inside len() or slice()",
+        "description": "msg.data (Bytes): complete calldata, must be used inside len() or slice()",
         "security": ""
     },
     "sender": {
@@ -67,12 +87,12 @@ const BUILTINS = {
     },
     "gasprice": {
         "prefix": "tx.gasprice",
-        "description": "tx.gasprice (uint256): gas price of the transaction",
+        "description": "tx.gasprice (uint256): gas price of the current transaction in wei",
         "security": ""
     },
     "origin": {
         "prefix": "tx.origin",
-        "description": "tx.origin (address payable): sender of the transaction (full call chain)",
+        "description": "tx.origin (address): sender of the transaction (full call chain)",
         "security": "Do not use for authentication"
     },
     "abi_decode": {
@@ -158,26 +178,36 @@ const BUILTINS = {
     },
     "deploy": {
         "prefix": "deploy",
-        "description": "Vyper constructor function decorator.",
+        "description": "Function is called only at deploy time",
         "security": ""
     },
     "external": {
         "prefix": "external",
-        "description": "External functions are part of the contract interface, which means they can be called from other contracts and via transactions. An external function f cannot be called internally.",
-        "security": "make sure to authenticate calls to this method as anyone can access it"
+        "description": "Function can only be called externally, it is part of the runtime selector table",
+        "security": "Make sure to authenticate calls to this method as anyone can access it via external calls."
     },
     "internal": {
         "prefix": "internal",
-        "description": "Those functions and state variables can only be accessed internally (i.e. from within the current contract or contracts initializing/using it)."
+        "description": "Function can only be called within the current contract"
     },
     "pure": {
         "prefix": "pure",
-        "description": "Functions can be declared pure in which case they promise not to read from or modify the state.",
+        "description": "Function does not read contract state or environment variables",
         "security": ["It is not possible to prevent functions from reading the state at the level of the EVM, it is only possible to prevent them from writing to the state (i.e. only view can be enforced at the EVM level, pure can not)."]
     },
     "view": {
         "prefix": "view",
-        "description": "function call cannot write state. It is however allowed to read state.",
+        "description": "Function does not alter contract state"
+    },
+    "payable": {
+        "prefix": "payable",
+        "description": "Function is able to receive Ether",
+        "security": "Ensure correct accounting and access control whenever receiving Ether."
+    },
+    "nonreentrant": {
+        "prefix": "nonreentrant",
+        "description": "Function cannot be called back into during an external call",
+        "security": "Use to guard functions against reentrancy; do not mix with other reentrancy patterns without care."
     },
     "codehash": {
         "prefix": "codehash",
