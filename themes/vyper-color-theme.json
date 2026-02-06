@@ -1,6 +1,6 @@
 {
     "$schema": "vscode://schemas/color-theme",
-    "name": "Vyper",
+    "name": "Fang - Vyper Language Theme",
     "type": "dark",
     "colors": {},
     "tokenColors": [
@@ -44,8 +44,7 @@
                 "keyword.control.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b",
-                "fontStyle": "bold"
+                "foreground": "#569CD6"
             }
         },
         {
@@ -69,7 +68,7 @@
                 "support.type.basetype.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6",
+                "foreground": "#4EC9B0",
                 "fontStyle": "italic"
             }
         },
@@ -77,12 +76,20 @@
             "scope": [
                 "storage.type.modifier.visibility.vyper",
                 "storage.type.modifier.mutability.vyper",
-                "storage.type.modifier.security.vyper",
                 "storage.type.modifier.storage.vyper",
                 "storage.type.modifier.other.vyper"
             ],
             "settings": {
                 "foreground": "#569CD6"
+            }
+        },
+        {
+            "scope": [
+                "storage.type.modifier.security.vyper"
+            ],
+            "settings": {
+                "foreground": "#fb0b0b",
+                "fontStyle": "bold underline"
             }
         },
         {
@@ -108,7 +115,7 @@
             ],
             "settings": {
                 "foreground": "#DCDCAA",
-                "fontStyle": "bold"
+                "fontStyle": "bold underline"
             }
         },
         {
@@ -124,7 +131,7 @@
                 "support.function.builtin.lowlevel.vyper"
             ],
             "settings": {
-                "foreground": "#CE9178"
+                "foreground": "#fb0b0b"
             }
         },
         {
