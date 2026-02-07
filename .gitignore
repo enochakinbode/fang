@@ -95,3 +95,6 @@ dist/**
 
 uv.lock
 pyproject.toml
+
+# Personal todo file
+todo.txt
