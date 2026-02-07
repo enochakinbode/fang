@@ -125,24 +125,16 @@
         "modifiers": {
             "patterns": [
                 {
-                    "name": "storage.type.modifier.visibility.vyper",
-                    "match": "\\b(external|internal|public)\\b"
-                },
-                {
-                    "name": "storage.type.modifier.mutability.vyper",
-                    "match": "\\b(view|pure|nonpayable|payable)\\b"
-                },
-                {
                     "name": "storage.type.modifier.security.vyper",
-                    "match": "\\b(nonreentrant|deploy)\\b"
+                    "match": "(@?)\\b(external|nonreentrant|deploy)\\b"
                 },
                 {
-                    "name": "storage.type.modifier.storage.vyper",
-                    "match": "\\b(immutable|constant)\\b"
+                    "name": "storage.type.modifier.neutral.vyper",
+                    "match": "(@?)\\b(internal|pure)\\b"
                 },
                 {
-                    "name": "storage.type.modifier.other.vyper",
-                    "match": "\\b(indexed|transient)\\b"
+                    "name": "storage.type.modifier.standard.vyper",
+                    "match": "(@?)\\b(view|public|nonpayable|payable|immutable|constant|indexed|transient)\\b"
                 }
             ]
         },
@@ -152,10 +144,10 @@
                     "include": "#function-definition"
                 },
                 {
-                    "include": "#function-call"
+                    "include": "#builtin-functions"
                 },
                 {
-                    "include": "#builtin-functions"
+                    "include": "#function-call"
                 }
             ]
         },

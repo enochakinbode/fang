@@ -74,22 +74,27 @@
         },
         {
             "scope": [
-                "storage.type.modifier.visibility.vyper",
-                "storage.type.modifier.mutability.vyper",
-                "storage.type.modifier.storage.vyper",
-                "storage.type.modifier.other.vyper"
-            ],
-            "settings": {
-                "foreground": "#569CD6"
-            }
-        },
-        {
-            "scope": [
                 "storage.type.modifier.security.vyper"
             ],
             "settings": {
                 "foreground": "#fb0b0b",
                 "fontStyle": "bold underline"
+            }
+        },
+        {
+            "scope": [
+                "storage.type.modifier.neutral.vyper"
+            ],
+            "settings": {
+                "foreground": "#D4D4D4"
+            }
+        },
+        {
+            "scope": [
+                "storage.type.modifier.standard.vyper"
+            ],
+            "settings": {
+                "foreground": "#569CD6"
             }
         },
         {
@@ -136,13 +141,27 @@
         },
         {
             "scope": [
+                "variable.language.special.extcall.vyper",
+                "variable.language.special.staticcall.vyper"
+            ],
+            "settings": {
+                "foreground": "#fb0b0b"
+            }
+        },
+        {
+            "scope": [
+                "variable.language.special.log.vyper"
+            ],
+            "settings": {
+                "foreground": "#569CD6"
+            }
+        },
+        {
+            "scope": [
                 "variable.language.special.msg.vyper",
                 "variable.language.special.block.vyper",
                 "variable.language.special.tx.vyper",
                 "variable.language.special.chain.vyper",
-                "variable.language.special.log.vyper",
-                "variable.language.special.extcall.vyper",
-                "variable.language.special.staticcall.vyper",
                 "variable.language.special.self.vyper"
             ],
             "settings": {

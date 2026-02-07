@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 """
-@author github.com/tintinweb
+@author github.com/enochakinbode
 
 Generate Vyper TextMate grammar entirely from Vyper's language specification
 """
@@ -119,35 +119,32 @@ class VyperGrammarGenerator:
                     ]
                 },
                 "builtin-types": {"patterns": []},
+                # Modifiers: patterns match both standalone modifiers and decorators with @ prefix
+                # Grouped by semantic meaning: security (critical), neutral, standard
                 "modifiers": {
                     "patterns": [
                         {
-                            "name": "storage.type.modifier.visibility.vyper",
-                            "match": "\\b(external|internal|public)\\b",
-                        },
-                        {
-                            "name": "storage.type.modifier.mutability.vyper",
-                            "match": "\\b(view|pure|nonpayable|payable)\\b",
-                        },
-                        {
+                            # Security modifiers: external, nonreentrant, deploy
                             "name": "storage.type.modifier.security.vyper",
-                            "match": "\\b(nonreentrant|deploy)\\b",
+                            "match": "(@?)\\b(external|nonreentrant|deploy)\\b",
                         },
                         {
-                            "name": "storage.type.modifier.storage.vyper",
-                            "match": "\\b(immutable|constant)\\b",
+                            # Neutral modifiers: internal, pure
+                            "name": "storage.type.modifier.neutral.vyper",
+                            "match": "(@?)\\b(internal|pure)\\b",
                         },
                         {
-                            "name": "storage.type.modifier.other.vyper",
-                            "match": "\\b(indexed|transient)\\b",
+                            # Standard modifiers: view, public, nonpayable, payable, immutable, constant, indexed, transient
+                            "name": "storage.type.modifier.standard.vyper",
+                            "match": "(@?)\\b(view|public|nonpayable|payable|immutable|constant|indexed|transient)\\b",
                         },
                     ]
                 },
                 "functions": {
                     "patterns": [
                         {"include": "#function-definition"},
-                        {"include": "#function-call"},
                         {"include": "#builtin-functions"},
+                        {"include": "#function-call"},
                     ]
                 },
                 "function-definition": {
