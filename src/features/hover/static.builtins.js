@@ -95,6 +95,16 @@ const BUILTINS = {
         "description": "tx.origin (address): sender of the transaction (full call chain)",
         "security": "Do not use for authentication"
     },
+    "chainid": {
+        "prefix": "chain.id",
+        "description": "chain.id (uint256): current chain ID (EIP-155)",
+        "security": "Useful for preventing cross-chain replay attacks. Always verify chain ID when dealing with cross-chain operations."
+    },
+    "log": {
+        "prefix": "log",
+        "description": "log: emit an event, used for logging contract events",
+        "security": "Events are not accessible from within contracts. They are only used for external logging and indexing."
+    },
     "extcall": {
         "prefix": "extcall",
         "description": "extcall: call context for external calls that allow state modification",
@@ -223,6 +233,81 @@ const BUILTINS = {
         "prefix": "codehash",
         "description": "",
         "security": "Note that the result of address.codehash will be zero during constructor calls. Therefore it is not fit to use it to check if an address is a contract or not as this can be subverted by calling your contract in a constructor."
+    },
+    "len": {
+        "prefix": "len",
+        "description": "len(b: Bytes | String | DynArray[_Type, _Integer]) -> uint256: return the length of a given Bytes, String or DynArray",
+        "security": ""
+    },
+    "max": {
+        "prefix": "max",
+        "description": "max(a: numeric, b: numeric) -> numeric: return the greater value of a and b. The input values may be any numeric type as long as they are both of the same type",
+        "security": ""
+    },
+    "min": {
+        "prefix": "min",
+        "description": "min(a: numeric, b: numeric) -> numeric: return the lesser value of a and b. The input values may be any numeric type as long as they are both of the same type",
+        "security": ""
+    },
+    "max_value": {
+        "prefix": "max_value",
+        "description": "max_value(type_) -> numeric: returns the maximum value of the numeric type specified by type_ (e.g., int128, uint256, decimal)",
+        "security": ""
+    },
+    "min_value": {
+        "prefix": "min_value",
+        "description": "min_value(type_) -> numeric: returns the minimum value of the numeric type specified by type_ (e.g., int128, uint256, decimal)",
+        "security": ""
+    },
+    "convert": {
+        "prefix": "convert",
+        "description": "convert(value, type_) -> Any: converts a variable or literal from one type to another. Returns a value of the type specified by type_",
+        "security": "Be careful with type conversions as they may truncate or overflow values."
+    },
+    "empty": {
+        "prefix": "empty",
+        "description": "empty(typename) -> Any: return a value which is the default (zero-ed) value of its type. Useful for initializing new memory variables",
+        "security": ""
+    },
+    "blobhash": {
+        "prefix": "blobhash",
+        "description": "blobhash(index: uint256) -> bytes32: return the versioned hash of the index-th BLOB associated with the current transaction (EIP-4844)",
+        "security": ""
+    },
+    "raw_log": {
+        "prefix": "raw_log",
+        "description": "raw_log(topics: bytes32[4], data: Bytes | bytes32) -> None: provides low level access to the LOG opcodes, emitting a log without having to specify an ABI type",
+        "security": ""
+    },
+    "raw_revert": {
+        "prefix": "raw_revert",
+        "description": "raw_revert(data: Bytes) -> None: provides low level access to the REVERT opcode, reverting execution with the specified data returned",
+        "security": ""
+    },
+    "slice": {
+        "prefix": "slice",
+        "description": "slice(b: Bytes | bytes32 | String, start: uint256, length: uint256) -> Bytes | String: copy a list of bytes and return a specified slice. If the value being sliced is a Bytes or bytes32, the return type is Bytes. If it is a String, the return type is String",
+        "security": "Ensure start and length are within bounds to avoid out-of-bounds access."
+    },
+    "unsafe_add": {
+        "prefix": "unsafe_add",
+        "description": "unsafe_add(a: uint256, b: uint256) -> uint256: addition without overflow checks",
+        "security": "Unsafe operation - may overflow. Use only when you are certain overflow cannot occur."
+    },
+    "unsafe_sub": {
+        "prefix": "unsafe_sub",
+        "description": "unsafe_sub(a: uint256, b: uint256) -> uint256: subtraction without underflow checks",
+        "security": "Unsafe operation - may underflow. Use only when you are certain underflow cannot occur."
+    },
+    "unsafe_mul": {
+        "prefix": "unsafe_mul",
+        "description": "unsafe_mul(a: uint256, b: uint256) -> uint256: multiplication without overflow checks",
+        "security": "Unsafe operation - may overflow. Use only when you are certain overflow cannot occur."
+    },
+    "unsafe_div": {
+        "prefix": "unsafe_div",
+        "description": "unsafe_div(a: uint256, b: uint256) -> uint256: division without zero checks",
+        "security": "Unsafe operation - will revert on division by zero. Ensure divisor is non-zero."
     }
 }
 

@@ -58,7 +58,7 @@ function createHover(name, snippet, type) {
 }
 
 function provideHoverHandler(document, position, token, type) {
-    const range = document.getWordRangeAtPosition(position, /(tx\.gasprice|tx\.origin|msg\.data|msg\.sender|msg\.sig|msg\.value|block\.coinbase|block\.difficulty|block\.gaslimit|block\.number|block\.timestamp|abi\.encodePacked|abi\.encodeWithSelector|abi\.encodeWithSignature|abi\.decode|abi\.encode|\.?[0-9_\w>]+)/);
+    const range = document.getWordRangeAtPosition(position, /(chain\.id|tx\.gasprice|tx\.origin|msg\.data|msg\.sender|msg\.gas|msg\.mana|msg\.sig|msg\.value|block\.coinbase|block\.difficulty|block\.prevrandao|block\.gaslimit|block\.basefee|block\.blobbasefee|block\.number|block\.prevhash|block\.timestamp|abi\.encodePacked|abi\.encodeWithSelector|abi\.encodeWithSignature|abi\.decode|abi\.encode|\.?[0-9_\w>]+)/);
     if (!range || range.length <= 0)
         return;
     const word = document.getText(range);
