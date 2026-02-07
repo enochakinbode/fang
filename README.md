@@ -88,8 +88,6 @@ Configure the Language Server in VS Code settings:
 Visual indicators help identify:
 - ⚠️ **Unsafe operations** - Highlighted in red (send, raw_call, selfdestruct, etc.)
 - ✅ **Safe modifiers** - Highlighted in green (nonreentrant, view, pure, etc.)
-- ℹ️ **Block/transaction variables** - Underlined for visibility
-- 🔵 **Special functions** - Bold and underlined (constructors, fallbacks)
 
 ## Development
 

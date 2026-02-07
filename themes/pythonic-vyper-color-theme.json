@@ -78,7 +78,7 @@
             ],
             "settings": {
                 "foreground": "#fb0b0b",
-                "fontStyle": "bold underline"
+                "fontStyle": "bold"
             }
         },
         {
@@ -111,16 +111,6 @@
             ],
             "settings": {
                 "foreground": "#DCDCAA"
-            }
-        },
-        {
-            "scope": [
-                "entity.name.function.constructor.vyper",
-                "entity.name.function.fallback.vyper"
-            ],
-            "settings": {
-                "foreground": "#DCDCAA",
-                "fontStyle": "bold underline"
             }
         },
         {
