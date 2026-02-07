@@ -134,9 +134,15 @@ class VyperGrammarGenerator:
                             "match": "(@?)\\b(internal|pure)\\b",
                         },
                         {
-                            # Standard modifiers: view, public, nonpayable, payable, immutable, constant, indexed, transient
+                            # Modifier-only keywords: public, constant, indexed (not used as decorators)
+                            "name": "storage.type.modifier.keyword.vyper",
+                            "match": "\\b(public|constant|indexed)\\b",
+                        },
+                        {
+                            # Standard modifiers: view, nonpayable, payable, immutable, transient
+                            # Note: public, constant, indexed are in separate scope above
                             "name": "storage.type.modifier.standard.vyper",
-                            "match": "(@?)\\b(view|public|nonpayable|payable|immutable|constant|indexed|transient)\\b",
+                            "match": "@\\b(view|nonpayable|payable|transient)\\b|\\b(view|nonpayable|payable|immutable|transient)\\b",
                         },
                     ]
                 },
@@ -184,19 +190,19 @@ class VyperGrammarGenerator:
                     "patterns": [
                         {
                             "name": "variable.language.special.msg.vyper",
-                            "match": "\\b(msg)\\b",
+                            "match": "\\b(msg)(\\.\\w+)?\\b",
                         },
                         {
                             "name": "variable.language.special.block.vyper",
-                            "match": "\\b(block)\\b",
+                            "match": "\\b(block)(\\.\\w+)?\\b",
                         },
                         {
                             "name": "variable.language.special.tx.vyper",
-                            "match": "\\b(tx)\\b",
+                            "match": "\\b(tx)(\\.\\w+)?\\b",
                         },
                         {
                             "name": "variable.language.special.chain.vyper",
-                            "match": "\\b(chain)\\b",
+                            "match": "\\b(chain)(\\.\\w+)?\\b",
                         },
                         {
                             "name": "variable.language.special.log.vyper",

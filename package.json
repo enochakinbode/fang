@@ -72,13 +72,6 @@
                 "path": "./snippets/vyper.json"
             }
         ],
-        "themes": [
-            {
-                "label": "Fang - Vyper Language Theme",
-                "uiTheme": "vs-dark",
-                "path": "./themes/vyper-color-theme.json"
-            }
-        ],
         "configuration": {
             "type": "object",
             "title": "Vyper (Ethereum)",

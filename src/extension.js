@@ -9,6 +9,8 @@
 
 /** imports */
 const vscode = require("vscode");
+const fs = require("fs");
+const path = require("path");
 
 const settings = require("./settings");
 const mod_hover = require("./features/hover/hover.js");
@@ -25,8 +27,37 @@ async function onDidChange(event) {
         return;
     }
 }
+async function applyTokenColors(context) {
+    try {
+        const themePath = path.join(context.extensionPath, 'themes', 'vyper-spec-theme.json');
+        const themeContent = fs.readFileSync(themePath, 'utf8');
+        const theme = JSON.parse(themeContent);
+
+        if (theme.tokenColors && Array.isArray(theme.tokenColors)) {
+            const config = vscode.workspace.getConfiguration();
+            const currentCustomizations = config.get('editor.tokenColorCustomizations', {});
+
+            // Merge with existing token color customizations
+            const mergedCustomizations = {
+                ...currentCustomizations,
+                textMateRules: [
+                    ...(currentCustomizations.textMateRules || []),
+                    ...theme.tokenColors
+                ]
+            };
+
+            await config.update('editor.tokenColorCustomizations', mergedCustomizations, vscode.ConfigurationTarget.Global);
+        }
+    } catch (error) {
+        console.error('Failed to apply token colors:', error);
+    }
+}
+
 function onInitModules(context, type) {
     mod_hover.init(context, type);
+
+    // Apply token colors from theme file
+    applyTokenColors(context);
 
     // Register restart LSP server command (register before LSP init so it's always available)
     const restartCommand = vscode.commands.registerCommand('vyper.restartLspServer', async () => {

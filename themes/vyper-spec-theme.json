@@ -1,6 +1,6 @@
 {
     "$schema": "vscode://schemas/color-theme",
-    "name": "Fang - Vyper Language Theme",
+    "name": "Vyper Spec Theme",
     "type": "dark",
     "colors": {},
     "tokenColors": [
@@ -9,7 +9,7 @@
                 "comment.line.number-sign.vyper"
             ],
             "settings": {
-                "foreground": "#75715E",
+                "foreground": "#8B949E",
                 "fontStyle": "italic"
             }
         },
@@ -19,7 +19,7 @@
                 "string.quoted.single.vyper"
             ],
             "settings": {
-                "foreground": "#CE9178"
+                "foreground": "#f9e2af"
             }
         },
         {
@@ -27,7 +27,7 @@
                 "constant.character.escape.vyper"
             ],
             "settings": {
-                "foreground": "#D7BA7D"
+                "foreground": "#fab387"
             }
         },
         {
@@ -36,7 +36,15 @@
                 "constant.numeric.hex.vyper"
             ],
             "settings": {
-                "foreground": "#B5CEA8"
+                "foreground": "#48B0FA"
+            }
+        },
+        {
+            "scope": [
+                "constant.language.boolean.vyper"
+            ],
+            "settings": {
+                "foreground": "#a6e3a1"
             }
         },
         {
@@ -44,7 +52,7 @@
                 "keyword.control.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#FF7B72"
             }
         },
         {
@@ -52,7 +60,7 @@
                 "keyword.other.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#FF7B72"
             }
         },
         {
@@ -60,7 +68,7 @@
                 "support.type.reference.vyper"
             ],
             "settings": {
-                "foreground": "#4EC9B0"
+                "foreground": "#47B0FA"
             }
         },
         {
@@ -68,8 +76,7 @@
                 "support.type.basetype.vyper"
             ],
             "settings": {
-                "foreground": "#4EC9B0",
-                "fontStyle": "italic"
+                "foreground": "#47B0FA"
             }
         },
         {
@@ -77,8 +84,7 @@
                 "storage.type.modifier.security.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b",
-                "fontStyle": "bold"
+                "foreground": "#47B0FA"
             }
         },
         {
@@ -86,7 +92,7 @@
                 "storage.type.modifier.neutral.vyper"
             ],
             "settings": {
-                "foreground": "#D4D4D4"
+                "foreground": "#47B0FA"
             }
         },
         {
@@ -94,7 +100,7 @@
                 "storage.type.modifier.keyword.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#FF7B72"
             }
         },
         {
@@ -102,7 +108,7 @@
                 "storage.type.modifier.standard.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#47B0FA"
             }
         },
         {
@@ -110,7 +116,7 @@
                 "storage.type.function.vyper"
             ],
             "settings": {
-                "foreground": "#C586C0"
+                "foreground": "#FF7B72"
             }
         },
         {
@@ -118,7 +124,7 @@
                 "entity.name.function.vyper"
             ],
             "settings": {
-                "foreground": "#DCDCAA"
+                "foreground": "#E5E7EB"
             }
         },
         {
@@ -126,7 +132,7 @@
                 "support.function.builtin.vyper"
             ],
             "settings": {
-                "foreground": "#4EC9B0"
+                "foreground": "#FFD34C"
             }
         },
         {
@@ -134,7 +140,7 @@
                 "support.function.builtin.lowlevel.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b"
+                "foreground": "#f38ba8"
             }
         },
         {
@@ -143,7 +149,7 @@
                 "variable.language.special.staticcall.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b"
+                "foreground": "#f38ba8"
             }
         },
         {
@@ -151,39 +157,80 @@
                 "variable.language.special.log.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#FF7B72"
             }
         },
         {
             "scope": [
                 "variable.language.special.msg.vyper",
-                "variable.language.special.block.vyper",
-                "variable.language.special.tx.vyper",
-                "variable.language.special.chain.vyper",
-                "variable.language.special.self.vyper"
+                "variable.language.special.block.vyper"
             ],
             "settings": {
-                "foreground": "#9CDCFE"
+                "foreground": "#FFA657"
             }
         },
         {
             "scope": [
-                "keyword.operator.arithmetic.vyper",
-                "keyword.operator.comparison.vyper",
-                "keyword.operator.logical.vyper",
-                "keyword.operator.bitwise.vyper",
+                "variable.language.special.tx.vyper",
+                "variable.language.special.chain.vyper"
+            ],
+            "settings": {
+                "foreground": "#47B0FA"
+            }
+        },
+        {
+            "scope": [
+                "variable.language.special.self.vyper"
+            ],
+            "settings": {
+                "foreground": "#79C0FF"
+            }
+        },
+        {
+            "scope": [
+                "keyword.operator.comparison.vyper"
+            ],
+            "settings": {
+                "foreground": "#79C0FF"
+            }
+        },
+        {
+            "scope": [
                 "keyword.operator.assignment.vyper"
             ],
             "settings": {
-                "foreground": "#D4D4D4"
+                "foreground": "#79C0FF"
+            }
+        },
+        {
+            "scope": [
+                "keyword.operator.arithmetic.vyper"
+            ],
+            "settings": {
+                "foreground": "#79C0FF"
+            }
+        },
+        {
+            "scope": [
+                "keyword.operator.logical.vyper",
+                "keyword.operator.bitwise.vyper"
+            ],
+            "settings": {
+                "foreground": "#e5e7e8"
+            }
+        },
+        {
+            "scope": [
+                "storage.type.modifier.decorator.vyper"
+            ],
+            "settings": {
+                "foreground": "#47B0FA"
             }
         },
         {
             "scope": [
                 "punctuation.separator.colon.vyper",
                 "punctuation.separator.comma.vyper",
-                "punctuation.definition.brackets.begin.vyper",
-                "punctuation.definition.brackets.end.vyper",
                 "punctuation.definition.parentheses.begin.vyper",
                 "punctuation.definition.parentheses.end.vyper",
                 "punctuation.definition.braces.begin.vyper",
@@ -192,7 +239,7 @@
                 "punctuation.definition.arguments.end.vyper"
             ],
             "settings": {
-                "foreground": "#D4D4D4"
+                "foreground": "#e5e7e8"
             }
         },
         {
@@ -201,7 +248,23 @@
                 "meta.function-call.vyper"
             ],
             "settings": {
-                "foreground": "#D4D4D4"
+                "foreground": "#e5e7e8"
+            }
+        },
+        {
+            "scope": [
+                "variable.other.vyper"
+            ],
+            "settings": {
+                "foreground": "#e5e7e8"
+            }
+        },
+        {
+            "scope": [
+                "source.vyper"
+            ],
+            "settings": {
+                "foreground": "#E5E7EB"
             }
         }
     ]

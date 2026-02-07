@@ -42,8 +42,38 @@ async function onDidChange(event) {
     }
 
 }
+async function applyTokenColors(context) {
+    try {
+        const themeUri = vscode.Uri.joinPath(context.extensionUri, 'themes', 'vyper-spec-theme.json');
+        const themeBytes = await vscode.workspace.fs.readFile(themeUri);
+        const themeContent = new TextDecoder('utf-8').decode(themeBytes);
+        const theme = JSON.parse(themeContent);
+
+        if (theme.tokenColors && Array.isArray(theme.tokenColors)) {
+            const config = vscode.workspace.getConfiguration();
+            const currentCustomizations = config.get('editor.tokenColorCustomizations', {});
+
+            // Merge with existing token color customizations
+            const mergedCustomizations = {
+                ...currentCustomizations,
+                textMateRules: [
+                    ...(currentCustomizations.textMateRules || []),
+                    ...theme.tokenColors
+                ]
+            };
+
+            await config.update('editor.tokenColorCustomizations', mergedCustomizations, vscode.ConfigurationTarget.Global);
+        }
+    } catch (error) {
+        console.error('Failed to apply token colors:', error);
+    }
+}
+
 function onInitModules(context, type) {
     mod_hover.init(context, type);
+
+    // Apply token colors from theme file
+    applyTokenColors(context);
 
     // Register restart LSP server command (not available in web mode)
     const restartCommand = vscode.commands.registerCommand('vyper.restartLspServer', async () => {
