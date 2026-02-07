@@ -33,7 +33,17 @@ Fang is built by combining:
 
 ## Installation
 
-TODO: 
+### From VS Code Marketplace
+
+1. Open VS Code
+2. Press `Ctrl+P` (or `Cmd+P` on Mac) to open Quick Open
+3. Paste the following command and press Enter:
+   ```
+   ext install enochakinbode.fang
+   ```
+4. Click "Install" when the extension appears
+
+Or search for "Fang - Vyper Language Support" in the Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X`). 
 
 ## Installing vyper-lsp
 
