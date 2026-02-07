@@ -95,6 +95,16 @@ const BUILTINS = {
         "description": "tx.origin (address): sender of the transaction (full call chain)",
         "security": "Do not use for authentication"
     },
+    "extcall": {
+        "prefix": "extcall",
+        "description": "extcall: call context for external calls that allow state modification",
+        "security": "External calls can modify state and introduce reentrancy risks. Use @nonreentrant when appropriate."
+    },
+    "staticcall": {
+        "prefix": "staticcall",
+        "description": "staticcall: call context for read-only external calls that prevent state modification",
+        "security": "Static calls are safer as they prevent state changes, but still validate all inputs and return values."
+    },
     "abi_decode": {
         "prefix": "abi_decode",
         "description": "abi.decode(encoded_data: Bytes[N]) -> (...): ABI-decodes the given data, while the types are given in parentheses as second argument.",
