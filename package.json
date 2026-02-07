@@ -90,6 +90,16 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Enable/disable the language server"
+                },
+                "vyper.customTheme": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Custom theme file name (without .json extension) from the themes folder. Leave empty to use default theme. Example: 'pythonic-vyper-color-theme' will load themes/pythonic-vyper-color-theme.json"
+                },
+                "vyper.customThemeEnabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable custom theme support. When enabled, loads the theme specified in 'vyper.customTheme' setting."
                 }
             }
         },

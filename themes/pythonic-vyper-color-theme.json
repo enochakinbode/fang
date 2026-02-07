@@ -1,8 +1,7 @@
 {
     "$schema": "vscode://schemas/color-theme",
-    "name": "Fang - Vyper Language Theme",
+    "name": "Fang - Pythonic Vyper Theme",
     "type": "dark",
-    "colors": {},
     "tokenColors": [
         {
             "scope": [

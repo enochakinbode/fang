@@ -29,13 +29,43 @@ async function onDidChange(event) {
 }
 async function applyTokenColors(context) {
     try {
-        const themePath = path.join(context.extensionPath, 'themes', 'vyper-spec-theme.json');
-        const themeContent = fs.readFileSync(themePath, 'utf8');
+        const config = vscode.workspace.getConfiguration('vyper');
+        const customThemeEnabled = config.get('customThemeEnabled', false);
+        const customThemeName = config.get('customTheme', '');
+
+        // Determine which theme file to load
+        let themeFileName = 'vyper-color-theme.json'; // default
+        if (customThemeEnabled && customThemeName && customThemeName.trim() !== '') {
+            // Remove .json extension if user included it
+            const cleanThemeName = customThemeName.trim().replace(/\.json$/, '');
+            themeFileName = `${cleanThemeName}.json`;
+        }
+
+        const themePath = path.join(context.extensionPath, 'themes', themeFileName);
+
+        // Check if file exists
+        if (!fs.existsSync(themePath)) {
+            console.warn(`Theme file not found: ${themePath}. Using default theme.`);
+            // Fall back to default if custom theme doesn't exist
+            if (customThemeEnabled && customThemeName) {
+                return; // Don't apply anything if custom theme was requested but not found
+            }
+            // Use default theme
+            const defaultThemePath = path.join(context.extensionPath, 'themes', 'vyper-color-theme.json');
+            if (!fs.existsSync(defaultThemePath)) {
+                console.error('Default theme file not found:', defaultThemePath);
+                return;
+            }
+            themeFileName = 'vyper-color-theme.json';
+        }
+
+        const finalThemePath = path.join(context.extensionPath, 'themes', themeFileName);
+        const themeContent = fs.readFileSync(finalThemePath, 'utf8');
         const theme = JSON.parse(themeContent);
 
         if (theme.tokenColors && Array.isArray(theme.tokenColors)) {
-            const config = vscode.workspace.getConfiguration();
-            const currentCustomizations = config.get('editor.tokenColorCustomizations', {});
+            const editorConfig = vscode.workspace.getConfiguration();
+            const currentCustomizations = editorConfig.get('editor.tokenColorCustomizations', {});
 
             // Merge with existing token color customizations
             const mergedCustomizations = {
@@ -46,7 +76,7 @@ async function applyTokenColors(context) {
                 ]
             };
 
-            await config.update('editor.tokenColorCustomizations', mergedCustomizations, vscode.ConfigurationTarget.Global);
+            await editorConfig.update('editor.tokenColorCustomizations', mergedCustomizations, vscode.ConfigurationTarget.Global);
         }
     } catch (error) {
         console.error('Failed to apply token colors:', error);
