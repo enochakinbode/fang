@@ -48,20 +48,6 @@ pip install vyper-lsp
 vyper-lsp --version
 ```
 
-## Configuration
-
-### LSP Settings
-
-Configure the Language Server in VS Code settings:
-
-```json
-{
-  "vyper.lsp.enabled": true,
-  "vyper.lsp.serverCommand": "vyper-lsp",
-  "vyper.lsp.serverArgs": []
-}
-```
-
 ### Custom Theme Support
 
 Fang supports custom color themes for Vyper syntax highlighting. You can use a custom theme file by configuring:
