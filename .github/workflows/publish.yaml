@@ -1,0 +1,35 @@
+name: Publish Extension
+
+on:
+  release:
+    types: [published] # Triggers only when you click "Publish Release" on GitHub
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: [actions/checkout](https://github.com)@v4
+
+      - name: Install Node.js
+        uses: [actions/setup-node](https://github.com)@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Publish to Marketplace
+        # This uses the secret you just saved in GitHub Settings
+        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
+
+      - name: Package VSIX
+        run: npx @vscode/vsce package
+
+      - name: Upload VSIX to GitHub Release
+        uses: [softprops/action-gh-release](https://github.com)@v2
+        with:
+          files: "*.vsix"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
