@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: [actions/checkout](https://github.com)@v4
+        uses: actions/checkout@v4
 
       - name: Install Node.js
-        uses: [actions/setup-node](https://github.com)@v4
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
@@ -20,16 +20,22 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Publish to Marketplace
-        # This uses the secret you just saved in GitHub Settings
-        run: npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
-
       - name: Package VSIX
         run: npx @vscode/vsce package
 
-      - name: Upload VSIX to GitHub Release
-        uses: [softprops/action-gh-release](https://github.com)@v2
+      - name: Upload VSIX to GitHub Release Assets
+        uses: softprops/action-gh-release@v2
         with:
           files: "*.vsix"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to Marketplace
+        # This uses the secret you just saved in GitHub Settings
+        # --pre-release flag for beta releases
+        run: |
+          if [[ "${{ github.event.release.prerelease }}" == "true" ]]; then
+            npx @vscode/vsce publish --pre-release -p ${{ secrets.VSCE_PAT }}
+          else
+            npx @vscode/vsce publish -p ${{ secrets.VSCE_PAT }}
+          fi
