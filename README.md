@@ -8,15 +8,11 @@ Fang is built by combining:
 - **[vyper-lsp](https://github.com/vyperlang/vyper-lsp)** - Official Vyper Language Server Protocol implementation for advanced IDE features
 - **[vscode-vyper](https://github.com/tintinweb/vscode-vyper)** - Original Vyper extension codebase (forked) providing syntax highlighting, decorations, and hover information
 
-This extension brings together the powerful LSP capabilities for code completion, diagnostics, and navigation with the proven syntax highlighting and security-focused code decorations from the original extension.
 
-**Vyper Version Support:** Fang supports Vyper 0.4.1 and later (as supported by vyper-lsp).
+> **Vyper Version Support:** Fang supports Vyper 0.4.1 and later (as supported by vyper-lsp).
 
 ## Features
 
-### Core Features
-
-- **Syntax Highlighting** - Full Vyper syntax support with color-coded keywords, types, and constructs
 - **Language Server Protocol (LSP)** - Advanced IDE features including:
   - Code completion and IntelliSense
   - Real-time diagnostics and error reporting
@@ -24,13 +20,8 @@ This extension brings together the powerful LSP capabilities for code completion
   - Symbol navigation
   - Hover documentation
 
-### Enhanced Features
+- **Syntax Highlighting** - Full Vyper syntax support with color-coded keywords, types, and constructs. Includes security-focused visual indicators for unsafe operations, modifiers, and special functions. Modifier color scheme: <span style="color: #fb0b0b">@external</span>, <span style="color: #fb0b0b">@deploy</span>, <span style="color: #fb0b0b">@nonreentrant</span>; <span style="color: #47B0FA">@view</span>, <span style="color: #47B0FA">@payable</span>, <span style="color: #E5E7EB">@internal</span>, <span style="color: #E5E7EB">@pure</span>
 
-- **Security-Focused Decorations** - Visual indicators for:
-  - Potentially unsafe operations (low-level calls, selfdestruct, etc.)
-  - Safe modifiers (nonreentrant, view, pure, etc.)
-  - Special functions (constructors, fallbacks)
-  - Block and transaction variables
 
 - **Code Snippets** - Quick templates for:
   - Constructors (`__init__`)
@@ -71,6 +62,25 @@ Configure the Language Server in VS Code settings:
 }
 ```
 
+### Custom Theme Support
+
+Fang supports custom color themes for Vyper syntax highlighting. You can use a custom theme file by configuring:
+
+```json
+{
+  "vyper.customThemeEnabled": true,
+  "vyper.customTheme": "my-custom-theme"
+}
+```
+
+This will load `themes/my-custom-theme.json` from the extension's `themes` folder (the `.json` extension is added automatically). 
+
+To create a custom theme, see the example theme files in the `themes` folder (e.g., `vyper-color-theme.json` or `pythonic-vyper-color-theme.json`) for the expected format.
+
+**Contributing Themes:** If you've created a custom theme that you'd like to share with the community, please open a Pull Request to add it to the extension's `themes` folder. This allows other users to benefit from your theme without needing to modify the extension themselves.
+
+**Note:** If the custom theme file is not found, Fang will fall back to the default theme.
+
 ## Usage
 
 ### Basic Usage
@@ -83,11 +93,6 @@ Configure the Language Server in VS Code settings:
 
 - **`vyper.restartLspServer`** - Restart the Vyper Language Server (useful if LSP becomes unresponsive)
 
-### Security Decorations
-
-Visual indicators help identify:
-- ⚠️ **Unsafe operations** - Highlighted in red (send, raw_call, selfdestruct, etc.)
-- ✅ **Safe modifiers** - Highlighted in green (nonreentrant, view, pure, etc.)
 
 ## Development
 
@@ -121,7 +126,7 @@ MIT License - See [LICENSE](./LICENSE) file for details.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request or open an issue on [GitHub](https://github.com/enochakinbode/fang/issues).
 
 ## Issues
 

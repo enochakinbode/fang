@@ -83,7 +83,7 @@
                 "storage.type.modifier.security.vyper"
             ],
             "settings": {
-                "foreground": "#47B0FA"
+                "foreground": "#fb0b0b"
             }
         },
         {
@@ -91,7 +91,7 @@
                 "storage.type.modifier.neutral.vyper"
             ],
             "settings": {
-                "foreground": "#47B0FA"
+                "foreground": "#E5E7EB"
             }
         },
         {
