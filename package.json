@@ -3,7 +3,7 @@
     "displayName": "Fang - Vyper Language Support",
     "description": "Comprehensive language support for Vyper smart contracts. Features syntax highlighting, code decorations, hover documentation, Language Server Protocol (LSP) integration, and code snippets to enhance your Vyper development experience.",
     "license": "MIT",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "keywords": [
         "vyper",
         "ethereum",
