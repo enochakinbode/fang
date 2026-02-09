@@ -273,42 +273,6 @@
       "body": "assert ${1:addr} == empty(address)",
       "description": "Assert address is zero address"
     },
-    "assert greater than zero": {
-      "prefix": [
-        "assert_gt_zero",
-        "gt_zero",
-        "positive"
-      ],
-      "body": "assert ${1:value} > 0",
-      "description": "Assert value is greater than zero"
-    },
-    "assert greater than or equal zero": {
-      "prefix": [
-        "assert_gte_zero",
-        "gte_zero",
-        "non_negative"
-      ],
-      "body": "assert ${1:value} >= 0",
-      "description": "Assert value is non-negative"
-    },
-    "assert not zero": {
-      "prefix": [
-        "assert_not_zero",
-        "not_zero",
-        "nonzero"
-      ],
-      "body": "assert ${1:value} != 0",
-      "description": "Assert value is not zero"
-    },
-    "assert equals zero": {
-      "prefix": [
-        "assert_zero",
-        "is_zero",
-        "zero"
-      ],
-      "body": "assert ${1:value} == 0",
-      "description": "Assert value equals zero"
-    },
     "assert array bounds": {
       "prefix": [
         "assert_bounds",
@@ -342,72 +306,6 @@
       ],
       "body": "assert self.balance >= ${1:amount}",
       "description": "Assert contract has sufficient balance"
-    },
-    "assert not equal": {
-      "prefix": [
-        "assert_ne",
-        "not_equal"
-      ],
-      "body": "assert ${1:a} != ${2:b}",
-      "description": "Assert two values are not equal"
-    },
-    "assert equal": {
-      "prefix": [
-        "assert_eq",
-        "equal"
-      ],
-      "body": "assert ${1:a} == ${2:b}",
-      "description": "Assert two values are equal"
-    },
-    "assert less than": {
-      "prefix": [
-        "assert_lt",
-        "less_than"
-      ],
-      "body": "assert ${1:a} < ${2:b}",
-      "description": "Assert first value is less than second"
-    },
-    "assert less than or equal": {
-      "prefix": [
-        "assert_lte",
-        "less_equal"
-      ],
-      "body": "assert ${1:a} <= ${2:b}",
-      "description": "Assert first value is less than or equal to second"
-    },
-    "assert greater than": {
-      "prefix": [
-        "assert_gt",
-        "greater_than"
-      ],
-      "body": "assert ${1:a} > ${2:b}",
-      "description": "Assert first value is greater than second"
-    },
-    "assert greater than or equal": {
-      "prefix": [
-        "assert_gte",
-        "greater_equal"
-      ],
-      "body": "assert ${1:a} >= ${2:b}",
-      "description": "Assert first value is greater than or equal to second"
-    },
-    "check flag in flags": {
-      "prefix": [
-        "flag_in",
-        "has_flag",
-        "check_flag"
-      ],
-      "body": "${1:flag} in ${2:flags}",
-      "description": "Check if flag is set in flags (bitflag check)"
-    },
-    "check flag not in flags": {
-      "prefix": [
-        "flag_not_in",
-        "no_flag",
-        "missing_flag"
-      ],
-      "body": "${1:flag} not in ${2:flags}",
-      "description": "Check if flag is not set in flags"
     },
     "struct declaration": {
       "prefix": "struct",
