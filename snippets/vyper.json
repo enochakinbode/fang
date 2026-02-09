@@ -347,9 +347,17 @@
     },
     "function declaration": {
       "prefix": [
-        "@external",
+        "@internal",
         "def",
         "func"
+      ],
+      "body": "def ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
+    },
+    "external function declaration": {
+      "prefix": [
+        "@external",
+        "external",
+        "extfunc"
       ],
       "body": "@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
     },
@@ -369,46 +377,6 @@
       ],
       "body": "@nonreentrant\n@external\ndef ${2:name}(${3:_name}: ${4:type}):\n\t$0\n"
     },
-    "external view function declaration": {
-      "prefix": [
-        "@view",
-        "view",
-        "funcview"
-      ],
-      "body": "@view\n@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
-    },
-    "external pure function declaration": {
-      "prefix": [
-        "@pure",
-        "pure",
-        "funcpure"
-      ],
-      "body": "@pure\n@external\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
-    },
-    "internal function declaration": {
-      "prefix": [
-        "@internal",
-        "internal",
-        "funcint"
-      ],
-      "body": "@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
-    },
-    "internal view function declaration": {
-      "prefix": [
-        "@view",
-        "view",
-        "funcintview"
-      ],
-      "body": "@view\n@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
-    },
-    "internal pure function declaration": {
-      "prefix": [
-        "@pure",
-        "pure",
-        "funcintpure"
-      ],
-      "body": "@pure\n@internal\ndef ${1:name}(${2:_name}: ${3:type}):\n\t$0\n"
-    },
     "variable declaration": {
       "prefix": "vardec",
       "body": "${1:name}: ${2:type}"
@@ -417,9 +385,17 @@
       "prefix": "pubvardec",
       "body": "${1:name}: public(${2:type})"
     },
-    "constant declaration": {
+    "constant variable declaration": {
       "prefix": "constdec",
       "body": "${1:NAME}: constant(${2:type}) = ${3:defaultValue}"
+    },
+    "immutable variable  declaration": {
+      "prefix": "immdec",
+      "body": "${1:name}: immutable(${2:type})"
+    },
+    "transient variable  declaration": {
+      "prefix": "transientdec",
+      "body": "${1:name}: transient(${2:type})"
     },
     "interface implementation impl": {
       "prefix": "implements",

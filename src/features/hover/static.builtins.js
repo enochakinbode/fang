@@ -229,6 +229,11 @@ const BUILTINS = {
         "description": "Function cannot be called back into during an external call",
         "security": "Use to guard functions against reentrancy; do not mix with other reentrancy patterns without care."
     },
+    "reentrant": {
+        "prefix": "reentrant",
+        "description": "Marks a function or code path as reentrant, opting out of nonreentrant-style protections.",
+        "security": "Use only when you explicitly allow reentrancy; carefully review all external calls and state changes."
+    },
     "codehash": {
         "prefix": "codehash",
         "description": "",
