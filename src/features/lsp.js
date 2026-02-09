@@ -2,7 +2,7 @@
 
 const vscode = require('vscode');
 const { LanguageClient, TransportKind } = require('vscode-languageclient/node');
-const settings = require('../settings');
+const settings = require('../settings.js');
 
 let client = null;
 
@@ -25,11 +25,6 @@ function init(context, type) {
             args: serverArgs,
             transport: TransportKind.stdio
         },
-        debug: {
-            command: serverCommand,
-            args: serverArgs,
-            transport: TransportKind.stdio
-        }
     };
 
     // Client options - defines how VS Code communicates with the server
@@ -110,9 +105,6 @@ function init(context, type) {
     // Start the client - start() returns a Promise that resolves when ready
     client.start().then(() => {
         console.log('Vyper Language Server is ready');
-
-        // Register custom request handlers that the CLIENT sends to the server
-        // These are done via client.sendRequest()
     }).catch((error) => {
         console.error('Failed to start language server:', error);
     });
@@ -133,13 +125,21 @@ async function restart(context, type) {
         try {
             console.log('Restarting Vyper Language Server...');
             await client.stop();
-            // Wait a bit before restarting
-            await new Promise(resolve => setTimeout(resolve, 500));
         } catch (error) {
             console.error('Error stopping language server:', error);
+            // If stop fails, we still try to restart below
+        }
+        try {
+            await client.start();
+            console.log('Vyper Language Server restarted');
+            return client;
+        } catch (error) {
+            console.error('Error restarting language server:', error);
+            // Fall through to full re-init as a last resort
+            client = null;
         }
     }
-    // Reinitialize the client
+    // If there was no existing client or restart failed, fully reinitialize
     return init(context, type);
 }
 

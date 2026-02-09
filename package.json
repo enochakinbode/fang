@@ -38,7 +38,6 @@
         "url": "https://github.com/enochakinbode/fang.git"
     },
     "main": "./src/extension.js",
-    "browser": "./dist/web/extension.js",
     "contributes": {
         "languages": [
             {
@@ -112,22 +111,11 @@
         ]
     },
     "scripts": {
-        "combineSnippets": "cat snippets/expr_builtins.json snippets/stmt_builtins.json snippets/expressions.json snippets/statements.json snippets/module.json snippets/other.json snippets/types.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
+        "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && python3 scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
-        "test": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
-        "pretest": "bun run compile-web",
-        "vscode:prepublish": "bun install && bun run package-web",
-        "compile-web": "webpack -c config/web.webpack.config.js",
-        "watch-web": "webpack -c config/web.webpack.config.js --watch",
-        "package-web": "webpack -c config/web.webpack.config.js --mode production --devtool hidden-source-map",
-        "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
+        "vscode:prepublish": "bun install"
     },
     "dependencies": {
         "vscode-languageclient": "^9.0.0"
-    },
-    "devDependencies": {
-        "@vscode/test-web": "^0.0.52",
-        "webpack": "^5.66.0",
-        "webpack-cli": "^4.9.1"
     }
 }
