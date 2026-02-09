@@ -1,6 +1,6 @@
 # Fang - Vyper Language Support
 
-<img src="./images/icon_small_with_border.png" alt="Fang" width="24" height="24" /> **Fang** is a comprehensive VS Code extension for [Vyper](https://www.vyperlang.org/) smart contract development. It combines the best of both worlds by integrating Language Server Protocol (LSP) support with the robust syntax highlighting and code analysis features from the original vscode-vyper extension.
+<img src="https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/icon_small_with_border.png" alt="Fang" width="24" height="24" /> **Fang** is a comprehensive VS Code extension for [Vyper](https://www.vyperlang.org/) smart contract development. It combines the best of both worlds by integrating Language Server Protocol (LSP) support with the robust syntax highlighting and code analysis features from the original vscode-vyper extension.
 
 ## About
 
@@ -19,30 +19,30 @@ Fang is built by combining:
 
 ### Pythonic Vyper Theme
 
-![Fang Pythonic Theme](./images/FANG_DEFAULT_PYTHONIC_THEME.png)
+![Fang Pythonic Theme](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_DEFAULT_PYTHONIC_THEME.png)
 
 ### Vyper Theme
 
-![Fang Vyper Theme](./images/FANG_VYPER_THEME.png)
+![Fang Vyper Theme](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_VYPER_THEME.png)
 
 
 ### Security Decorators (On/Off)
 
 | On | Off |
 |---|---|
-| ![Security Decorators On](./images/FANG_SECURITY_DECORATORS.png) | ![Security Decorators Off](./images/FANG_SECURITY_DECORATORS_OFF.png) |
+| ![Security Decorators On](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SECURITY_DECORATORS.png) | ![Security Decorators Off](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SECURITY_DECORATORS_OFF.png) |
 
 ### Diagnostics
 
-![Fang Diagnostics](./images/FAND_DIAGNOSTICS.png)
+![Fang Diagnostics](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FAND_DIAGNOSTICS.png)
 
 ### Settings
 
-![Fang Settings](./images/FANG_SETTINGS.png)
+![Fang Settings](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SETTINGS.png)
 
 ### Snippets Demo
 
-![Fang Snippets Demo](./images/FANG_SNIPPETS.gif)
+![Fang Snippets Demo](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SNIPPETS.gif)
 
 
 
