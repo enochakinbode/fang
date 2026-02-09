@@ -1,11 +1,9 @@
 'use strict';
-/** 
- * @author github.com/enochakinbode
+
+/** * @author github.com/enochakinbode
  * @license MIT
- * 
  **/
 
-/** imports */
 const vscode = require("vscode");
 const fs = require("fs");
 const path = require("path");
@@ -14,131 +12,164 @@ const settings = require("./settings");
 const mod_hover = require("./features/hover/hover.js");
 const mod_lsp = require("./features/lsp.js");
 
-/** global vars */
-var activeEditor;
-
-async function onDidChange() {
-    if (vscode.window.activeTextEditor.document.languageId != settings.LANGUAGE_ID) {
-        return;
-    }
+/**
+ * Helper to identify Vyper-specific TextMate rules
+ */
+function isVyperRule(rule) {
+    const scopes = Array.isArray(rule.scope) ? rule.scope : [rule.scope];
+    return scopes.some(s => typeof s === 'string' && s.includes('.vyper'));
 }
+
+/**
+ * Applies custom token colors by injecting them into the user's global settings.
+ * Also disables semantic highlighting for Vyper to ensure these colors are visible.
+ */
 async function applyTokenColors(context) {
     try {
         const config = vscode.workspace.getConfiguration('vyper');
         const customThemeName = config.get('customTheme', '');
 
-        // If a custom theme is provided use it, otherwise use the default
-        let themeFileName = 'vyper-color-theme.json';
-        if (customThemeName && customThemeName.trim() !== '') {
-            const cleanThemeName = customThemeName.trim().replace(/\.json$/, '');
-            themeFileName = `${cleanThemeName}.json`;
-        }
+        let themeFileName = (customThemeName && customThemeName.trim() !== '')
+            ? `${customThemeName.trim().replace(/\.json$/, '')}.json`
+            : 'vyper-color-theme.json';
 
-        const themePath = path.join(context.extensionPath, 'themes', themeFileName);
-
+        let themePath = path.join(context.extensionPath, 'themes', themeFileName);
         if (!fs.existsSync(themePath)) {
-            console.warn(`Theme file not found: ${themePath}. Falling back to default.`);
+            console.warn(`[Vyper] Theme file not found: ${themePath}, falling back to default theme.`);
             themeFileName = 'vyper-color-theme.json';
+            themePath = path.join(context.extensionPath, 'themes', themeFileName);
         }
 
-        const finalThemePath = path.join(context.extensionPath, 'themes', themeFileName);
-        if (!fs.existsSync(finalThemePath)) {
-            console.error('Default theme file not found:', finalThemePath);
-            return;
-        }
+        const themeContent = JSON.parse(fs.readFileSync(themePath, 'utf8'));
+        const themeRules = themeContent.tokenColors || [];
 
-        const themeContent = fs.readFileSync(finalThemePath, 'utf8');
-        const theme = JSON.parse(themeContent);
+        const editorConfig = vscode.workspace.getConfiguration();
 
-        if (theme.tokenColors && Array.isArray(theme.tokenColors)) {
-            const editorConfig = vscode.workspace.getConfiguration();
-            const currentCustomizations = editorConfig.get('editor.tokenColorCustomizations', {});
+        const inspect = editorConfig.inspect('editor.tokenColorCustomizations');
+        const target = inspect && inspect.workspaceValue !== undefined
+            ? vscode.ConfigurationTarget.Workspace
+            : vscode.ConfigurationTarget.Global;
 
-            const mergedCustomizations = {
-                ...currentCustomizations,
-                textMateRules: [
-                    ...(currentCustomizations.textMateRules || []),
-                    ...theme.tokenColors
-                ]
-            };
+        const currentCustomizations = inspect
+            ? ((target === vscode.ConfigurationTarget.Workspace ? inspect.workspaceValue : inspect.globalValue) || {})
+            : (editorConfig.get('editor.tokenColorCustomizations', {}) || {});
 
-            await editorConfig.update('editor.tokenColorCustomizations', mergedCustomizations, vscode.ConfigurationTarget.Global);
-        }
+        const existingRules = currentCustomizations.textMateRules || [];
+        const filteredRules = existingRules.filter(rule => !isVyperRule(rule));
+
+        const highlightSecurity = config.get('theme.highlightSecurityDecorators', true);
+
+        // Find base decorator color
+        const decoratorRule = themeRules.find(r =>
+            (Array.isArray(r.scope) ? r.scope.join(' ') : r.scope || '')
+                .includes('storage.type.modifier.decorator.vyper')
+        );
+        const decoratorColor = decoratorRule?.settings?.foreground || '#D4D4D4';
+
+        const finalVyperRules = themeRules.map(rule => {
+            const scopeString = Array.isArray(rule.scope) ? rule.scope.join(' ') : (rule.scope || '');
+            if (scopeString.includes('storage.type.modifier.security.vyper')) {
+                return {
+                    ...rule,
+                    settings: { ...rule.settings, foreground: highlightSecurity ? '#fb0b0b' : decoratorColor }
+                };
+            }
+            return rule;
+        });
+
+        const updatedCustomizations = {
+            ...currentCustomizations,
+            textMateRules: [...filteredRules, ...finalVyperRules]
+        };
+
+        // Apply the update to the detected target (Global or Workspace)
+        await editorConfig.update('editor.tokenColorCustomizations', updatedCustomizations, target);
+
+        // Also force the semantic highlighting off for the same target
+        const vyperLangConfig = vscode.workspace.getConfiguration('[vyper]');
+        await vyperLangConfig.update('editor.semanticHighlighting.enabled', false, target);
+
+        console.log(`[Vyper] Applied ${themeFileName} theme at ${target === vscode.ConfigurationTarget.Workspace ? 'Workspace' : 'Global'} level.`);
     } catch (error) {
-        console.error('Failed to apply token colors:', error);
+        console.error('[Vyper] Failed to apply token colors:', error);
     }
 }
 
-function onInitModules(context, type) {
+/**
+ * Initializes all sub-modules
+ */
+async function onInitModules(context, type) {
     mod_hover.init(context, type);
 
-    // Apply token colors from theme file
-    applyTokenColors(context);
+    // Ensure theme is applied before LSP starts
+    await applyTokenColors(context);
 
-    // Register restart LSP server command (register before LSP init so it's always available)
+    // Register restart command
     const restartCommand = vscode.commands.registerCommand('vyper.restartLspServer', async () => {
         try {
             await mod_lsp.restart(context, type);
-            vscode.window.showInformationMessage('Vyper LSP Server restarted successfully');
-        } catch (error) {
-            vscode.window.showErrorMessage(`Failed to restart Vyper LSP Server: ${error.message}`);
+            vscode.window.showInformationMessage('Vyper LSP Server restarted');
+        } catch (e) {
+            vscode.window.showErrorMessage(`LSP Restart Failed: ${e.message}`);
         }
     });
     context.subscriptions.push(restartCommand);
 
-    // Initialize LSP (after command registration so command is always available even if LSP fails)
-    mod_lsp.init(context, type);
+    // Init LSP (it internally checks if enabled)
+    await mod_lsp.init(context, type);
 }
 
-function onActivate(context) {
+async function activate(context) {
+    const type = settings.LANGUAGE_ID;
 
-    const active = vscode.window.activeTextEditor;
-    activeEditor = active;
+    // Language configuration
+    vscode.languages.setLanguageConfiguration(type, {
+        onEnterRules: [{
+            beforeText: /^\s*(?:struct|flag|event|interface|def|class|for|if|elif|else).*?:\s*$/,
+            action: { indentAction: vscode.IndentAction.Indent }
+        }]
+    });
 
-    registerDocType(settings.LANGUAGE_ID);
+    // Run module initialization
+    await onInitModules(context, type);
 
-    function registerDocType(type) {
-        // taken from: https://github.com/Microsoft/vscode/blob/master/extensions/python/src/pythonMain.ts ; slightly modified
-        // autoindent while typing
-        vscode.languages.setLanguageConfiguration(type, {
-            onEnterRules: [
-                {
-                    beforeText: /^\s*(?:struct|flag|event|interface|def|class|for|if|elif|else).*?:\s*$/,
-                    action: { indentAction: vscode.IndentAction.Indent }
-                }
-            ]
-        });
-
-        // Initialize modules including LSP
-        onInitModules(context, type);
-        onDidChange();
-
-        /***** OnActiveEditor Change */
-        vscode.window.onDidChangeActiveTextEditor(editor => {
-            activeEditor = editor;
-            if (editor) onDidChange();
-
-        }, null, context.subscriptions);
-
-        /***** OnTextDocument Change */
-        vscode.workspace.onDidChangeTextDocument(event => {
-            if (activeEditor && event.document === activeEditor.document) {
-                onDidChange();
+    // Handle Configuration Changes
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(async event => {
+        // 1. Handle LSP toggle
+        if (event.affectsConfiguration('vyper.lsp.enabled')) {
+            const config = vscode.workspace.getConfiguration('vyper');
+            if (config.get('lsp.enabled')) {
+                await mod_lsp.init(context, type);
+            } else {
+                await mod_lsp.stop();
             }
+        }
 
-        }, null, context.subscriptions);
+        // 2. Handle Theme/Decorator changes
+        if (
+            event.affectsConfiguration('vyper.customTheme') ||
+            event.affectsConfiguration('vyper.theme.highlightSecurityDecorators') ||
+            event.affectsConfiguration('vyper')
+        ) {
+            await applyTokenColors(context);
+        }
+    }));
+}
 
+/**
+ * Cleanup on deactivation
+ */
+async function deactivate() {
+    await mod_lsp.stop();
+
+    // Cleanup the injected theme settings to leave the user's config clean
+    const editorConfig = vscode.workspace.getConfiguration();
+    const current = editorConfig.get('editor.tokenColorCustomizations', {});
+    if (current.textMateRules) {
+        const cleaned = current.textMateRules.filter(rule => !isVyperRule(rule));
+        await editorConfig.update('editor.tokenColorCustomizations', { ...current, textMateRules: cleaned }, vscode.ConfigurationTarget.Global);
     }
 }
 
-// Add deactivate function to properly stop the LSP client
-function onDeactivate() {
-    const client = mod_lsp.getClient();
-    if (client) {
-        return client.stop();
-    }
-}
-
-/* exports */
-exports.activate = onActivate;
-exports.deactivate = onDeactivate;
+exports.activate = activate;
+exports.deactivate = deactivate;
