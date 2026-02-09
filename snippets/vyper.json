@@ -255,82 +255,6 @@
       "body": "epsilon(${1:Type})",
       "description": "Smallest non-zero value for decimal-like types"
     },
-    "send": {
-      "prefix": "send",
-      "body": "send(${1:recipient}, ${2:amount})",
-      "description": "Send ether to recipient, reverts on failure"
-    },
-    "print": {
-      "prefix": "print",
-      "body": "print(${1:value})",
-      "description": "Debug print (testing / debugging only)"
-    },
-    "breakpoint": {
-      "prefix": "breakpoint",
-      "body": "breakpoint(${1:value})",
-      "description": "Trigger a breakpoint for debugging"
-    },
-    "selfdestruct": {
-      "prefix": "selfdestruct",
-      "body": "selfdestruct(${1:recipient})",
-      "description": "Destroy the contract and send remaining balance to recipient"
-    },
-    "raw_log": {
-      "prefix": "raw_log",
-      "body": "raw_log([${1:topic}], ${2:data})",
-      "description": "Low-level LOG with topics and data"
-    },
-    "raw_revert": {
-      "prefix": "raw_revert",
-      "body": "raw_revert(${1:data})",
-      "description": "Low-level REVERT with return data"
-    },
-    "raw_call": {
-      "prefix": "raw_call",
-      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize})",
-      "description": "Low-level CALL, capturing success flag and return data"
-    },
-    "raw_delegatecall": {
-      "prefix": [
-        "raw_delegatecall",
-        "delegatecall"
-      ],
-      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_delegate_call=True)",
-      "description": "Low-level DELEGATECALL, capturing success flag and return data"
-    },
-    "raw_staticcall": {
-      "prefix": [
-        "raw_staticcall",
-        "staticcall"
-      ],
-      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_static_call=True)",
-      "description": "Low-level STATICCALL, capturing success flag and return data"
-    },
-    "raw_create": {
-      "prefix": "raw_create",
-      "body": "new_contract: address = raw_create(${1:value}, ${2:code})",
-      "description": "Low-level CREATE, storing address of new contract"
-    },
-    "create minimal proxy to": {
-      "prefix": "create_minimal_proxy_to",
-      "body": "proxy: address = create_minimal_proxy_to(${1:target})",
-      "description": "Create minimal proxy (EIP-1167) and store its address"
-    },
-    "create_forwarder_to": {
-      "prefix": "create_forwarder_to",
-      "body": "forwarder: address = create_forwarder_to(${1:target})",
-      "description": "Create forwarder contract and store its address"
-    },
-    "create copy of": {
-      "prefix": "create_copy_of",
-      "body": "copy: address = create_copy_of(${1:target})",
-      "description": "Create copy of target contract and store its address"
-    },
-    "create from blueprint": {
-      "prefix": "create_from_blueprint",
-      "body": "instance: address = create_from_blueprint(${1:blueprint}, ${2:salt})",
-      "description": "Create contract from blueprint and store its address"
-    },
     "assert not empty address": {
       "prefix": [
         "assert_not_empty",
@@ -485,34 +409,6 @@
       "body": "${1:flag} not in ${2:flags}",
       "description": "Check if flag is not set in flags"
     },
-    "log event call": {
-      "prefix": "log",
-      "body": "log ${1:name}(${2:variable}, ${3:variable})"
-    },
-    "if statement": {
-      "prefix": "if",
-      "body": "if ${1:condition}: \n\t$2\n"
-    },
-    "if else statement": {
-      "prefix": "ifelse",
-      "body": "if ${1:condition}: \n\t$2\n else: \n\t$0\n"
-    },
-    "for array statement": {
-      "prefix": "forarray",
-      "body": "for ${1:name}: ${2:type} in ${3:array}:\n\t$0\n"
-    },
-    "range(end)": {
-      "prefix": "for range",
-      "body": "for ${1:name}: ${2:type} in range(${3:times}):\n\t$0\n"
-    },
-    "range(start, end)": {
-      "prefix": "for range",
-      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}):\n\t$0\n"
-    },
-    "range(start, end, bound=)": {
-      "prefix": "for range",
-      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}, bound=${5:bound}):\n\t$0\n"
-    },
     "struct declaration": {
       "prefix": "struct",
       "body": "struct ${1:name}:\n\t${2:name}: ${3:type}$0\n\t$0\n"
@@ -638,6 +534,110 @@
     "natspec": {
       "prefix": "natspec",
       "body": "\"\"\"\n@author ${1:author}\n@notice ${2:notice}\n@dev ${3:dev}\n@param ${4:param}\n@return ${5:return}\n\"\"\"\n\t"
+    },
+    "log event call": {
+      "prefix": "log",
+      "body": "log ${1:name}(${2:variable}, ${3:variable})"
+    },
+    "if statement": {
+      "prefix": "if",
+      "body": "if ${1:condition}: \n\t$2\n"
+    },
+    "if else statement": {
+      "prefix": "ifelse",
+      "body": "if ${1:condition}: \n\t$2\n else: \n\t$0\n"
+    },
+    "for array statement": {
+      "prefix": "forarray",
+      "body": "for ${1:name}: ${2:type} in ${3:array}:\n\t$0\n"
+    },
+    "range(end)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:times}):\n\t$0\n"
+    },
+    "range(start, end)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}):\n\t$0\n"
+    },
+    "range(start, end, bound=)": {
+      "prefix": "for range",
+      "body": "for ${1:name}: ${2:type} in range(${3:start}, ${4:end}, bound=${5:bound}):\n\t$0\n"
+    },
+    "send": {
+      "prefix": "send",
+      "body": "send(${1:recipient}, ${2:amount})",
+      "description": "Send ether to recipient, reverts on failure"
+    },
+    "print": {
+      "prefix": "print",
+      "body": "print(${1:value})",
+      "description": "Debug print (testing / debugging only)"
+    },
+    "breakpoint": {
+      "prefix": "breakpoint",
+      "body": "breakpoint(${1:value})",
+      "description": "Trigger a breakpoint for debugging"
+    },
+    "selfdestruct": {
+      "prefix": "selfdestruct",
+      "body": "selfdestruct(${1:recipient})",
+      "description": "Destroy the contract and send remaining balance to recipient"
+    },
+    "raw_log": {
+      "prefix": "raw_log",
+      "body": "raw_log([${1:topic}], ${2:data})",
+      "description": "Low-level LOG with topics and data"
+    },
+    "raw_revert": {
+      "prefix": "raw_revert",
+      "body": "raw_revert(${1:data})",
+      "description": "Low-level REVERT with return data"
+    },
+    "raw_call": {
+      "prefix": "raw_call",
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize})",
+      "description": "Low-level CALL, capturing success flag and return data"
+    },
+    "raw_delegatecall": {
+      "prefix": [
+        "raw_delegatecall",
+        "delegatecall"
+      ],
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_delegate_call=True)",
+      "description": "Low-level DELEGATECALL, capturing success flag and return data"
+    },
+    "raw_staticcall": {
+      "prefix": [
+        "raw_staticcall",
+        "staticcall"
+      ],
+      "body": "(success, return_data): (bool, Bytes[${3:max_outsize}]) = raw_call(${1:target}, ${2:data}, max_outsize=${3:max_outsize}, is_static_call=True)",
+      "description": "Low-level STATICCALL, capturing success flag and return data"
+    },
+    "raw_create": {
+      "prefix": "raw_create",
+      "body": "new_contract: address = raw_create(${1:value}, ${2:code})",
+      "description": "Low-level CREATE, storing address of new contract"
+    },
+    "create minimal proxy to": {
+      "prefix": "create_minimal_proxy_to",
+      "body": "proxy: address = create_minimal_proxy_to(${1:target})",
+      "description": "Create minimal proxy (EIP-1167) and store its address"
+    },
+    "create_forwarder_to": {
+      "prefix": "create_forwarder_to",
+      "body": "forwarder: address = create_forwarder_to(${1:target})",
+      "description": "Create forwarder contract and store its address"
+    },
+    "create copy of": {
+      "prefix": "create_copy_of",
+      "body": "copy: address = create_copy_of(${1:target})",
+      "description": "Create copy of target contract and store its address"
+    },
+    "create from blueprint": {
+      "prefix": "create_from_blueprint",
+      "body": "instance: address = create_from_blueprint(${1:blueprint}, ${2:salt})",
+      "description": "Create contract from blueprint and store its address"
     },
     "HashMap type": {
       "prefix": "HashMap",
