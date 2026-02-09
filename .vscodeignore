@@ -45,6 +45,10 @@ uv.lock
 # Documentation
 *.md
 !README.md
+!CHANGELOG.md
+
+# Keep preview/media assets used in README
+!images/**
 
 # Git
 .git/

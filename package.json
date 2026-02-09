@@ -3,7 +3,7 @@
     "displayName": "Fang - Vyper Language Support",
     "description": "Comprehensive language support for Vyper smart contracts. Features syntax highlighting, code decorations, hover documentation, Language Server Protocol (LSP) integration, and code snippets to enhance your Vyper development experience.",
     "license": "MIT",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "keywords": [
         "vyper",
         "ethereum",
@@ -19,7 +19,7 @@
     "publisher": "enochakinbode",
     "icon": "images/icon.png",
     "galleryBanner": {
-        "color": "#EDE5D5",
+        "color": "#130E14",
         "theme": "light"
     },
     "engines": {
@@ -80,11 +80,6 @@
                     "default": "vyper-lsp",
                     "description": "Command to start the Vyper language server"
                 },
-                "vyper.lsp.serverArgs": {
-                    "type": "array",
-                    "default": [],
-                    "description": "Arguments to pass to the language server"
-                },
                 "vyper.lsp.enabled": {
                     "type": "boolean",
                     "default": true,
@@ -92,13 +87,21 @@
                 },
                 "vyper.customTheme": {
                     "type": "string",
-                    "default": "",
-                    "description": "Custom theme file name (without .json extension) from the themes folder. Leave empty to use default theme. Example: 'pythonic-vyper-color-theme' will load themes/pythonic-vyper-color-theme.json"
+                    "enum": [
+                        "vyper-color-theme",
+                        "pythonic-vyper-color-theme"
+                    ],
+                    "enumDescriptions": [
+                        "Default Vyper color theme",
+                        "Pythonic-inspired Vyper color theme"
+                    ],
+                    "default": "pythonic-vyper-color-theme",
+                    "description": "Select a custom theme for Vyper syntax highlighting"
                 },
-                "vyper.customThemeEnabled": {
+                "vyper.theme.highlightSecurityDecorators": {
                     "type": "boolean",
-                    "default": false,
-                    "description": "Enable custom theme support. When enabled, loads the theme specified in 'vyper.customTheme' setting."
+                    "default": true,
+                    "description": "Highlight security decorators (@reentrant, @external, @deploy, @payable) in red to draw attention"
                 }
             }
         },
@@ -112,7 +115,7 @@
     },
     "scripts": {
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
-        "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && python3 scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
+        "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
         "vscode:prepublish": "bun install"
     },
     "dependencies": {

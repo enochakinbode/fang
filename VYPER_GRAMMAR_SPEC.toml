@@ -1,0 +1,135 @@
+####################################
+## Vyper TextMate syntax spec (TOML)
+## Used to generate: syntaxes/vyper.tmLanguage.json
+##
+## Goals:
+## - Stick to standard TextMate scope conventions
+## - Keep categories small, predictable, and Vyper‑accurate
+####################################
+
+[language]
+name = "Vyper"
+scope_name = "source.vyper"
+
+
+####################################
+## Top‑level repository entries
+####################################
+
+[top_level]
+patterns = [
+    "comments",
+    "strings",
+    "numbers",
+    "keywords",
+    "types",
+    "modifiers",
+    "functions",
+    "operators",
+]
+
+
+####################################
+## Keywords
+####################################
+
+[keywords]
+
+    [keywords.control]
+    tokens = [
+        "if",
+        "elif",
+        "else",
+        "for",
+        "while",
+        "break",
+        "continue",
+        "pass",
+        "return",
+        "import",
+        "range",
+    ]
+
+    [keywords.exceptions]
+    tokens = ["assert", "raise", "log"]
+
+    [keywords.environment]
+    tokens = ["msg", "block", "tx", "chain"]
+
+        [keywords.environment.self]
+        tokens = ["self"]
+
+
+####################################
+## Types
+####################################
+
+[types]
+# Builtin type list is pulled from the Vyper compiler at generation time.
+source = "vyper"
+
+    [types.declaration]
+
+    [types.builtin]
+
+    [types.reference]
+
+
+####################################
+## Modifiers / decorators
+####################################
+
+[modifiers]
+
+    [modifiers.decorator]
+    tokens = [
+        "external",
+        "@internal",
+        "@deploy",
+        "@view",
+        "@pure",
+        "@payable",
+        "@reentrant",
+        "@nonreentrant",
+    ]
+
+    [modifiers.keyword]
+    tokens = [
+        "public",
+        "constant",
+        "transient",
+        "immutable",
+        "reentrant",
+        "indexed",
+    ]
+
+    [modifiers.security]
+    tokens = [
+        "@reentrant",
+        "@external",
+        "@deploy",
+        "@payable",
+    ]
+
+
+####################################
+## Functions
+####################################
+
+[functions]
+# Builtin function lists are sourced from the Vyper compiler at generation time.
+
+    [functions.definition]
+
+    [functions.builtin]
+
+    [functions.builtin_lowlevel]
+
+
+####################################
+## Operators
+####################################
+
+[operators]
+
+    [operators.all]

@@ -1,7 +1,4 @@
 {
-    "$schema": "vscode://schemas/color-theme",
-    "name": "Fang - Vyper Theme",
-    "type": "dark",
     "tokenColors": [
         {
             "scope": [
@@ -35,15 +32,7 @@
                 "constant.numeric.hex.vyper"
             ],
             "settings": {
-                "foreground": "#48B0FA"
-            }
-        },
-        {
-            "scope": [
-                "constant.language.boolean.vyper"
-            ],
-            "settings": {
-                "foreground": "#a6e3a1"
+                "foreground": "#E5E7EB"
             }
         },
         {
@@ -56,10 +45,18 @@
         },
         {
             "scope": [
-                "keyword.other.vyper"
+                "keyword.environment.vyper"
             ],
             "settings": {
-                "foreground": "#FF7B72"
+                "foreground": "#FFA657"
+            }
+        },
+        {
+            "scope": [
+                "keyword.environment.self.vyper"
+            ],
+            "settings": {
+                "foreground": "#79C0FF"
             }
         },
         {
@@ -88,10 +85,10 @@
         },
         {
             "scope": [
-                "storage.type.modifier.neutral.vyper"
+                "storage.type.modifier.decorator.vyper"
             ],
             "settings": {
-                "foreground": "#E5E7EB"
+                "foreground": "#F9E2AF"
             }
         },
         {
@@ -104,10 +101,10 @@
         },
         {
             "scope": [
-                "storage.type.modifier.standard.vyper"
+                "storage.type.definition.vyper"
             ],
             "settings": {
-                "foreground": "#47B0FA"
+                "foreground": "#FF7B72"
             }
         },
         {
@@ -116,14 +113,6 @@
             ],
             "settings": {
                 "foreground": "#FF7B72"
-            }
-        },
-        {
-            "scope": [
-                "entity.name.function.vyper"
-            ],
-            "settings": {
-                "foreground": "#E5E7EB"
             }
         },
         {
@@ -139,123 +128,15 @@
                 "support.function.builtin.lowlevel.vyper"
             ],
             "settings": {
-                "foreground": "#f38ba8"
+                "foreground": "#fb0b0b"
             }
         },
         {
             "scope": [
-                "variable.language.special.extcall.vyper",
-                "variable.language.special.staticcall.vyper"
-            ],
-            "settings": {
-                "foreground": "#f38ba8"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.log.vyper"
-            ],
-            "settings": {
-                "foreground": "#FF7B72"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.msg.vyper",
-                "variable.language.special.block.vyper"
-            ],
-            "settings": {
-                "foreground": "#FFA657"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.tx.vyper",
-                "variable.language.special.chain.vyper"
-            ],
-            "settings": {
-                "foreground": "#47B0FA"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.self.vyper"
+                "keyword.operator.vyper"
             ],
             "settings": {
                 "foreground": "#79C0FF"
-            }
-        },
-        {
-            "scope": [
-                "keyword.operator.comparison.vyper"
-            ],
-            "settings": {
-                "foreground": "#79C0FF"
-            }
-        },
-        {
-            "scope": [
-                "keyword.operator.assignment.vyper"
-            ],
-            "settings": {
-                "foreground": "#79C0FF"
-            }
-        },
-        {
-            "scope": [
-                "keyword.operator.arithmetic.vyper"
-            ],
-            "settings": {
-                "foreground": "#79C0FF"
-            }
-        },
-        {
-            "scope": [
-                "keyword.operator.logical.vyper",
-                "keyword.operator.bitwise.vyper"
-            ],
-            "settings": {
-                "foreground": "#e5e7e8"
-            }
-        },
-        {
-            "scope": [
-                "storage.type.modifier.decorator.vyper"
-            ],
-            "settings": {
-                "foreground": "#47B0FA"
-            }
-        },
-        {
-            "scope": [
-                "punctuation.separator.colon.vyper",
-                "punctuation.separator.comma.vyper",
-                "punctuation.definition.parentheses.begin.vyper",
-                "punctuation.definition.parentheses.end.vyper",
-                "punctuation.definition.braces.begin.vyper",
-                "punctuation.definition.braces.end.vyper",
-                "punctuation.definition.arguments.begin.vyper",
-                "punctuation.definition.arguments.end.vyper"
-            ],
-            "settings": {
-                "foreground": "#e5e7e8"
-            }
-        },
-        {
-            "scope": [
-                "meta.function.vyper",
-                "meta.function-call.vyper"
-            ],
-            "settings": {
-                "foreground": "#e5e7e8"
-            }
-        },
-        {
-            "scope": [
-                "variable.other.vyper"
-            ],
-            "settings": {
-                "foreground": "#e5e7e8"
             }
         },
         {
