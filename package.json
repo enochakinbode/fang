@@ -92,7 +92,7 @@
                 },
                 "vyper.customTheme": {
                     "type": "string",
-                    "default": "pythonic-vyper-color-theme",
+                    "default": "vyper-color-theme",
                     "description": "Custom theme file name (without .json extension) from the themes folder. Leave empty to use default theme. Example: 'pythonic-vyper-color-theme' will load themes/pythonic-vyper-color-theme.json"
                 }
             }
