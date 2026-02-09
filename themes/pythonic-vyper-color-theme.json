@@ -1,7 +1,4 @@
 {
-    "$schema": "vscode://schemas/color-theme",
-    "name": "Fang - Pythonic Vyper Theme",
-    "type": "dark",
     "tokenColors": [
         {
             "scope": [
@@ -18,7 +15,7 @@
                 "string.quoted.single.vyper"
             ],
             "settings": {
-                "foreground": "#CE9178"
+                "foreground": "#E394DC"
             }
         },
         {
@@ -48,10 +45,18 @@
         },
         {
             "scope": [
-                "keyword.other.vyper"
+                "keyword.environment.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#87C3FF"
+            }
+        },
+        {
+            "scope": [
+                "keyword.environment.self.vyper"
+            ],
+            "settings": {
+                "foreground": "#87C3FF"
             }
         },
         {
@@ -76,16 +81,15 @@
                 "storage.type.modifier.security.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b",
-                "fontStyle": "bold"
+                "foreground": "#fb0b0b"
             }
         },
         {
             "scope": [
-                "storage.type.modifier.neutral.vyper"
+                "storage.type.modifier.decorator.vyper"
             ],
             "settings": {
-                "foreground": "#D4D4D4"
+                "foreground": "#4EC9B0"
             }
         },
         {
@@ -93,12 +97,12 @@
                 "storage.type.modifier.keyword.vyper"
             ],
             "settings": {
-                "foreground": "#569CD6"
+                "foreground": "#4EC9B0"
             }
         },
         {
             "scope": [
-                "storage.type.modifier.standard.vyper"
+                "storage.type.definition.vyper"
             ],
             "settings": {
                 "foreground": "#569CD6"
@@ -109,15 +113,7 @@
                 "storage.type.function.vyper"
             ],
             "settings": {
-                "foreground": "#C586C0"
-            }
-        },
-        {
-            "scope": [
-                "entity.name.function.vyper"
-            ],
-            "settings": {
-                "foreground": "#DCDCAA"
+                "foreground": "#82D2CE"
             }
         },
         {
@@ -138,66 +134,7 @@
         },
         {
             "scope": [
-                "variable.language.special.extcall.vyper",
-                "variable.language.special.staticcall.vyper"
-            ],
-            "settings": {
-                "foreground": "#fb0b0b"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.log.vyper"
-            ],
-            "settings": {
-                "foreground": "#569CD6"
-            }
-        },
-        {
-            "scope": [
-                "variable.language.special.msg.vyper",
-                "variable.language.special.block.vyper",
-                "variable.language.special.tx.vyper",
-                "variable.language.special.chain.vyper",
-                "variable.language.special.self.vyper"
-            ],
-            "settings": {
-                "foreground": "#9CDCFE"
-            }
-        },
-        {
-            "scope": [
-                "keyword.operator.arithmetic.vyper",
-                "keyword.operator.comparison.vyper",
-                "keyword.operator.logical.vyper",
-                "keyword.operator.bitwise.vyper",
-                "keyword.operator.assignment.vyper"
-            ],
-            "settings": {
-                "foreground": "#D4D4D4"
-            }
-        },
-        {
-            "scope": [
-                "punctuation.separator.colon.vyper",
-                "punctuation.separator.comma.vyper",
-                "punctuation.definition.brackets.begin.vyper",
-                "punctuation.definition.brackets.end.vyper",
-                "punctuation.definition.parentheses.begin.vyper",
-                "punctuation.definition.parentheses.end.vyper",
-                "punctuation.definition.braces.begin.vyper",
-                "punctuation.definition.braces.end.vyper",
-                "punctuation.definition.arguments.begin.vyper",
-                "punctuation.definition.arguments.end.vyper"
-            ],
-            "settings": {
-                "foreground": "#D4D4D4"
-            }
-        },
-        {
-            "scope": [
-                "meta.function.vyper",
-                "meta.function-call.vyper"
+                "keyword.operator.vyper"
             ],
             "settings": {
                 "foreground": "#D4D4D4"
