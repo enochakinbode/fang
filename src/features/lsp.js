@@ -25,6 +25,11 @@ function init(context, type) {
             args: serverArgs,
             transport: TransportKind.stdio
         },
+        debug: {
+            command: serverCommand,
+            args: serverArgs,
+            transport: TransportKind.stdio
+        }
     };
 
     // Client options - defines how VS Code communicates with the server
