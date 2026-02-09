@@ -25,36 +25,28 @@ async function onDidChange() {
 async function applyTokenColors(context) {
     try {
         const config = vscode.workspace.getConfiguration('vyper');
-        const customThemeEnabled = config.get('customThemeEnabled', false);
         const customThemeName = config.get('customTheme', '');
 
-        // Determine which theme file to load
-        let themeFileName = 'vyper-color-theme.json'; // default
-        if (customThemeEnabled && customThemeName && customThemeName.trim() !== '') {
-            // Remove .json extension if user included it
+        // If a custom theme is provided use it, otherwise use the default
+        let themeFileName = 'vyper-color-theme.json';
+        if (customThemeName && customThemeName.trim() !== '') {
             const cleanThemeName = customThemeName.trim().replace(/\.json$/, '');
             themeFileName = `${cleanThemeName}.json`;
         }
 
         const themePath = path.join(context.extensionPath, 'themes', themeFileName);
 
-        // Check if file exists
         if (!fs.existsSync(themePath)) {
-            console.warn(`Theme file not found: ${themePath}. Using default theme.`);
-            // Fall back to default if custom theme doesn't exist
-            if (customThemeEnabled && customThemeName) {
-                return; // Don't apply anything if custom theme was requested but not found
-            }
-            // Use default theme
-            const defaultThemePath = path.join(context.extensionPath, 'themes', 'vyper-color-theme.json');
-            if (!fs.existsSync(defaultThemePath)) {
-                console.error('Default theme file not found:', defaultThemePath);
-                return;
-            }
+            console.warn(`Theme file not found: ${themePath}. Falling back to default.`);
             themeFileName = 'vyper-color-theme.json';
         }
 
         const finalThemePath = path.join(context.extensionPath, 'themes', themeFileName);
+        if (!fs.existsSync(finalThemePath)) {
+            console.error('Default theme file not found:', finalThemePath);
+            return;
+        }
+
         const themeContent = fs.readFileSync(finalThemePath, 'utf8');
         const theme = JSON.parse(themeContent);
 
@@ -62,7 +54,6 @@ async function applyTokenColors(context) {
             const editorConfig = vscode.workspace.getConfiguration();
             const currentCustomizations = editorConfig.get('editor.tokenColorCustomizations', {});
 
-            // Merge with existing token color customizations
             const mergedCustomizations = {
                 ...currentCustomizations,
                 textMateRules: [

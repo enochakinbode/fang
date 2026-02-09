@@ -92,13 +92,8 @@
                 },
                 "vyper.customTheme": {
                     "type": "string",
-                    "default": "",
+                    "default": "pythonic-vyper-color-theme",
                     "description": "Custom theme file name (without .json extension) from the themes folder. Leave empty to use default theme. Example: 'pythonic-vyper-color-theme' will load themes/pythonic-vyper-color-theme.json"
-                },
-                "vyper.customThemeEnabled": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Enable custom theme support. When enabled, loads the theme specified in 'vyper.customTheme' setting."
                 }
             }
         },
@@ -112,7 +107,7 @@
     },
     "scripts": {
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
-        "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && python3 scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
+        "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
         "vscode:prepublish": "bun install"
     },
     "dependencies": {
