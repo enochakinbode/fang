@@ -245,7 +245,6 @@ const BUILTINS = {
             "initializes: <module_alias> declares a module storage location and requires calling that module's __init__() if it exists.",
             "A module __init__() must not be invoked more than once; doing so is a compile-time error."
         ],
-        "example": "import ownable\n\ninitializes: ownable\n\n@deploy\ndef __init__():\n    ownable.__init__()",
         "security": "Initialize dependencies exactly once before relying on module state.",
         "reference": "https://docs.vyperlang.org/en/stable/using-modules.html#initializing-a-module"
     },
@@ -255,14 +254,12 @@ const BUILTINS = {
             "uses: <module_alias> grants access to another module's state without requiring initialization in the current module.",
             "Common for libraries that defer initialization to downstream contracts."
         ],
-        "example": "import ownable\n\nuses: ownable\n\n@external\ndef begin_transfer(new_owner: address):\n    ownable._check_owner()",
         "security": "If your contract must be deployable, ensure required modules are initialized somewhere in the dependency tree.",
         "reference": "https://docs.vyperlang.org/en/stable/using-modules.html#the-uses-statement"
     },
     "implements": {
         "prefix": "implements",
         "description": "implements: <InterfaceName> declares that the contract conforms to an interface.",
-        "example": "from ethereum.ercs import IERC20\n\nimplements: IERC20",
         "security": "Ensure all interface methods and expected behavior are correctly implemented.",
         "reference": "https://docs.vyperlang.org/en/stable/interfaces.html"
     },
