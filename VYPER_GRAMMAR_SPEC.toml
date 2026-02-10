@@ -41,13 +41,16 @@ patterns = [
         "elif",
         "else",
         "for",
-        "while",
         "break",
         "continue",
         "pass",
         "return",
         "import",
         "range",
+        "exports",
+        "initializes",
+        "implements",
+        "uses",
     ]
 
     [keywords.exceptions]
@@ -83,14 +86,16 @@ source = "vyper"
 
     [modifiers.decorator]
     tokens = [
-        "external",
+        "@external",
         "@internal",
         "@deploy",
         "@view",
         "@pure",
+        "@nonpayable",
         "@payable",
         "@reentrant",
         "@nonreentrant",
+        "@raw_return",
     ]
 
     [modifiers.keyword]
@@ -101,6 +106,10 @@ source = "vyper"
         "immutable",
         "reentrant",
         "indexed",
+        "view",
+        "pure",
+        "nonpayable",
+        "payable",
     ]
 
     [modifiers.security]

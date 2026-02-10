@@ -399,7 +399,18 @@
     },
     "interface implementation impl": {
       "prefix": "implements",
-      "body": "implements: ${1:interface}"
+      "body": "implements: ${1:InterfaceName}",
+      "description": "Declare contract conformance to an interface"
+    },
+    "module initializes statement": {
+      "prefix": "initializes",
+      "body": "initializes: ${1:module_alias}",
+      "description": "Declare a module dependency that must be initialized"
+    },
+    "module uses statement": {
+      "prefix": "uses",
+      "body": "uses: ${1:module_alias}",
+      "description": "Use another module's state without initializing it here"
     },
     "natspec sample": {
       "prefix": "natspec sample",

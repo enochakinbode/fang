@@ -33,19 +33,19 @@ def _make_keyword_pattern(tokens: list[str]) -> str:
 
     Tokens starting with '@' are handled separately because \\b (word
     boundary) does not work before non-word characters like '@'.
-    For those we emit  @\\b(name)\\b  which matches the boundary between
-    '@' (non-word) and the identifier (word).
+    For those we emit (?<!\\w)(@name1|@name2)\\b so each token carries
+    its own '@' and still matches as a standalone decorator.
     """
     if not tokens:
         return ""
 
-    at_tokens = [t[1:].replace("|", "\\|") for t in tokens if t.startswith("@")]
+    at_tokens = [f"@{t[1:].replace('|', '\\|')}" for t in tokens if t.startswith("@")]
     regular_tokens = [t.replace("|", "\\|") for t in tokens if not t.startswith("@")]
 
     parts: list[str] = []
     if at_tokens:
         inner = "|".join(at_tokens)
-        parts.append(rf"@\b({inner})\b")
+        parts.append(rf"(?<!\w)({inner})\b")
     if regular_tokens:
         inner = "|".join(regular_tokens)
         parts.append(rf"\b({inner})\b")
