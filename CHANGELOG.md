@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.3] - 2026-02-10
+
+### Highlights
+
+- Updated icon image to fix contrast issues for better visibility.
+
 ## [0.1.2] - 2026-02-10
 
 ### Highlights
