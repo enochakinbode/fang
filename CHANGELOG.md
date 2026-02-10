@@ -2,6 +2,22 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.2] - 2026-02-10
+
+### Highlights
+
+- Release bump to `0.1.2` with refreshed extension branding/icon.
+- Improved grammar and snippet coverage for newer Vyper module/decorator keywords.
+- Cleaner README onboarding with stronger Marketplace/LSP install guidance and badges.
+- Hover docs were simplified to reduce clutter from overly verbose examples.
+
+### Syntax and Snippets
+
+- Enhanced grammar/token handling for recently added Vyper keywords and decorators.
+- Updated snippet packs to reflect the new keyword/decorator coverage and module patterns.
+- Kept grammar generation aligned with `VYPER_GRAMMAR_SPEC.toml` and generator updates.
+
+
 ## [0.1.1] - 2026-02-09
 
 ### Highlights
