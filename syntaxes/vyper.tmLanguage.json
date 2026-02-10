@@ -81,7 +81,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.vyper",
-                    "match": "\\b(if|elif|else|for|while|break|continue|pass|return|import|range|assert|raise|log)\\b"
+                    "match": "\\b(if|elif|else|for|break|continue|pass|return|import|range|exports|initializes|implements|uses|assert|raise|log)\\b"
                 },
                 {
                     "name": "keyword.environment.vyper",
@@ -134,15 +134,15 @@
             "patterns": [
                 {
                     "name": "storage.type.modifier.security.vyper",
-                    "match": "@\\b(reentrant|external|deploy|payable)\\b"
+                    "match": "(?<!\\w)(@reentrant|@external|@deploy|@payable)\\b"
                 },
                 {
                     "name": "storage.type.modifier.decorator.vyper",
-                    "match": "@\\b(internal|deploy|view|pure|payable|reentrant|nonreentrant)\\b|\\b(external)\\b"
+                    "match": "(?<!\\w)(@external|@internal|@deploy|@view|@pure|@nonpayable|@payable|@reentrant|@nonreentrant|@raw_return)\\b"
                 },
                 {
                     "name": "storage.type.modifier.keyword.vyper",
-                    "match": "\\b(public|constant|transient|immutable|reentrant|indexed)\\b"
+                    "match": "\\b(public|constant|transient|immutable|reentrant|indexed|view|pure|nonpayable|payable)\\b"
                 }
             ]
         },

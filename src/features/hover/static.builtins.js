@@ -219,20 +219,55 @@ const BUILTINS = {
         "prefix": "view",
         "description": "Function does not alter contract state"
     },
+    "nonpayable": {
+        "prefix": "nonpayable",
+        "description": "Function may read/write contract state but cannot receive Ether (default mutability).",
+        "security": "Do not assume msg.value is available; use @payable when Ether must be accepted."
+    },
     "payable": {
         "prefix": "payable",
         "description": "Function is able to receive Ether",
         "security": "Ensure correct accounting and access control whenever receiving Ether."
+    },
+    "reentrant": {
+        "prefix": "reentrant",
+        "description": "Marks a function or code path as reentrant, opting out of nonreentrant-style protections.",
+        "security": "Use only when you explicitly allow reentrancy; carefully review all external calls and state changes."
     },
     "nonreentrant": {
         "prefix": "nonreentrant",
         "description": "Function cannot be called back into during an external call",
         "security": "Use to guard functions against reentrancy; do not mix with other reentrancy patterns without care."
     },
-    "reentrant": {
-        "prefix": "reentrant",
-        "description": "Marks a function or code path as reentrant, opting out of nonreentrant-style protections.",
-        "security": "Use only when you explicitly allow reentrancy; carefully review all external calls and state changes."
+    "initializes": {
+        "prefix": "initializes",
+        "description": [
+            "initializes: <module_alias> declares a module storage location and requires calling that module's __init__() if it exists.",
+            "A module __init__() must not be invoked more than once; doing so is a compile-time error."
+        ],
+        "security": "Initialize dependencies exactly once before relying on module state.",
+        "reference": "https://docs.vyperlang.org/en/stable/using-modules.html#initializing-a-module"
+    },
+    "uses": {
+        "prefix": "uses",
+        "description": [
+            "uses: <module_alias> grants access to another module's state without requiring initialization in the current module.",
+            "Common for libraries that defer initialization to downstream contracts."
+        ],
+        "security": "If your contract must be deployable, ensure required modules are initialized somewhere in the dependency tree.",
+        "reference": "https://docs.vyperlang.org/en/stable/using-modules.html#the-uses-statement"
+    },
+    "implements": {
+        "prefix": "implements",
+        "description": "implements: <InterfaceName> declares that the contract conforms to an interface.",
+        "security": "Ensure all interface methods and expected behavior are correctly implemented.",
+        "reference": "https://docs.vyperlang.org/en/stable/interfaces.html"
+    },
+    "raw_return": {
+        "prefix": "raw_return",
+        "description": "Decorator for external functions that returns raw Bytes[N] without ABI-encoding.",
+        "security": "Use carefully in proxy/helper flows; callers must handle raw bytes return data correctly.",
+        "reference": "https://docs.vyperlang.org/en/stable/control-structures.html#raw-return"
     },
     "codehash": {
         "prefix": "codehash",
