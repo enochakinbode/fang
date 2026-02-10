@@ -88,12 +88,12 @@
                 "vyper.customTheme": {
                     "type": "string",
                     "enum": [
-                        "vyper-color-theme",
-                        "pythonic-vyper-color-theme"
+                        "pythonic-vyper-color-theme",
+                        "vyper-color-theme"
                     ],
                     "enumDescriptions": [
                         "Default Vyper color theme",
-                        "Pythonic-inspired Vyper color theme"
+                        "Fang Vyper color theme"
                     ],
                     "default": "pythonic-vyper-color-theme",
                     "description": "Select a custom theme for Vyper syntax highlighting"

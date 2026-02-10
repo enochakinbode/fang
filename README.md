@@ -1,5 +1,9 @@
 # Fang - Vyper Language Support
 
+[![Vyper LSP](https://img.shields.io/badge/Vyper--LSP-supported-6E56CF?logo=language-server-protocol&logoColor=white)](https://github.com/vyperlang/vyper-lsp)
+[![Vyper](https://img.shields.io/badge/Vyper-%3E%3D0.4.1%2C%3C0.5.0-3C8C3E?logo=ethereum&logoColor=white)](https://www.vyperlang.org/)
+[![Actions Status](https://github.com/enochakinbode/fang/actions/workflows/publish.yaml/badge.svg?branch=pilot)](https://github.com/enochakinbode/fang/actions/workflows/publish.yaml)
+
 <img src="https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/icon_small_with_border.png" alt="Fang" width="24" height="24" /> **Fang** is a comprehensive VS Code extension for [Vyper](https://www.vyperlang.org/) smart contract development. It combines the best of both worlds by integrating Language Server Protocol (LSP) support with the robust syntax highlighting and code analysis features from the original vscode-vyper extension.
 
 ## About
@@ -10,10 +14,23 @@ Fang is built by combining:
 
 ## Installation
 
-### From VS Code Marketplace
+```
+ext install enochakinbode.fang
+```
 
-- Quick Open (`Ctrl/Cmd+P`): `ext install enochakinbode.fang`
-- Or open Extensions (`Ctrl/Cmd+Shift+X`) and search for `Fang`
+Marketplace: https://marketplace.visualstudio.com/items?itemName=enochakinbode.fang
+
+### Install `vyper-lsp` (required for LSP features)
+
+```bash
+pip install vyper-lsp
+```
+
+Verify:
+
+```bash
+vyper-lsp --version
+```
 
 ## Preview
 
@@ -36,33 +53,18 @@ Fang is built by combining:
 
 ![Fang Diagnostics](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FAND_DIAGNOSTICS.png)
 
-### Settings
-
-![Fang Settings](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SETTINGS.png)
-
 ### Snippets Demo
 
 ![Fang Snippets Demo](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SNIPPETS.gif)
 
+### Settings
+
+![Fang Settings](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_SETTINGS.png)
 
 
 
-> **Vyper Version Support:** Fang supports Vyper 0.4.1 and later (as supported by vyper-lsp).
 
-
-
-### Install `vyper-lsp` (required for LSP features)
-
-Required for LSP features. Install with pip:
-
-```bash
-pip install vyper-lsp
-```
-
-**Verify installation:**
-```bash
-vyper-lsp --version
-```
+> **Vyper Version Support:** Fang supports `vyper>=0.4.1,<0.5.0` (as supported by `vyper-lsp`).
 
 ## Usage
 
