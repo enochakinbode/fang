@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.1.4] - 2026-03-02
+
+### Highlights
+
+- Fixed VS Code Marketplace gallery banner contrast by treating Fang as a dark-themed banner so text renders light on the dark background in both light and dark modes.
+
 ## [0.1.3] - 2026-02-10
 
 ### Highlights
