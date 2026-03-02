@@ -20,7 +20,7 @@
     "icon": "images/icon.png",
     "galleryBanner": {
         "color": "#130E14",
-        "theme": "light"
+        "theme": "dark"
     },
     "engines": {
         "vscode": "^1.87.0"
