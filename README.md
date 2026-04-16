@@ -79,9 +79,16 @@ Leave `vyper.lsp.serverCommand` empty to use Fang's managed language server.
 
 Set `vyper.lsp.serverCommand` only if you want Fang to run your own `vyper-lsp` environment instead.
 
+### Removing Fang's Managed Server
+
+Fang removes its managed `vyper-lsp` environment during extension uninstall when VS Code runs the uninstall hook.
+
+To clear it without uninstalling Fang, run **Vyper: Clear Managed Vyper LSP Server** from the Command Palette.
+
 ### Commands
 
 - **`vyper.restartLspServer`** - Restart the Vyper Language Server (useful if LSP becomes unresponsive)
+- **`vyper.clearManagedLspServer`** - Remove Fang's managed language server environment so it can be prepared again
 
 
 ## Development

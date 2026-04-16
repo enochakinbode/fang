@@ -292,6 +292,11 @@ function createManagedVyperLsp(deps = {}) {
         return installLocks.get(lockKey);
     }
 
+    async function removeManagedServer(options = {}) {
+        const globalStoragePath = options.globalStoragePath ?? options.context.globalStorageUri.fsPath;
+        await fsp.rm(getManagedRootPath(globalStoragePath), { recursive: true, force: true });
+    }
+
     async function resolveServerCommand(options = {}) {
         const configuredCommand = (options.serverCommand ?? '').trim();
         if (configuredCommand.length > 0) {
@@ -316,10 +321,12 @@ function createManagedVyperLsp(deps = {}) {
         getManagedEnvPath,
         getManagedExecutablePath,
         getManagedPythonPath,
+        getManagedRootPath,
         getMetadataPath,
         inspectEnvironment,
         isSupportedPythonVersion,
         parsePythonInfo,
+        removeManagedServer,
         resolveServerCommand
     };
 }

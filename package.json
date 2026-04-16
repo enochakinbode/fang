@@ -110,6 +110,11 @@
                 "command": "vyper.restartLspServer",
                 "title": "Restart Vyper LSP Server",
                 "category": "Vyper"
+            },
+            {
+                "command": "vyper.clearManagedLspServer",
+                "title": "Clear Managed Vyper LSP Server",
+                "category": "Vyper"
             }
         ]
     },
@@ -117,6 +122,7 @@
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
         "test": "node --test test/*.test.js",
+        "vscode:uninstall": "node ./src/lifecycle/uninstall.js",
         "vscode:prepublish": "bun install"
     },
     "dependencies": {

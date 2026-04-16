@@ -245,3 +245,16 @@ test('resolves executable paths for desktop platforms', () => {
     assert.equal(manager.getManagedExecutablePath('/tmp/fang-env', 'linux'), '/tmp/fang-env/bin/vyper-lsp');
     assert.equal(manager.getManagedExecutablePath('C:\\fang-env', 'win32'), 'C:\\fang-env\\Scripts\\vyper-lsp.exe');
 });
+
+test('removes the managed server directory on request', async () => {
+    const globalStoragePath = makeTempDir();
+    const manager = createManagedVyperLsp();
+    const managedRoot = manager.getManagedRootPath(globalStoragePath);
+
+    fs.mkdirSync(path.join(managedRoot, 'nested'), { recursive: true });
+    fs.writeFileSync(path.join(managedRoot, 'nested', 'file.txt'), '');
+
+    await manager.removeManagedServer({ globalStoragePath });
+
+    assert.equal(fs.existsSync(managedRoot), false);
+});
