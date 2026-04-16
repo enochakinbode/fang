@@ -2,6 +2,8 @@
 .venv/
 venv/
 env/
+.pip-cache/
+vendor/
 __pycache__/
 *.pyc
 *.pyo

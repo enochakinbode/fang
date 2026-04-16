@@ -20,17 +20,16 @@ ext install enochakinbode.fang
 
 Marketplace: https://marketplace.visualstudio.com/items?itemName=enochakinbode.fang
 
-### Install `vyper-lsp` (required for LSP features)
+### Language Server Setup
 
-```bash
-pip install vyper-lsp
-```
+Fang manages `vyper-lsp` for you. You do not need to run `pip install vyper-lsp`.
 
-Verify:
+Requirements:
 
-```bash
-vyper-lsp --version
-```
+- Python `3.12` or newer must be installed on your machine.
+- Internet access is required the first time Fang prepares the language server.
+
+Open a `.vy` or `.vyi` file and approve the first-run prompt. Fang will create a private environment in VS Code extension storage, install the pinned language server, and reuse it on later launches.
 
 ## Preview
 
@@ -64,7 +63,7 @@ vyper-lsp --version
 
 
 
-> **Vyper Version Support:** Fang supports `vyper>=0.4.1,<0.5.0` (as supported by `vyper-lsp`).
+> **Vyper Version Support:** Fang's managed language server installs pinned `vyper-lsp==0.1.4`. Advanced users who need a project-specific compiler or LSP version can set `vyper.lsp.serverCommand` to their own `vyper-lsp` command.
 
 ## Usage
 
@@ -72,7 +71,13 @@ vyper-lsp --version
 
 1. Open a `.vy` or `.vyi` file.
 2. Syntax highlighting activates automatically.
-3. LSP features (completion, diagnostics, navigation) work when `vyper-lsp` is installed.
+3. LSP features (completion, diagnostics, navigation) work after Fang prepares its managed language server.
+
+### Custom LSP Command
+
+Leave `vyper.lsp.serverCommand` empty to use Fang's managed language server.
+
+Set `vyper.lsp.serverCommand` only if you want Fang to run your own `vyper-lsp` environment instead.
 
 ### Commands
 
@@ -132,4 +137,3 @@ Found a bug or have a feature request? Please open an issue on [GitHub](https://
 ---
 
 **Fang** - Sharp tools for Vyper development 🐍
-
