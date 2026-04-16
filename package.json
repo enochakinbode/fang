@@ -77,8 +77,8 @@
             "properties": {
                 "vyper.lsp.serverCommand": {
                     "type": "string",
-                    "default": "vyper-lsp",
-                    "description": "Command to start the Vyper language server"
+                    "default": "",
+                    "description": "Command to start the Vyper language server. Leave empty to let Fang prepare and run its managed vyper-lsp server."
                 },
                 "vyper.lsp.enabled": {
                     "type": "boolean",

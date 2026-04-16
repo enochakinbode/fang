@@ -136,7 +136,10 @@ async function activate(context) {
     // Handle Configuration Changes
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(async event => {
         // 1. Handle LSP toggle
-        if (event.affectsConfiguration('vyper.lsp.enabled')) {
+        if (
+            event.affectsConfiguration('vyper.lsp.enabled') ||
+            event.affectsConfiguration('vyper.lsp.serverCommand')
+        ) {
             const config = vscode.workspace.getConfiguration('vyper');
             if (config.get('lsp.enabled')) {
                 await mod_lsp.init(context, type);
