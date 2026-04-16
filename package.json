@@ -116,6 +116,7 @@
     "scripts": {
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
+        "test": "node --test test/*.test.js",
         "vscode:prepublish": "bun install"
     },
     "dependencies": {
