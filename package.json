@@ -3,7 +3,7 @@
     "displayName": "Fang - Vyper Language Support",
     "description": "Comprehensive language support for Vyper smart contracts. Features syntax highlighting, code decorations, hover documentation, Language Server Protocol (LSP) integration, and code snippets to enhance your Vyper development experience.",
     "license": "MIT",
-    "version": "0.1.4",
+    "version": "0.2.0",
     "keywords": [
         "vyper",
         "ethereum",
@@ -77,8 +77,8 @@
             "properties": {
                 "vyper.lsp.serverCommand": {
                     "type": "string",
-                    "default": "vyper-lsp",
-                    "description": "Command to start the Vyper language server"
+                    "default": "",
+                    "description": "Command to start the Vyper language server. Leave empty to let Fang prepare and run its managed vyper-lsp server."
                 },
                 "vyper.lsp.enabled": {
                     "type": "boolean",
@@ -110,12 +110,19 @@
                 "command": "vyper.restartLspServer",
                 "title": "Restart Vyper LSP Server",
                 "category": "Vyper"
+            },
+            {
+                "command": "vyper.clearManagedLspServer",
+                "title": "Clear Managed Vyper LSP Server",
+                "category": "Vyper"
             }
         ]
     },
     "scripts": {
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
+        "test": "node --test test/*.test.js",
+        "vscode:uninstall": "node ./src/lifecycle/uninstall.js",
         "vscode:prepublish": "bun install"
     },
     "dependencies": {

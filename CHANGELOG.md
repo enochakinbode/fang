@@ -2,6 +2,21 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.2.0] - 2026-04-16
+
+### Highlights
+
+- Fang now prepares its own managed `vyper-lsp` environment, so users no longer need to install `vyper-lsp` manually.
+- The managed server requires Python `3.12+` and installs pinned `vyper-lsp==0.1.4` on first use after user approval.
+- `vyper.lsp.serverCommand` now defaults to Fang-managed mode when empty and remains available for custom language server environments.
+- Added cleanup for Fang's managed `vyper-lsp` environment during extension uninstall and a manual clear command.
+
+### Docs and Packaging
+
+- Updated README installation guidance to remove the manual `pip install vyper-lsp` step.
+- Documented the pinned managed LSP caveat and custom-command escape hatch.
+- Kept VSIX packaging generic and excluded rejected bundled-wheel artifacts from published packages.
+
 ## [0.1.4] - 2026-03-02
 
 ### Highlights
@@ -60,4 +75,3 @@ All notable changes to this project are documented in this file.
 
 - README refreshed with clearer install instructions, preview media, and settings guidance.
 - Added dedicated theme contribution guide at `themes/GUIDE.md`.
-

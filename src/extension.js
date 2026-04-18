@@ -11,6 +11,7 @@ const path = require("path");
 const settings = require("./settings");
 const mod_hover = require("./features/hover/hover.js");
 const mod_lsp = require("./features/lsp.js");
+const managedVyperLsp = require("./features/managedVyperLsp.js");
 
 /**
  * Helper to identify Vyper-specific TextMate rules
@@ -115,6 +116,17 @@ async function onInitModules(context, type) {
     });
     context.subscriptions.push(restartCommand);
 
+    const clearManagedServerCommand = vscode.commands.registerCommand('vyper.clearManagedLspServer', async () => {
+        try {
+            await mod_lsp.stop();
+            await managedVyperLsp.removeManagedServer({ context });
+            vscode.window.showInformationMessage('Fang managed Vyper language server cleared. It will be prepared again the next time it is needed.');
+        } catch (e) {
+            vscode.window.showErrorMessage(`Failed to clear Fang managed Vyper language server: ${e.message}`);
+        }
+    });
+    context.subscriptions.push(clearManagedServerCommand);
+
     // Init LSP (it internally checks if enabled)
     await mod_lsp.init(context, type);
 }
@@ -136,7 +148,10 @@ async function activate(context) {
     // Handle Configuration Changes
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(async event => {
         // 1. Handle LSP toggle
-        if (event.affectsConfiguration('vyper.lsp.enabled')) {
+        if (
+            event.affectsConfiguration('vyper.lsp.enabled') ||
+            event.affectsConfiguration('vyper.lsp.serverCommand')
+        ) {
             const config = vscode.workspace.getConfiguration('vyper');
             if (config.get('lsp.enabled')) {
                 await mod_lsp.init(context, type);
