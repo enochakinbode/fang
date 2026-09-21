@@ -5,47 +5,34 @@
  **/
 
 const vscode = require("vscode");
-const fs = require("fs");
-const path = require("path");
 
 const settings = require("./settings");
 const mod_hover = require("./features/hover/hover.js");
 const mod_lsp = require("./features/lsp.js");
 const managedVyperLsp = require("./features/managedVyperLsp.js");
 
+const SECURITY_SCOPE = 'storage.type.modifier.security.vyper';
+const SECURITY_COLOR = '#fb0b0b';
+
 /**
- * Helper to identify Vyper-specific TextMate rules
+ * Matches textMate rules that Fang injects into the user config.
  */
-function isVyperRule(rule) {
+function isInjectedVyperRule(rule) {
     const scopes = Array.isArray(rule.scope) ? rule.scope : [rule.scope];
     return scopes.some(s => typeof s === 'string' && s.includes('.vyper'));
 }
 
 /**
- * Applies custom token colors by injecting them into the user's global settings.
- * Also disables semantic highlighting for Vyper to ensure these colors are visible.
+ * Applies the security decorator override (if enabled) by injecting a single
+ * rule into `editor.tokenColorCustomizations`. The themes are contributed as
+ * real themes now, so this is the only thing Fang writes to user settings.
  */
-async function applyTokenColors(context) {
+async function applyDecoratorOverride() {
     try {
         const config = vscode.workspace.getConfiguration('vyper');
-        const customThemeName = config.get('customTheme', '');
-
-        let themeFileName = (customThemeName && customThemeName.trim() !== '')
-            ? `${customThemeName.trim().replace(/\.json$/, '')}.json`
-            : 'vyper-color-theme.json';
-
-        let themePath = path.join(context.extensionPath, 'themes', themeFileName);
-        if (!fs.existsSync(themePath)) {
-            console.warn(`[Vyper] Theme file not found: ${themePath}, falling back to default theme.`);
-            themeFileName = 'vyper-color-theme.json';
-            themePath = path.join(context.extensionPath, 'themes', themeFileName);
-        }
-
-        const themeContent = JSON.parse(fs.readFileSync(themePath, 'utf8'));
-        const themeRules = themeContent.tokenColors || [];
+        const highlightSecurity = config.get('theme.highlightSecurityDecorators', true);
 
         const editorConfig = vscode.workspace.getConfiguration();
-
         const inspect = editorConfig.inspect('editor.tokenColorCustomizations');
         const target = inspect && inspect.workspaceValue !== undefined
             ? vscode.ConfigurationTarget.Workspace
@@ -56,43 +43,52 @@ async function applyTokenColors(context) {
             : (editorConfig.get('editor.tokenColorCustomizations', {}) || {});
 
         const existingRules = currentCustomizations.textMateRules || [];
-        const filteredRules = existingRules.filter(rule => !isVyperRule(rule));
+        const filteredRules = existingRules.filter(rule => !isInjectedVyperRule(rule));
 
-        const highlightSecurity = config.get('theme.highlightSecurityDecorators', true);
+        const textMateRules = highlightSecurity
+            ? [...filteredRules, { scope: SECURITY_SCOPE, settings: { foreground: SECURITY_COLOR } }]
+            : filteredRules;
 
-        // Find base decorator color
-        const decoratorRule = themeRules.find(r =>
-            (Array.isArray(r.scope) ? r.scope.join(' ') : r.scope || '')
-                .includes('storage.type.modifier.decorator.vyper')
-        );
-        const decoratorColor = decoratorRule?.settings?.foreground || '#D4D4D4';
-
-        const finalVyperRules = themeRules.map(rule => {
-            const scopeString = Array.isArray(rule.scope) ? rule.scope.join(' ') : (rule.scope || '');
-            if (scopeString.includes('storage.type.modifier.security.vyper')) {
-                return {
-                    ...rule,
-                    settings: { ...rule.settings, foreground: highlightSecurity ? '#fb0b0b' : decoratorColor }
-                };
-            }
-            return rule;
-        });
-
-        const updatedCustomizations = {
+        await editorConfig.update('editor.tokenColorCustomizations', {
             ...currentCustomizations,
-            textMateRules: [...filteredRules, ...finalVyperRules]
-        };
+            textMateRules
+        }, target);
 
-        // Apply the update to the detected target (Global or Workspace)
-        await editorConfig.update('editor.tokenColorCustomizations', updatedCustomizations, target);
-
-        // Also force the semantic highlighting off for the same target
+        // Keep the theme's token colors authoritative by disabling semantic tokens for Vyper.
         const vyperLangConfig = vscode.workspace.getConfiguration('[vyper]');
         await vyperLangConfig.update('editor.semanticHighlighting.enabled', false, target);
 
-        console.log(`[Vyper] Applied ${themeFileName} theme at ${target === vscode.ConfigurationTarget.Workspace ? 'Workspace' : 'Global'} level.`);
+        console.log(`[Vyper] Security decorator highlighting ${highlightSecurity ? 'enabled' : 'disabled'} at ${target === vscode.ConfigurationTarget.Workspace ? 'Workspace' : 'Global'} level.`);
     } catch (error) {
-        console.error('[Vyper] Failed to apply token colors:', error);
+        console.error('[Vyper] Failed to apply decorator override:', error);
+    }
+}
+
+/**
+ * Removes everything Fang injected into the user config:
+ * - the injected `.vyper` textMate rule(s) (decorator override, plus any legacy theme pollution)
+ * - the `[vyper]` semantic highlighting disable
+ */
+async function cleanupUserConfig() {
+    try {
+        const editorConfig = vscode.workspace.getConfiguration();
+        const inspect = editorConfig.inspect('editor.tokenColorCustomizations');
+        const vyperLangConfig = vscode.workspace.getConfiguration('[vyper]');
+        const langInspect = vyperLangConfig.inspect('editor.semanticHighlighting.enabled');
+
+        for (const target of [vscode.ConfigurationTarget.Global, vscode.ConfigurationTarget.Workspace]) {
+            const value = target === vscode.ConfigurationTarget.Global ? inspect?.globalValue : inspect?.workspaceValue;
+            if (value && Array.isArray(value.textMateRules) && value.textMateRules.some(isInjectedVyperRule)) {
+                const cleaned = value.textMateRules.filter(rule => !isInjectedVyperRule(rule));
+                await editorConfig.update('editor.tokenColorCustomizations', { ...value, textMateRules: cleaned }, target);
+            }
+            const langValue = target === vscode.ConfigurationTarget.Global ? langInspect?.globalValue : langInspect?.workspaceValue;
+            if (langValue !== undefined) {
+                await vyperLangConfig.update('editor.semanticHighlighting.enabled', undefined, target);
+            }
+        }
+    } catch (error) {
+        console.error('[Vyper] Failed to clean up injected settings:', error);
     }
 }
 
@@ -102,8 +98,8 @@ async function applyTokenColors(context) {
 async function onInitModules(context, type) {
     mod_hover.init(context, type);
 
-    // Ensure theme is applied before LSP starts
-    await applyTokenColors(context);
+    // Ensure decorator override is applied before LSP starts
+    await applyDecoratorOverride();
 
     // Register restart command
     const restartCommand = vscode.commands.registerCommand('vyper.restartLspServer', async () => {
@@ -160,13 +156,9 @@ async function activate(context) {
             }
         }
 
-        // 2. Handle Theme/Decorator changes
-        if (
-            event.affectsConfiguration('vyper.customTheme') ||
-            event.affectsConfiguration('vyper.theme.highlightSecurityDecorators') ||
-            event.affectsConfiguration('vyper')
-        ) {
-            await applyTokenColors(context);
+        // 2. Handle decorator highlight toggle
+        if (event.affectsConfiguration('vyper.theme.highlightSecurityDecorators')) {
+            await applyDecoratorOverride();
         }
     }));
 }
@@ -177,13 +169,8 @@ async function activate(context) {
 async function deactivate() {
     await mod_lsp.stop();
 
-    // Cleanup the injected theme settings to leave the user's config clean
-    const editorConfig = vscode.workspace.getConfiguration();
-    const current = editorConfig.get('editor.tokenColorCustomizations', {});
-    if (current.textMateRules) {
-        const cleaned = current.textMateRules.filter(rule => !isVyperRule(rule));
-        await editorConfig.update('editor.tokenColorCustomizations', { ...current, textMateRules: cleaned }, vscode.ConfigurationTarget.Global);
-    }
+    // Remove injected settings so the user's config is left clean
+    await cleanupUserConfig();
 }
 
 exports.activate = activate;

@@ -2,6 +2,8 @@
 
 This guide explains how to add and contribute a Vyper theme to Fang.
 
+Fang themes are **real VS Code color themes**. They are contributed via `contributes.themes` and selected from the workbench **Color Theme** picker, exactly like any other VS Code theme.
+
 ## Theme File Location
 
 Add your theme file under `themes/`:
@@ -14,18 +16,24 @@ Example:
 
 ## Theme File Format
 
-Your theme must be valid JSON and include a `tokenColors` array.
+Your theme is a standard VS Code color theme JSON file. It extends a base VS Code theme (set with `uiTheme` in `package.json`) and only overrides what it needs.
 
 ```json
 {
-  "tokenColors": [
-    {
-      "scope": ["keyword.control.vyper"],
-      "settings": { "foreground": "#FF7B72" }
-    }
-  ]
+    "$schema": "vscode://schemas/color-theme",
+    "name": "Solarized Vyper",
+    "tokenColors": [
+        {
+            "scope": ["keyword.control.vyper"],
+            "settings": { "foreground": "#FF7B72" }
+        }
+    ]
 }
 ```
+
+- `$schema` and `name` are required.
+- `tokenColors` is the array of TextMate scope rules.
+- `colors` is optional. Omit it to inherit all editor/workbench chrome colors from the base theme (`vs-dark`, `vs`, etc.).
 
 ## Required Scope Coverage
 
@@ -54,39 +62,46 @@ At minimum, style these scopes:
 
 Fang supports:
 
-- `vyper.theme.highlightSecurityDecorators = true|false`
+- `vyper.theme.highlightSecurityDecorators = true|false` (default `true`)
 
 Behavior:
 
-- `true`: security decorators are forced to `#fb0b0b`
-- `false`: security decorators use the same color as `storage.type.modifier.decorator.vyper`
+- `true`: Fang injects a single override into `editor.tokenColorCustomizations` forcing `storage.type.modifier.security.vyper` to `#fb0b0b`. This is the **only** setting Fang writes to the user config, and it is removed on deactivation.
+- `false`: no override is injected. The color from your theme's `storage.type.modifier.security.vyper` rule is used as-is.
 
-Make sure your theme looks good in both modes.
+So your theme's `storage.type.modifier.security.vyper` color is the "highlight off" state. Set it to the same value as your decorator rule (or a subtle tint) so the theme looks intentional in both modes.
 
-## Make Theme Selectable in Settings
+## Make Theme Selectable in the Theme Picker
 
-To expose your theme in the settings dropdown:
+Add your theme to the `contributes.themes` array in `package.json`:
 
-1. Add your theme name (without `.json`) to:
-   - `contributes.configuration.properties.vyper.customTheme.enum` in `package.json`
-2. Add a matching label to:
-   - `contributes.configuration.properties.vyper.customTheme.enumDescriptions`
+```json
+"themes": [
+    {
+        "label": "Solarized Vyper",
+        "uiTheme": "vs-dark",
+        "path": "./themes/solarized-vyper-color-theme.json"
+    }
+]
+```
 
-Example value:
+- `label` appears in the Color Theme picker.
+- `uiTheme` is the base theme to extend (`vs` for light, `vs-dark` for dark, `hc-black`/`hc-light` for high contrast).
+- `path` is relative to the extension root.
 
-- `solarized-vyper-color-theme`
+Users pick it via **Preferences > Color Theme** (or `Cmd/Ctrl+K Cmd/Ctrl+T`).
 
 ## Validation Checklist
 
 Before opening a PR:
 
 - JSON parses correctly (no trailing commas)
+- `$schema` and `name` are set
+- Theme is listed under `contributes.themes` with a correct `uiTheme`
 - Required scopes are covered
 - Contrast is readable
-- Switching works for:
-  - `vyper.customTheme`
-  - `vyper.theme.highlightSecurityDecorators`
-- No stale/non-existent scopes are included
+- Security decorator toggle (`vyper.theme.highlightSecurityDecorators`) looks good both on and off
+- The theme picker shows your theme and it activates on a `.vy` file
 
 ## Recommended Testing
 
@@ -101,10 +116,9 @@ Test against snippets that include:
 ## Contribution Steps
 
 1. Add your theme file under `themes/`
-2. (Recommended) update `package.json` enum + enumDescriptions
+2. Register it in `contributes.themes` in `package.json`
 3. Update `README.md` with your theme mention
 4. Open a PR with:
    - screenshots
    - short palette rationale
    - checklist confirmation
-

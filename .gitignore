@@ -95,6 +95,7 @@ dist/**
 
 uv.lock
 pyproject.toml
+.venv/
 
 # Personal todo file
 todo.txt

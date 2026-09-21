@@ -33,6 +33,8 @@ Open a `.vy` or `.vyi` file and approve the first-run prompt. Fang will create a
 
 ## Preview
 
+Fang ships two real VS Code color themes — **Pythonic Vyper** and **Fang Vyper** — selectable from the workbench **Color Theme** picker (`Cmd/Ctrl+K Cmd/Ctrl+T`). Both extend VS Code's default dark theme and only restyle Vyper code.
+
 ### Pythonic Vyper Theme
 
 ![Fang Pythonic Theme](https://raw.githubusercontent.com/enochakinbode/fang/pilot/images/FANG_DEFAULT_PYTHONIC_THEME.png)
@@ -43,6 +45,8 @@ Open a `.vy` or `.vyi` file and approve the first-run prompt. Fang will create a
 
 
 ### Security Decorators (On/Off)
+
+To draw attention to security-sensitive decorators (`@reentrant`, `@external`, `@deploy`, `@payable`), Fang forces them red by default via `vyper.theme.highlightSecurityDecorators`. Set it to `false` to use your theme's decorator color instead.
 
 | On | Off |
 |---|---|

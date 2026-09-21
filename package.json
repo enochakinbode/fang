@@ -3,7 +3,7 @@
     "displayName": "Fang - Vyper Language Support",
     "description": "Comprehensive language support for Vyper smart contracts. Features syntax highlighting, code decorations, hover documentation, Language Server Protocol (LSP) integration, and code snippets to enhance your Vyper development experience.",
     "license": "MIT",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "keywords": [
         "vyper",
         "ethereum",
@@ -85,19 +85,6 @@
                     "default": true,
                     "description": "Enable/disable the language server"
                 },
-                "vyper.customTheme": {
-                    "type": "string",
-                    "enum": [
-                        "pythonic-vyper-color-theme",
-                        "vyper-color-theme"
-                    ],
-                    "enumDescriptions": [
-                        "Default Vyper color theme",
-                        "Fang Vyper color theme"
-                    ],
-                    "default": "pythonic-vyper-color-theme",
-                    "description": "Select a custom theme for Vyper syntax highlighting"
-                },
                 "vyper.theme.highlightSecurityDecorators": {
                     "type": "boolean",
                     "default": true,
@@ -105,6 +92,18 @@
                 }
             }
         },
+        "themes": [
+            {
+                "label": "Pythonic Vyper",
+                "uiTheme": "vs-dark",
+                "path": "./themes/pythonic-vyper-color-theme.json"
+            },
+            {
+                "label": "Fang Vyper",
+                "uiTheme": "vs-dark",
+                "path": "./themes/vyper-color-theme.json"
+            }
+        ],
         "commands": [
             {
                 "command": "vyper.restartLspServer",
@@ -119,11 +118,12 @@
         ]
     },
     "scripts": {
+        "test": "node --test test/*.test.js",
         "combineSnippets": "cat snippets/*.json | jq -s 'reduce .[] as $item ({}; .[\".source.vyper\"] += $item[\".source.vyper\"])' > snippets/vyper.json",
         "generateGrammar": "rm -f syntaxes/vyper.tmLanguage.json && uv run scripts/generate_vyper_grammar.py > syntaxes/vyper.tmLanguage.json",
-        "test": "node --test test/*.test.js",
         "vscode:uninstall": "node ./src/lifecycle/uninstall.js",
-        "vscode:prepublish": "bun install"
+        "vscode:prepublish": "bun install",
+        "package": "npx @vscode/vsce package"
     },
     "dependencies": {
         "vscode-languageclient": "^9.0.0"

@@ -1,4 +1,6 @@
 {
+    "$schema": "vscode://schemas/color-theme",
+    "name": "Pythonic Vyper",
     "tokenColors": [
         {
             "scope": [
@@ -81,7 +83,7 @@
                 "storage.type.modifier.security.vyper"
             ],
             "settings": {
-                "foreground": "#fb0b0b"
+                "foreground": "#4EC9B0"
             }
         },
         {

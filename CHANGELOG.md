@@ -2,6 +2,30 @@
 
 All notable changes to this project are documented in this file.
 
+## [0.2.1] - 2026-09-21
+
+### Highlights
+
+- Fang's Vyper themes are now real VS Code color themes — **Pythonic Vyper** and **Fang Vyper** — contributed via `contributes.themes` and selectable from the workbench Color Theme picker. They extend VS Code's default dark theme instead of being injected into the user config.
+- Removed the `vyper.customTheme` setting: theme selection now lives in the Color Theme picker (`Cmd/Ctrl+K Cmd/Ctrl+T`).
+- `vyper.theme.highlightSecurityDecorators` is now the only setting Fang ever writes to the user config, and it is removed again on deactivation.
+
+### Themes and Highlighting
+
+- Converted theme files to standard VS Code color themes (`$schema`, `name`) that extend the default dark theme via `uiTheme: vs-dark`.
+- The security decorator override no longer injects the entire theme — just the single `storage.type.modifier.security.vyper` rule. When highlighting is off, decorators fall back to their theme color.
+- Security decorator styling is now applied before LSP startup and tracked reactively via configuration changes.
+
+### Extension Behavior
+
+- Deactivation now removes Fang's injected TextMate rules and the `[vyper]` semantic-highlighting disable from **both** Global and Workspace settings, also clearing any theme rules left behind by older versions.
+- Uninstalling the extension now also strips Fang's injected settings (vyper `textMateRules` and the `[vyper]` semantic-highlighting override) from the user's global `settings.json`, since VS Code does not run `deactivate()` on uninstall.
+
+### Docs
+
+- Updated `themes/GUIDE.md` to the real-theme contribution workflow (register under `contributes.themes`, pick via Color Theme picker).
+- README now documents the Color Theme picker flow and the security decorator toggle.
+
 ## [0.2.0] - 2026-04-16
 
 ### Highlights

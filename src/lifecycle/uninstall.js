@@ -63,6 +63,97 @@ function removeIfPresent(targetPath) {
     return true;
 }
 
+/**
+ * Returns true when the rule was injected by Fang, i.e. targets a `.vyper` scope.
+ */
+function isInjectedVyperRule(rule) {
+    const scopes = Array.isArray(rule.scope) ? rule.scope : [rule.scope];
+    return scopes.some((s) => typeof s === 'string' && s.includes('.vyper'));
+}
+
+/**
+ * Removes everything Fang injected into a parsed settings object, in place.
+ * Returns true if anything was removed. Non-Vyper customizations are kept.
+ */
+function cleanSettings(settings) {
+    if (!settings || typeof settings !== 'object' || Array.isArray(settings)) {
+        return false;
+    }
+
+    let changed = false;
+
+    const tokenCustomizations = settings['editor.tokenColorCustomizations'];
+    if (tokenCustomizations && typeof tokenCustomizations === 'object') {
+        if (Array.isArray(tokenCustomizations.textMateRules)) {
+            const filtered = tokenCustomizations.textMateRules.filter((rule) => !isInjectedVyperRule(rule));
+            if (filtered.length !== tokenCustomizations.textMateRules.length) {
+                changed = true;
+                if (filtered.length === 0) {
+                    delete tokenCustomizations.textMateRules;
+                } else {
+                    tokenCustomizations.textMateRules = filtered;
+                }
+            }
+        }
+        if (Object.keys(tokenCustomizations).length === 0) {
+            delete settings['editor.tokenColorCustomizations'];
+            changed = true;
+        }
+    }
+
+    const vyperOverrides = settings['[vyper]'];
+    if (vyperOverrides && typeof vyperOverrides === 'object') {
+        if (Object.prototype.hasOwnProperty.call(vyperOverrides, 'editor.semanticHighlighting.enabled')) {
+            delete vyperOverrides['editor.semanticHighlighting.enabled'];
+            changed = true;
+        }
+        if (Object.keys(vyperOverrides).length === 0) {
+            delete settings['[vyper]'];
+        }
+    }
+
+    return changed;
+}
+
+function getCleanupSettingsPaths() {
+    return getProductUserDataRoots().map((root) => path.join(root, 'User', 'settings.json'));
+}
+
+function cleanSettingsFile(settingsPath) {
+    if (!fs.existsSync(settingsPath)) {
+        return false;
+    }
+
+    let content;
+    try {
+        content = fs.readFileSync(settingsPath, 'utf8');
+    } catch (error) {
+        console.warn(`Failed to read settings file ${settingsPath}: ${error.message}`);
+        return false;
+    }
+
+    let settings;
+    try {
+        settings = JSON.parse(content);
+    } catch (error) {
+        console.warn(`Skipping settings file ${settingsPath}: not valid JSON (${error.message})`);
+        return false;
+    }
+
+    if (!cleanSettings(settings)) {
+        return false;
+    }
+
+    try {
+        fs.writeFileSync(settingsPath, JSON.stringify(settings, null, 4) + '\n', 'utf8');
+        console.log(`Removed Fang settings from ${settingsPath}`);
+        return true;
+    } catch (error) {
+        console.warn(`Failed to write settings file ${settingsPath}: ${error.message}`);
+        return false;
+    }
+}
+
 function main() {
     for (const candidate of getManagedServerCandidates()) {
         try {
@@ -71,6 +162,14 @@ function main() {
             }
         } catch (error) {
             console.warn(`Failed to remove Fang managed Vyper language server at ${candidate}: ${error.message}`);
+        }
+    }
+
+    for (const settingsPath of getCleanupSettingsPaths()) {
+        try {
+            cleanSettingsFile(settingsPath);
+        } catch (error) {
+            console.warn(`Failed to clean settings file ${settingsPath}: ${error.message}`);
         }
     }
 }
@@ -82,6 +181,9 @@ if (require.main === module) {
 module.exports = {
     EXTENSION_ID,
     MANAGED_SERVER_DIR,
+    cleanSettings,
+    cleanSettingsFile,
+    getCleanupSettingsPaths,
     getManagedServerCandidates,
     getProductUserDataRoots,
     main,
